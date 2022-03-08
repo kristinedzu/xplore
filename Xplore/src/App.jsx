@@ -40,7 +40,7 @@ export default function App(){
   return(
     <IonApp>
         <IonReactRouter>
-          <IonTabs>
+          <IonTabs className='nav'>
             <IonRouterOutlet>
               <Route exact path="/homepage">
                 <HomePage />

@@ -234,3 +234,13 @@ http://ionicframework.com/docs/theming/ */
     --ion-card-background: #1e1e1e;
   }
 }
+
+/*
+   * Custom App Styling
+   * -------------------------------------------
+   */
+
+   .slider-card-title{
+     font-weight: 500;
+     font-size: 18px;
+   }
