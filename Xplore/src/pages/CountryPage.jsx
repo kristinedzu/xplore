@@ -4,22 +4,14 @@ import { postsRef } from "../firebase-config";
 import { onValue } from "@firebase/database";
 import CityItem from "../components/CityItem";
 import { useParams } from "react-router";
+import { useIonViewWillEnter } from "@ionic/react";
 
 
 export default function CountryPage() {
-  const [posts, setPosts] = useState([]);
   const [country, setCountry] = useState([]);
   const [cities, setCities] = useState([]);
   const params = useParams();
   const countryId = params.id;
-
-//   async function getUsers() {
-//     const response = await fetch("https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/users.json");
-//     const data = await response.json();
-//     // mapp object into an array with objects
-//     const users = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-//     return users;
-//   }
 
   async function loadData() {
     //fetch country data by countryId prop
@@ -35,12 +27,9 @@ export default function CountryPage() {
     setCities(citiesArray.reverse());
     }
 
-    useEffect(() => {
-        loadData();
-    }, []);
-
-
-
+    useIonViewWillEnter(() => {
+      loadData();
+    });
 
   return (
     <IonPage>

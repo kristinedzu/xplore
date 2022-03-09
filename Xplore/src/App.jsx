@@ -14,6 +14,7 @@ import { homeOutline, addOutline, personCircleOutline } from 'ionicons/icons';
 import HomePage from './pages/HomePage';
 import AddNewPostPage from './pages/AddNewPostPage';
 import CountryPage from './pages/CountryPage';
+import CityPage from './pages/CityPage';
 import ProfilePage from './pages/ProfilePage';
 
 /* Core CSS required for Ionic components to work properly */
@@ -51,6 +52,9 @@ export default function App(){
               </Route>
               <Route path="/countries/:id">
                   <CountryPage />
+              </Route>
+              <Route path="/countries/cities/:id">
+                  <CityPage />
               </Route>
               <Route path="/profilepage">
                 <ProfilePage />
