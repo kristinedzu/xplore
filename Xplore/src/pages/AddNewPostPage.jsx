@@ -32,14 +32,12 @@ export default function AddNewPostPage() {
           <IonToolbar>
             <IonTitle size="large">Add new post</IonTitle>
           </IonToolbar>
-          
-          <IonList>
+        </IonHeader>
+        <IonList>
               {countries.map(country =>  
                   <CountryItem country={country} key={country.id} />
               )}
-          </IonList>
-
-        </IonHeader>
+      </IonList>
       </IonContent>
     </IonPage>
   );

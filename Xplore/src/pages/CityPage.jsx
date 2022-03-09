@@ -38,12 +38,8 @@ export default function CityPage() {
           <IonToolbar>
             <IonTitle size="large">{city.name}</IonTitle>
           </IonToolbar>
-          
-          <IonList>
-           
-          </IonList>
-
         </IonHeader>
+        
       </IonContent>
     </IonPage>
   );

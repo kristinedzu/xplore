@@ -43,15 +43,12 @@ export default function CountryPage() {
           <IonToolbar>
             <IonTitle size="large">{country.name}</IonTitle>
           </IonToolbar>
-          
-          <IonList>
-           
+        </IonHeader>
+        <IonList>
               {cities.map(city =>  
                   <CityItem city={city} key={city.id} />
               )}
-          </IonList>
-
-        </IonHeader>
+        </IonList>
       </IonContent>
     </IonPage>
   );
