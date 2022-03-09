@@ -13,6 +13,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { homeOutline, addOutline, personCircleOutline } from 'ionicons/icons';
 import HomePage from './pages/HomePage';
 import AddNewPostPage from './pages/AddNewPostPage';
+import CountryPage from './pages/CountryPage';
 import ProfilePage from './pages/ProfilePage';
 
 /* Core CSS required for Ionic components to work properly */
@@ -47,6 +48,9 @@ export default function App(){
               </Route>
               <Route exact path="/addnewpostpage">
                 <AddNewPostPage />
+              </Route>
+              <Route path="/countries/:id">
+                  <CountryPage />
               </Route>
               <Route path="/profilepage">
                 <ProfilePage />
