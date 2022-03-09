@@ -2,65 +2,22 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList } from '@
 import { useEffect, useState } from "react";
 import { postsRef } from "../firebase-config";
 import { onValue } from "@firebase/database";
-import PostListItem from "../components/PostItem";
+import CountryItem from "../components/CountryItem";
 
 export default function AddNewPostPage() {
-  const [posts, setPosts] = useState([]);
-
-  async function getUsers() {
-    const response = await fetch("https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/users.json");
-    const data = await response.json();
-    // mapp object into an array with objects
-    const users = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-    return users;
-  }
+  const [countries, setCountries] = useState([]);
 
   async function getCountries() {
-    const response = await fetch("https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/countries.json");
-    const data = await response.json();
-    // mapp object into an array with objects
-    const countries = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-    return countries;
+    const countriesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/countries.json`);
+    const countriesData = await countriesRes.json();
+    const countriesArray = Object.keys(countriesData).map(key => ({ id: key, ...countriesData[key]})); // from object to array
+
+    setCountries(countriesArray);
   }
 
-  async function getCities() {
-    const response = await fetch("https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/cities.json");
-    const data = await response.json();
-    // mapp object into an array with objects
-    const cities = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-    return cities;
-  }
-console.log(posts);
-
-
-useEffect(() => {
-    async function listenOnChange() {
-
-        const usersArray = await getUsers();
-        const countriesArray = await getCountries();
-        const citiesArray = await getCities();
-
-        onValue(postsRef, async snapshot => {
-            const postsArray = [];
-            snapshot.forEach(postSnapshot => {
-                const id = postSnapshot.key;
-                const data = postSnapshot.val();
-                const post = {
-                    id,
-                    ...data,
-                    user: usersArray.find(user => user.id == data.uid),
-                    country: countriesArray.find(country => country.id == data.countryId),
-                    city: citiesArray.find(city => city.id == data.cityId)
-                };
-                postsArray.push(post);
-                
-            });
-            setPosts(postsArray.reverse()); // newest post first
-        });
-    }
- 
-    listenOnChange();
-}, []);
+  useEffect(() => {
+    getCountries();
+  }, []);
 
 
   return (
@@ -77,8 +34,8 @@ useEffect(() => {
           </IonToolbar>
           
           <IonList>
-              {posts.map(post => post.user && 
-                  <PostListItem post={post} key={post.id} />
+              {countries.map(country =>  
+                  <CountryItem country={country} key={country.id} />
               )}
           </IonList>
 

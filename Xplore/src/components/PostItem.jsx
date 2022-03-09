@@ -6,12 +6,18 @@ import {
     IonImg,
     IonItem
 } from "@ionic/react";
+import { useHistory } from "react-router-dom";
+
 
 export default function PostListItem({ post }) {
-    
+    const history = useHistory();
+
+    function goToCountryView() {
+        history.push(`countries/${post.country.id}`);
+    }
 
     return (
-        <IonCard>
+        <IonCard slot="start" onClick={goToCountryView}>
             <IonItem lines="none">
             </IonItem>
             <IonImg className="post-img" src={post.img} />
