@@ -38,7 +38,7 @@ export default function CountryPage() {
           <IonTitle>{country.name}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen class="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">{country.name}</IonTitle>

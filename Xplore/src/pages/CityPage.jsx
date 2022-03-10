@@ -33,7 +33,7 @@ export default function CityPage() {
           <IonTitle>{city.name}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen class="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">{city.name}</IonTitle>

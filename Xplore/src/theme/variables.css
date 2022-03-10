@@ -262,6 +262,7 @@ http://ionicframework.com/docs/theming/ */
 
 .post-img {
   height: 170px;
+  width: 260px;
   object-fit: cover;
 }
 
@@ -281,10 +282,6 @@ http://ionicframework.com/docs/theming/ */
   width: auto !important;
 }
 
-.header{
-  margin-top: 8px;
-}
-
 .home-page-title{
   box-sizing: unset;
   font-size: 30px;
@@ -292,4 +289,8 @@ http://ionicframework.com/docs/theming/ */
 
 .title-toolbar{
   padding-bottom: 16px;
+}
+
+.input-item {
+  margin: 16px 0;
 }

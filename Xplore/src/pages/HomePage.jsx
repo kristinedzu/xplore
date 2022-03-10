@@ -55,18 +55,18 @@ export default function HomePage(){
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonItem lines="none">
-          <IonAvatar slot="end">
-            <IonImg src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
-          </IonAvatar>
-          <IonLabel>Hi User!</IonLabel>
-        </IonItem>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense"  className="header">
+      <IonContent fullscreen class="ion-padding">
+        <IonHeader>
+          <IonItem lines="none">
+            <IonAvatar slot="end">
+              <IonImg src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+            </IonAvatar>
+            <IonLabel>Hi User!</IonLabel>
+          </IonItem>
+        </IonHeader>
+        <IonHeader collapse="condense">
           <IonToolbar className='title-toolbar'>
-            <IonTitle size="large" className='home-page-title ion-text-wrap'>Let's start your travel!</IonTitle>
+            <IonTitle size="large" className='home-page-title'>Let's start your travel!</IonTitle>
           </IonToolbar>
           <IonToolbar>
             <IonSearchbar animated></IonSearchbar>

@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonInput, IonLabel, IonItem, IonSelect, IonSelectOption, IonButton} from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonLabel, IonTextarea, IonItem, IonSelect, IonSelectOption, IonButton} from '@ionic/react';
 import { useEffect, useState } from "react";
 // import { postsRef } from "../firebase-config";
 // import { onValue } from "@firebase/database";
@@ -9,6 +9,7 @@ export default function AddNewPostPage() {
   const [cities, setCities] = useState([]);
   const [country, setCountry] = useState([]);
   const [city, setCity] = useState([]);
+  const [text, setText] = useState();
 
   async function getCountries() {
     const countriesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/countries.json`);
@@ -38,25 +39,33 @@ export default function AddNewPostPage() {
           <IonTitle>Add new post</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen class="ion-padding">
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Add new post</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonList>
-          <IonSelect value={country} placeholder="Select Country" onIonChange={e => setCountry(e.detail.value)}>
-              {countries.map(country =>  
-                  <IonSelectOption key={country.id} value={country}>{country.name}</IonSelectOption>
-              )}
+          <IonItem className="input-item">
+            <IonLabel position="floating">Country</IonLabel>
+            <IonSelect value={country} placeholder="Select Country" onIonChange={e => setCountry(e.detail.value)}>
+                {countries.map(country =>  
+                    <IonSelectOption key={country.id} value={country}>{country.name}</IonSelectOption>
+                )}
             </IonSelect>
-        </IonList>
-        <IonList>
-          <IonSelect value={city} placeholder="Select City" onIonFocus={getCountries} onIonChange={e => setCity(e.detail.value)}>
-              {cities.map(city =>  
-                  <IonSelectOption key={city.id} value={city}>{city.name}</IonSelectOption>
-              )}
-          </IonSelect>
+          </IonItem>
+          <IonItem className="input-item">
+            <IonLabel position="floating">City</IonLabel>
+            <IonSelect value={city} placeholder="Select City" onIonFocus={getCountries} onIonChange={e => setCity(e.detail.value)}>
+                {cities.map(city =>  
+                    <IonSelectOption key={city.id} value={city}>{city.name}</IonSelectOption>
+                )}
+            </IonSelect>
+          </IonItem>          
+          <IonItem className="input-item">
+            <IonLabel position="stacked">Description</IonLabel>
+            <IonTextarea value={text} placeholder="Your review destinations" onIonChange={e => setText(e.detail.value)}></IonTextarea>
+          </IonItem>
           <IonButton expand="block">Add</IonButton>
         </IonList>
         
