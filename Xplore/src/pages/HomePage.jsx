@@ -13,12 +13,21 @@ import '@ionic/react/css/ionic-swiper.css';
 export default function HomePage(){
 
   const [countries, setCountries] = useState([]);
+  
+  async function getPosts() {
+    const postsRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/posts.json`);
+    const postsData = await postsRes.json();
+    const posts = Object.keys(postsData).map(key => ({ id: key, ...postsData[key]})); // from object to array
+    return posts;
+  }
 
   async function getCountries() {
+    const postsArray = await getPosts();
+
     const countriesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/countries.json`);
     const countriesData = await countriesRes.json();
-    const countriesArray = Object.keys(countriesData).map(key => ({ id: key, ...countriesData[key]})); // from object to array
-
+    const allCountries = Object.keys(countriesData).map(key => ({ id: key, ...countriesData[key], posts: postsArray.find(post => post.countryId == key)})); // from object to array
+    const countriesArray = allCountries.filter(country => country.posts != undefined);
     setCountries(countriesArray);
   }
 
