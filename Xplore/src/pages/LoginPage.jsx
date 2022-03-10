@@ -44,7 +44,7 @@ export default function LoginPage() {
           <IonTitle>Sign in Page</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen class='ion-padding'>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Sign in</IonTitle>

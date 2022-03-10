@@ -40,13 +40,13 @@ export default function SignUpPage() {
           <IonTitle>Sign up Page</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen class='ion-padding'>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Sign in</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <form onSubmit={signIn} className="ion-padding">
+        <form onSubmit={signIn}>
             <IonItem>
                 <IonLabel position="stacked">E-mail</IonLabel>
                 <IonInput
@@ -56,7 +56,7 @@ export default function SignUpPage() {
                 <IonLabel position="stacked">Password</IonLabel>
                 <IonInput value={password} type="Password" onIonChange={e => setPassword(e.target.value)}></IonInput>
             </IonItem>
-            <IonButton expand="block" type="submit">Sign in
+            <IonButton expand="block" type="submit">Sign up
               <IonRippleEffect type="unbounded"></IonRippleEffect>
             </IonButton>
         </form>

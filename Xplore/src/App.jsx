@@ -96,7 +96,7 @@ function PublicRoutes(){
 
 export default function App() {
   const [userIsAuthenticated, setUserIsAuthenticated] = useState(localStorage.getItem("userIsAuthenticated"));
-  //const auth = getAuth();
+  const auth = getAuth();
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {
@@ -117,7 +117,7 @@ export default function App() {
     <IonApp>
       <IonReactRouter>
           {userIsAuthenticated ? <PrivateRoutes /> : <PublicRoutes />}
-          <Route>{userIsAuthenticated ? <Route exact path="/homepage"><HomePage /></Route> : <Redirect to="/loginpage" />}</Route>
+          <Route>{userIsAuthenticated ? <Redirect to="/homepage" /> : <Redirect to="/loginpage" />}</Route>
       </IonReactRouter>
     </IonApp>
   );
