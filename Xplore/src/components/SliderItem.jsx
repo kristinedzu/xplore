@@ -1,1 +1,0 @@
-// create a slider item to reuse it in all pages
