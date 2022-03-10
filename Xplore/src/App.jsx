@@ -63,16 +63,16 @@ export default function App(){
                 <Redirect to="/homepage" />
               </Route>
             </IonRouterOutlet>
-            <IonTabBar slot="bottom">
-              <IonTabButton tab="Home Page" href="/homepage">
+            <IonTabBar className='main-nav' slot="bottom">
+              <IonTabButton className='main-nav-tab' tab="Home Page" href="/homepage">
                 <IonIcon icon={homeOutline} />
                 <IonLabel>Home Page</IonLabel>
               </IonTabButton>
-              <IonTabButton tab="Add new post" href="/addnewpostpage">
+              <IonTabButton className='main-nav-tab' tab="Add new post" href="/addnewpostpage">
                 <IonIcon icon={addOutline} />
                 <IonLabel>Add new post</IonLabel>
               </IonTabButton>
-              <IonTabButton tab="Profile Page" href="/profilepage">
+              <IonTabButton className='main-nav-tab' tab="Profile Page" href="/profilepage">
                 <IonIcon icon={personCircleOutline} />
                 <IonLabel>My profile</IonLabel>
               </IonTabButton>

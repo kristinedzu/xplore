@@ -4,7 +4,7 @@ http://ionicframework.com/docs/theming/ */
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
+  --ion-color-primary: #3D92A2;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
@@ -83,7 +83,7 @@ http://ionicframework.com/docs/theming/ */
    */
 
   body {
-    --ion-color-primary: #428cff;
+    --ion-color-primary: #3D92A2;
     --ion-color-primary-rgb: 66,140,255;
     --ion-color-primary-contrast: #ffffff;
     --ion-color-primary-contrast-rgb: 255,255,255;
@@ -236,11 +236,60 @@ http://ionicframework.com/docs/theming/ */
 }
 
 /*
-   * Custom App Styling
-   * -------------------------------------------
-   */
+* Custom App Styling
+* -------------------------------------------
+*/
 
-   .slider-card-title{
-     font-weight: 500;
-     font-size: 18px;
-   }
+.main-nav{
+  padding: 8px 0 16px 0;
+  border-radius: 24px 24px 0 0;
+  background-color: #3D92A2;
+}
+
+.main-nav-tab{
+  background-color: #3D92A2;
+  color: rgba(255, 255, 255, 0.678);
+}
+
+.tab-selected {
+  color: white;
+}
+
+.slider-card-title{
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.post-img {
+  height: 170px;
+  object-fit: cover;
+}
+
+.post-header {
+  padding: 4px 16px;
+}
+
+.post-title {
+  width: fit-content;
+}
+
+.cities-card{
+  width: -webkit-fill-available;
+}
+
+.ion-slide {
+  width: auto !important;
+}
+
+.header{
+  margin-top: 8px;
+}
+
+.home-page-title{
+  box-sizing: unset;
+  font-size: 30px;
+}
+
+.title-toolbar{
+  padding-bottom: 16px;
+}
