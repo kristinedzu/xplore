@@ -1,54 +1,30 @@
-import { 
-  IonContent, 
-  IonHeader, 
-  IonPage, 
-  IonTitle, 
-  IonToolbar, 
-  IonSearchbar,
-  IonItem,
-  IonAvatar,
-  IonLabel,
-  IonCard,
-  IonImg,
-  IonCardTitle,
-  IonCardContent,
-  IonButtons,
-  IonButton
-} from '@ionic/react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import React from 'react';
+import 
+{IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar, IonItem, IonAvatar, IonLabel, IonCard, IonImg, IonCardTitle,IonCardContent, IonList, IonListHeader} from '@ionic/react';
+import { IonSlides, IonSlide } from '@ionic/react';
+import { useEffect, useState } from "react";
+import CountryItem from "../components/CountryItem";
 import { getAuth, signOut } from "firebase/auth";
 
-//import 'swiper/swiper.min.css';
-import 'swiper/swiper.min.css';
-import '@ionic/react/css/ionic-swiper.css';
 
 export default function HomePage(){
   const auth = getAuth();
   function handleSignOut() {
     signOut(auth);
-}
-  const sliderData = [
-    {
-      title: "Piza",
-      subtitle: "Piza tower",
-      image: "https://images.pexels.com/photos/629142/pexels-photo-629142.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-    },
-    {
-      title: "Bangkok",
-      subtitle: "Bangkok during the dat",
-      image: "https://images.pexels.com/photos/708764/pexels-photo-708764.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-    },
-    {
-      title: "Yellowstone",
-      subtitle: "Yellowstone",
-      image: "https://images.pexels.com/photos/5464615/pexels-photo-5464615.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-    },
-    {
-      title: "North Norway",
-      subtitle: "Norway",
-      image: "https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-    }
-  ];
+  }
+  const [countries, setCountries] = useState([]);
+
+  async function getCountries() {
+    const countriesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/countries.json`);
+    const countriesData = await countriesRes.json();
+    const countriesArray = Object.keys(countriesData).map(key => ({ id: key, ...countriesData[key]})); // from object to array
+
+    setCountries(countriesArray);
+  }
+
+  useEffect(() => {
+    getCountries();
+  }, []);
 
   const sliderCitiesData = [
     {
@@ -64,55 +40,80 @@ export default function HomePage(){
       name: "Barcelona"
     }
   ];
+
+  const slideOpts = {
+    initialSlide: 0,
+    speed: 400,
+    slidesPerView: "2.5"
+  };
+  
+  const slide2Opts = {
+    initialSlide: 0,
+    speed: 400,
+    slidesPerView: 2.3,
+  };
+
   return (
     <IonPage>
-      <IonHeader>
-        <IonItem>
-          <IonAvatar slot="end">
-            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
-          </IonAvatar>
-          <IonLabel>Hi User!</IonLabel>
-        </IonItem>
-      </IonHeader>
-      <IonContent fullscreen>
+      <IonContent fullscreen class="ion-padding">
+        <IonHeader>
+          <IonItem lines="none">
+            <IonAvatar slot="end">
+              <IonImg src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+            </IonAvatar>
+            <IonLabel>Hi User!</IonLabel>
+          </IonItem>
+        </IonHeader>
         <IonHeader collapse="condense">
+          <IonToolbar className='title-toolbar'>
+            <IonTitle size="large" className='home-page-title'>Let's start your travel!</IonTitle>
+          </IonToolbar>
           <IonToolbar>
-            <IonTitle size="large">Let's start your travel!</IonTitle>
+            <IonSearchbar animated></IonSearchbar>
           </IonToolbar>
         </IonHeader>
-        <IonSearchbar></IonSearchbar>
-        <IonLabel>Cities worth visting</IonLabel>
-        <Swiper spaceBetween={0} slidesPerView={2.25}>
-          {sliderCitiesData.map((card, index) => {
-            return (
-              <SwiperSlide key={`slide_${index}`}>
-                <IonCard>
-                  <IonCardContent>
-                    <IonCardTitle className='slider-card-title'>{card.name}</IonCardTitle>  
-                  </IonCardContent>  
-                </IonCard>  
-              </SwiperSlide>
-            )
-          })}
-        </Swiper>
-        <IonLabel>Most popular destinations</IonLabel>
-        <Swiper spaceBetween={0} slidesPerView={2.25}>
-          {sliderData.map((card, index) => {
-            return (
-              <SwiperSlide key={`slide_${index}`}>
-                <IonCard>
-                  <IonImg src={card.image} alt="card" className='slider-img'/>
-                  <IonCardContent>
-                    <IonCardTitle className='slider-card-title'>{card.title}</IonCardTitle>  
-                  </IonCardContent>  
-                </IonCard>  
-              </SwiperSlide>
-            )
-          })}
-        </Swiper>
-        <IonButtons>
-          <IonButton onClick={handleSignOut}>Sign Out</IonButton>
-        </IonButtons>
+        <IonList>
+          <IonListHeader>
+            <IonLabel>Cities worth visting</IonLabel>
+          </IonListHeader>
+          <IonItem lines="none">
+            <IonSlides options={slideOpts}>
+              {sliderCitiesData.map((card, index) => {
+                return (
+                  <IonSlide className='ion-slide' key={`slide_${index}`}>
+                    <IonCard className='cities-card'>
+                      <IonCardContent>
+                        <IonCardTitle className='slider-card-title'>{card.name}</IonCardTitle>  
+                      </IonCardContent>  
+                    </IonCard>  
+                  </IonSlide>
+                )
+              })}
+            </IonSlides>
+          </IonItem>
+          <IonListHeader>
+            <IonLabel>Most popular destinations</IonLabel>
+          </IonListHeader>
+          <IonItem lines="none">
+            <IonSlides options={slide2Opts}>
+            {countries.map((country, index) => {
+              return (
+                <IonSlide className='ion-slide' key={`slide_${index}`}>
+                  <CountryItem country={country} key={country.id} />  
+                </IonSlide>
+              )
+            })}
+            </IonSlides>
+          </IonItem>
+        </IonList>
+        <IonList>
+          <IonItem>
+            <IonButtons>
+              <IonButton onClick={handleSignOut}>Sign Out</IonButton>
+            </IonButtons>
+          </IonItem>
+        </IonList>
+        
       </IonContent>
     </IonPage>
   );

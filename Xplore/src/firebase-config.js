@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getStorage } from "firebase/storage";
 import { initializeAuth, indexedDBLocalPersistence } from "firebase/auth";
+import { getDatabase,ref } from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -28,3 +29,7 @@ export const auth = initializeAuth(app, {
 const analytics = getAnalytics(app);
 const storage = getStorage(app);
 //const auth = getAuth(app);
+// const storage = getStorage(firebaseApp);
+
+const database = getDatabase(app);
+export const postsRef = ref(database, "posts");

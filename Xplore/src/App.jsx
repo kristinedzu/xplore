@@ -13,6 +13,8 @@ import { IonReactRouter } from '@ionic/react-router';
 import { homeOutline, addOutline, personCircleOutline } from 'ionicons/icons';
 import HomePage from './pages/HomePage';
 import AddNewPostPage from './pages/AddNewPostPage';
+import CountryPage from './pages/CountryPage';
+import CityPage from './pages/CityPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
@@ -60,17 +62,23 @@ function PrivateRoutes(){
             <Route exact path="/">
               <Redirect to="/homepage" />
             </Route>
+            <Route path="/countries/:id">
+                <CountryPage />
+            </Route>
+            <Route path="/countries/cities/:id">
+                <CityPage />
+            </Route>
           </IonRouterOutlet>
-          <IonTabBar slot="bottom">
-            <IonTabButton tab="Home Page" href="/homepage">
+          <IonTabBar className='main-nav' slot="bottom">
+            <IonTabButton className='main-nav-tab' tab="Home Page" href="/homepage">
               <IonIcon icon={homeOutline} />
               <IonLabel>Home Page</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="Add new post" href="/addnewpostpage">
+            <IonTabButton className='main-nav-tab' tab="Add new post" href="/addnewpostpage">
               <IonIcon icon={addOutline} />
               <IonLabel>Add new post</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="Profile Page" href="/profilepage">
+            <IonTabButton className='main-nav-tab' tab="Profile Page" href="/profilepage">
               <IonIcon icon={personCircleOutline} />
               <IonLabel>My profile</IonLabel>
             </IonTabButton>
