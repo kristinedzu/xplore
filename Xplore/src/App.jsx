@@ -17,6 +17,9 @@ import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase-config";
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -35,54 +38,87 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { useEffect, useState } from 'react';
 
 setupIonicReact();
 
-export default function App(){
+function PrivateRoutes(){
   return(
     <IonApp>
-        <IonReactRouter>
-          <IonTabs className='nav'>
-            <IonRouterOutlet>
-              <Route exact path="/homepage">
-                <HomePage />
-              </Route>
-              <Route exact path="/addnewpostpage">
-                <AddNewPostPage />
-              </Route>
-              <Route path="/profilepage">
-                <ProfilePage />
-              </Route>
-              <Route exact path="/">
-                <Redirect to="/homepage" />
-              </Route>
-              <Route exact path="/loginpage">
-                <LoginPage />
-              </Route>
-              <Route exact path="/signuppage">
-                <SignUpPage />
-              </Route>
-            </IonRouterOutlet>
-            <IonTabBar slot="bottom">
-              <IonTabButton tab="Home Page" href="/homepage">
-                <IonIcon icon={homeOutline} />
-                <IonLabel>Home Page</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="Add new post" href="/addnewpostpage">
-                <IonIcon icon={addOutline} />
-                <IonLabel>Add new post</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="Profile Page" href="/profilepage">
-                <IonIcon icon={personCircleOutline} />
-                <IonLabel>My profile</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="Login Page" href="/loginpage">
-                <IonIcon icon={personCircleOutline} />
-                <IonLabel>Login page</IonLabel>
-              </IonTabButton>
-            </IonTabBar>
-          </IonTabs>
-        </IonReactRouter>
-      </IonApp>
-    );
+      <IonReactRouter>
+        <IonTabs className='nav'>
+          <IonRouterOutlet>
+            <Route exact path="/homepage">
+              <HomePage />
+            </Route>
+            <Route exact path="/addnewpostpage">
+              <AddNewPostPage />
+            </Route>
+            <Route path="/profilepage">
+              <ProfilePage />
+            </Route>
+            <Route exact path="/">
+              <Redirect to="/homepage" />
+            </Route>
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom">
+            <IonTabButton tab="Home Page" href="/homepage">
+              <IonIcon icon={homeOutline} />
+              <IonLabel>Home Page</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="Add new post" href="/addnewpostpage">
+              <IonIcon icon={addOutline} />
+              <IonLabel>Add new post</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="Profile Page" href="/profilepage">
+              <IonIcon icon={personCircleOutline} />
+              <IonLabel>My profile</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </IonReactRouter>
+    </IonApp>
+  );
+}
+
+function PublicRoutes(){
+  return(
+    <IonRouterOutlet>
+      <Route exact path="/loginpage">
+        <LoginPage />
+      </Route>
+      <Route exact path="/signuppage">
+        <SignUpPage />
+      </Route>
+    </IonRouterOutlet>
+  )
+}
+
+export default function App() {
+  const [userIsAuthenticated, setUserIsAuthenticated] = useState(localStorage.getItem("userIsAuthenticated"));
+  //const auth = getAuth();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+          console.log(user);
+          // User is authenticated
+          setUserIsAuthenticated(true);
+          localStorage.setItem("userIsAuthenticated", true);
+      } else {
+          // User is signed out
+          setUserIsAuthenticated(false);
+          localStorage.removeItem("userIsAuthenticated", false);
+      }
+    });
+  }, [auth]);
+
+  return (
+    <IonApp>
+      <IonReactRouter>
+          {userIsAuthenticated ? <PrivateRoutes /> : <PublicRoutes />}
+          <Route>{userIsAuthenticated ? <Route exact path="/homepage"><HomePage /></Route> : <Redirect to="/loginpage" />}</Route>
+      </IonReactRouter>
+    </IonApp>
+  );
 }

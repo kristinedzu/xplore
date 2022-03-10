@@ -11,15 +11,22 @@ import {
   IonCard,
   IonImg,
   IonCardTitle,
-  IonCardContent
+  IonCardContent,
+  IonButtons,
+  IonButton
 } from '@ionic/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { getAuth, signOut } from "firebase/auth";
 
 //import 'swiper/swiper.min.css';
 import 'swiper/swiper.min.css';
 import '@ionic/react/css/ionic-swiper.css';
 
 export default function HomePage(){
+  const auth = getAuth();
+  function handleSignOut() {
+    signOut(auth);
+}
   const sliderData = [
     {
       title: "Piza",
@@ -57,7 +64,6 @@ export default function HomePage(){
       name: "Barcelona"
     }
   ];
-
   return (
     <IonPage>
       <IonHeader>
@@ -104,6 +110,9 @@ export default function HomePage(){
             )
           })}
         </Swiper>
+        <IonButtons>
+          <IonButton onClick={handleSignOut}>Sign Out</IonButton>
+        </IonButtons>
       </IonContent>
     </IonPage>
   );

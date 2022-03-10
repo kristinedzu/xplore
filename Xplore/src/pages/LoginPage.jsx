@@ -8,20 +8,24 @@ import {
   IonRippleEffect,
   IonInput,
   IonLabel,
-  IonItem
+  IonItem,
+  IonList
 } from '@ionic/react';
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from 'react';
+import { useHistory } from "react-router-dom";
 
 export default function LoginPage() {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const auth = getAuth();
+  const history = useHistory();
 
-  function signIn(event){
+  function handleSubmit(event){
+    event.preventDefault();
     signInWithEmailAndPassword(auth, mail, password)
-    event.then((userCredential) => {
+    .then((userCredential) => {
       // Signed in 
       const user = userCredential.user;
       // ...
@@ -46,20 +50,27 @@ export default function LoginPage() {
             <IonTitle size="large">Sign in</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <form onSubmit={signIn} className="ion-padding">
-            <IonItem>
-                <IonLabel position="stacked">E-mail</IonLabel>
-                <IonInput
-                  value={mail} type="email" onIonChange={e => setMail(e.target.value)}></IonInput>
-            </IonItem>
-            <IonItem>
-                <IonLabel position="stacked">Password</IonLabel>
-                <IonInput value={password} type="Password" onIonChange={e => setPassword(e.target.value)}></IonInput>
-            </IonItem>
-            <IonButton expand="block" type="submit">Sign in
-              <IonRippleEffect type="unbounded"></IonRippleEffect>
-            </IonButton>
-        </form>
+        <IonList>
+          <form onSubmit={handleSubmit}>
+              <IonItem>
+                  <IonLabel position="stacked">E-mail</IonLabel>
+                  <IonInput
+                    value={mail} type="email" onIonChange={e => setMail(e.target.value)}></IonInput>
+              </IonItem>
+              <IonItem>
+                  <IonLabel position="stacked">Password</IonLabel>
+                  <IonInput value={password} type="Password" onIonChange={e => setPassword(e.target.value)}></IonInput>
+              </IonItem>
+              <IonButton expand="block" type="submit">Sign in
+                <IonRippleEffect type="unbounded"></IonRippleEffect>
+              </IonButton>
+              <IonItem className="ion-text-center">
+                <IonButton size="small" fill="clear" onClick={() => history.replace("/signuppage")}>
+                    Sign Up
+                </IonButton>
+              </IonItem>
+          </form>
+        </IonList>
       </IonContent>
     </IonPage>
   );
