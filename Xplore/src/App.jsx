@@ -14,6 +14,8 @@ import { homeOutline, addOutline, personCircleOutline } from 'ionicons/icons';
 import HomePage from './pages/HomePage';
 import AddNewPostPage from './pages/AddNewPostPage';
 import ProfilePage from './pages/ProfilePage';
+import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -54,6 +56,12 @@ export default function App(){
               <Route exact path="/">
                 <Redirect to="/homepage" />
               </Route>
+              <Route exact path="/loginpage">
+                <LoginPage />
+              </Route>
+              <Route exact path="/signuppage">
+                <SignUpPage />
+              </Route>
             </IonRouterOutlet>
             <IonTabBar slot="bottom">
               <IonTabButton tab="Home Page" href="/homepage">
@@ -67,6 +75,10 @@ export default function App(){
               <IonTabButton tab="Profile Page" href="/profilepage">
                 <IonIcon icon={personCircleOutline} />
                 <IonLabel>My profile</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="Login Page" href="/loginpage">
+                <IonIcon icon={personCircleOutline} />
+                <IonLabel>Login page</IonLabel>
               </IonTabButton>
             </IonTabBar>
           </IonTabs>
