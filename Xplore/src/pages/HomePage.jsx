@@ -1,15 +1,18 @@
 import React from 'react';
 import 
-{IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar, IonItem, IonAvatar, IonLabel, IonCard, IonImg, IonCardTitle,IonCardContent, IonList, IonListHeader} from '@ionic/react';
-import { IonSlides, IonSlide } from '@ionic/react';
+{IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar, IonItem, IonAvatar, IonLabel, IonCard, IonImg, IonCardTitle,IonCardContent, IonList, IonListHeader, IonButtons, IonButton} from '@ionic/react';
+import { IonSlides, IonSlide, useIonViewWillEnter } from '@ionic/react';
 import { useEffect, useState } from "react";
 import CountryItem from "../components/CountryItem";
 import { getAuth, signOut } from "firebase/auth";
 
 
 export default function HomePage(){
+  const [user, setUser] = useState([]);
   const auth = getAuth();
-  function handleSignOut() {
+  let activeUser = auth.currentUser;
+
+  function signOutUser() {
     signOut(auth);
   }
   const [countries, setCountries] = useState([]);
@@ -22,9 +25,21 @@ export default function HomePage(){
     setCountries(countriesArray);
   }
 
+  async function getUserName() {
+    const userRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/users/${activeUser.uid}.json`);
+    const userData = await userRes.json();
+    console.log(userData);
+    setUser(userData);
+  }
+
+
   useEffect(() => {
     getCountries();
   }, []);
+
+  useIonViewWillEnter(() => {
+    getUserName();
+  });
 
   const sliderCitiesData = [
     {
@@ -61,7 +76,8 @@ export default function HomePage(){
             <IonAvatar slot="end">
               <IonImg src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
             </IonAvatar>
-            <IonLabel>Hi User!</IonLabel>
+            <IonLabel>Hi {user.firstName}!</IonLabel>
+            
           </IonItem>
         </IonHeader>
         <IonHeader collapse="condense">
@@ -109,7 +125,7 @@ export default function HomePage(){
         <IonList>
           <IonItem>
             <IonButtons>
-              <IonButton onClick={handleSignOut}>Sign Out</IonButton>
+              <IonButton onClick={signOutUser}>Sign Out</IonButton>
             </IonButtons>
           </IonItem>
         </IonList>

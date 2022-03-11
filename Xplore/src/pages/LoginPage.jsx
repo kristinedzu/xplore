@@ -22,7 +22,7 @@ export default function LoginPage() {
   const auth = getAuth();
   const history = useHistory();
 
-  function handleSubmit(event){
+  function signIn(event){
     event.preventDefault();
     signInWithEmailAndPassword(auth, mail, password)
     .then((userCredential) => {
@@ -51,7 +51,7 @@ export default function LoginPage() {
           </IonToolbar>
         </IonHeader>
         <IonList>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={signIn}>
               <IonItem>
                   <IonLabel position="stacked">E-mail</IonLabel>
                   <IonInput

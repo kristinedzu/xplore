@@ -46,8 +46,7 @@ setupIonicReact();
 
 function PrivateRoutes(){
   return(
-    <IonApp>
-      <IonReactRouter>
+ 
         <IonTabs className='nav'>
           <IonRouterOutlet>
             <Route exact path="/homepage">
@@ -84,8 +83,6 @@ function PrivateRoutes(){
             </IonTabButton>
           </IonTabBar>
         </IonTabs>
-      </IonReactRouter>
-    </IonApp>
   );
 }
 

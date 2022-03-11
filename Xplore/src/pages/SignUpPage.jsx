@@ -8,28 +8,55 @@ import {
   IonRippleEffect,
   IonInput,
   IonLabel,
-  IonItem
+  IonItem,
+  IonIcon
 } from '@ionic/react';
 
+import { getUserRef } from "../firebase-config";
+import { get, set } from "@firebase/database";
+import { cameraOutline } from 'ionicons/icons';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from 'react';
+import { useHistory } from "react-router-dom";
 
 export default function SignUpPage() {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const auth = getAuth();
 
-  function signIn(event){
+  const history = useHistory();
+
+  // const userDataToAdd = {
+  //   userId: user.uid,
+  //   firstName: firstName,
+  //   lastName: lastName
+  // }
+
+  function signUp(event){
+    event.preventDefault();
     createUserWithEmailAndPassword(auth, mail, password)
-    event.then((userCredential) => {
+    .then((userCredential) => {
       // Signed in 
       const user = userCredential.user;
       // ...
+      //await addUser(getUserRef(user.uid), userToUpdate);
+      console.log(user.uid);
+      //console.log(firstName);
+      
+      //const db = database;
+      set(getUserRef(user.uid), {
+        userId: user.uid,
+        firstName: firstName,
+        lastName: lastName
+      });
+
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
+      // const errorCode = error.code;
+      // const errorMessage = error.message;
+      console.log(error);
     });
   }
 
@@ -43,10 +70,24 @@ export default function SignUpPage() {
       <IonContent fullscreen class='ion-padding'>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Sign in</IonTitle>
+            <IonTitle size="large">Sign up</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <form onSubmit={signIn}>
+        <form onSubmit={signUp}>
+            <IonItem lines="none">
+                <IonLabel>Choose Image</IonLabel>
+                <IonButton>
+                    <IonIcon slot="icon-only" icon={cameraOutline} />
+                </IonButton>
+            </IonItem>
+            <IonItem>
+                <IonLabel position="stacked">First name</IonLabel>
+                <IonInput value={firstName} type="text" onIonChange={e => setFirstName(e.target.value)}></IonInput>
+            </IonItem>
+            <IonItem>
+                <IonLabel position="stacked">Last name</IonLabel>
+                <IonInput value={lastName} type="text" onIonChange={e => setLastName(e.target.value)}></IonInput>
+            </IonItem>
             <IonItem>
                 <IonLabel position="stacked">E-mail</IonLabel>
                 <IonInput
@@ -59,6 +100,11 @@ export default function SignUpPage() {
             <IonButton expand="block" type="submit">Sign up
               <IonRippleEffect type="unbounded"></IonRippleEffect>
             </IonButton>
+            <IonItem className="ion-text-center">
+              <IonButton size="small" fill="clear" onClick={() => history.replace("/signinpage")}>
+                  Sign Ip
+              </IonButton>
+            </IonItem>
         </form>
       </IonContent>
     </IonPage>

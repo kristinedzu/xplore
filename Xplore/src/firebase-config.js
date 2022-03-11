@@ -31,5 +31,11 @@ const storage = getStorage(app);
 //const auth = getAuth(app);
 // const storage = getStorage(firebaseApp);
 
-const database = getDatabase(app);
+export const database = getDatabase(app);
 export const postsRef = ref(database, "posts");
+export const usersRef = ref(database, "users");
+
+export function getUserRef(userId) {
+  return ref(database, "users/" + userId);
+}
+
