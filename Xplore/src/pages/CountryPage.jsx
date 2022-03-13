@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import { postsRef } from "../firebase-config";
 import { onValue } from "@firebase/database";
 import CityItem from "../components/CityItem";
+import PostSlider from "../components/PostSlider";
 import { useParams } from "react-router";
 import { useIonViewWillEnter } from "@ionic/react";
 
 
 export default function CountryPage() {
+  const [posts, setPosts] = useState([]);
   const [country, setCountry] = useState([]);
-  const [cities, setCities] = useState([]);
   const params = useParams();
   const countryId = params.id;
 
@@ -18,18 +19,42 @@ export default function CountryPage() {
     const countryRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/countries/${countryId}.json`);
     const countryData = await countryRes.json();
     setCountry(countryData);
+  
 
-    // fetch cities where countryId is equal to countryId prop
+ 
+      // fetch cities where countryId is equal to countryId prop
     const citiesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/cities.json`);
     const citiesData = await citiesRes.json();
-    const allCities = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key], country: countryData })); // from object to array
+    const allCities = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key]})); // from object to array
     const citiesArray = allCities.filter(city => city.countryId == countryId);
-    setCities(citiesArray.reverse());
+    return citiesArray;  
+  }
+
+  useIonViewWillEnter(() => {
+
+    async function listenOnChange() {
+      const cities = await loadData();
+      onValue(postsRef, async snapshot => {
+          const postsArray = [];
+          snapshot.forEach(postSnapshot => {
+              const id = postSnapshot.key;
+              const data = postSnapshot.val();
+
+              const post = {
+                  id,
+                  ...data,
+                  city: cities.find(city => city.id == data.cityId)
+              };
+              postsArray.push(post);
+              
+          });
+          setPosts(postsArray.reverse()); // newest post first
+      });
     }
 
-    useIonViewWillEnter(() => {
-      loadData();
-    });
+  listenOnChange();
+  }, []);
+
 
   return (
     <IonPage>
@@ -44,11 +69,11 @@ export default function CountryPage() {
             <IonTitle size="large">{country.name}</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonList>
-              {cities.map(city =>  
-                  <CityItem city={city} key={city.id} />
-              )}
-        </IonList>
+        
+        {posts?.map(post =>  post &&
+            <PostSlider post={post} key={post.id} />
+        )}
+        
       </IonContent>
     </IonPage>
   );

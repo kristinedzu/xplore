@@ -4,6 +4,7 @@ import { useIonViewWillEnter } from "@ionic/react";
 import { postsRef } from "../firebase-config";
 import { onValue } from "@firebase/database";
 import { useParams } from "react-router";
+import PostListItem from '../components/PostListItem';
 
 
 export default function CityPage() {
@@ -19,9 +20,30 @@ export default function CityPage() {
     setCity(cityData);
   }
 
-    useIonViewWillEnter(() => {
-      loadCity();
-    });
+  function getPosts() {
+    onValue(postsRef, async snapshot => {
+      const allPosts = [];
+      snapshot.forEach(postSnapshot => {
+          const id = postSnapshot.key;
+          const data = postSnapshot.val();
+
+          const post = {
+              id,
+              ...data
+          };
+          allPosts.push(post);
+      });
+      const postsArray = allPosts.filter(post => post.cityId == cityId);
+      setPosts(postsArray.reverse()); // newest post first
+  });
+  }
+
+  useIonViewWillEnter(() => {
+    loadCity();
+    getPosts();
+
+  }, []);
+  console.log(posts);
 
 
 
@@ -39,6 +61,9 @@ export default function CityPage() {
             <IonTitle size="large">{city.name}</IonTitle>
           </IonToolbar>
         </IonHeader>
+        {posts.map(post => 
+            <PostListItem post={post} key={post.id} />
+        )}
         
       </IonContent>
     </IonPage>
