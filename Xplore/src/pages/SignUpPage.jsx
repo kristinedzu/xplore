@@ -9,7 +9,8 @@ import {
   IonInput,
   IonLabel,
   IonItem,
-  IonIcon
+  IonIcon,
+  IonImg
 } from '@ionic/react';
 
 import { getUserRef } from "../firebase-config";
@@ -75,10 +76,11 @@ export default function SignUpPage() {
         </IonHeader>
         <form onSubmit={signUp}>
             <IonItem lines="none">
-                <IonLabel>Choose Image</IonLabel>
-                <IonButton>
-                    <IonIcon slot="icon-only" icon={cameraOutline} />
-                </IonButton>
+              <IonImg className="ion-padding"/>
+              <IonLabel>Choose Image</IonLabel>
+              <IonButton>
+                  <IonIcon slot="icon-only" icon={cameraOutline} />
+              </IonButton>
             </IonItem>
             <IonItem>
                 <IonLabel position="stacked">First name</IonLabel>
@@ -97,10 +99,10 @@ export default function SignUpPage() {
                 <IonLabel position="stacked">Password</IonLabel>
                 <IonInput value={password} type="Password" onIonChange={e => setPassword(e.target.value)}></IonInput>
             </IonItem>
-            <IonButton expand="block" type="submit">Sign up
+            <IonButton expand="block" class="ion-margin-top" type="submit">Sign up
               <IonRippleEffect type="unbounded"></IonRippleEffect>
             </IonButton>
-            <IonItem className="ion-text-center">
+            <IonItem className="ion-text-center" lines="none">
               <IonButton size="small" fill="clear" onClick={() => history.replace("/signinpage")}>
                   Sign Ip
               </IonButton>

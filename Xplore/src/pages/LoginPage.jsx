@@ -9,7 +9,8 @@ import {
   IonInput,
   IonLabel,
   IonItem,
-  IonList
+  IonList,
+  IonImg
 } from '@ionic/react';
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -39,32 +40,27 @@ export default function LoginPage() {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Sign in Page</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent fullscreen class='ion-padding'>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Sign in</IonTitle>
+            <IonTitle size="large">Let's start your travel!</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonList>
+        <IonList className="form-container">
           <form onSubmit={signIn}>
               <IonItem>
                   <IonLabel position="stacked">E-mail</IonLabel>
                   <IonInput
-                    value={mail} type="email" onIonChange={e => setMail(e.target.value)}></IonInput>
+                    value={mail} className="input" type="email" onIonChange={e => setMail(e.target.value)}></IonInput>
               </IonItem>
               <IonItem>
                   <IonLabel position="stacked">Password</IonLabel>
                   <IonInput value={password} type="Password" onIonChange={e => setPassword(e.target.value)}></IonInput>
               </IonItem>
-              <IonButton expand="block" type="submit">Sign in
+              <IonButton expand="block" class="ion-margin-top" type="submit">Sign in
                 <IonRippleEffect type="unbounded"></IonRippleEffect>
               </IonButton>
-              <IonItem className="ion-text-center">
+              <IonItem className="ion-text-center" lines="none">
                 <IonButton size="small" fill="clear" onClick={() => history.replace("/signuppage")}>
                     Sign Up
                 </IonButton>

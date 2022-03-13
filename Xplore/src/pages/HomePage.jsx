@@ -77,7 +77,6 @@ export default function HomePage(){
               <IonImg src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
             </IonAvatar>
             <IonLabel>Hi {user.firstName}!</IonLabel>
-            
           </IonItem>
         </IonHeader>
         <IonHeader collapse="condense">
