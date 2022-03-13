@@ -266,6 +266,12 @@ http://ionicframework.com/docs/theming/ */
   object-fit: cover;
 }
 
+.post-img-profile {
+  height: 170px;
+  width: 100%;
+  object-fit: cover;
+}
+
 .post-header {
   padding: 4px 16px;
 }
@@ -293,4 +299,15 @@ http://ionicframework.com/docs/theming/ */
 
 .input-item {
   margin: 16px 0;
+}
+
+.card-flex {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.padding-top{
+  padding-top: 24px;
 }

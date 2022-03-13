@@ -15,18 +15,14 @@ export default function AddNewPostPage() {
     const countriesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/countries.json`);
     const countriesData = await countriesRes.json();
     const countriesArray = Object.keys(countriesData).map(key => ({ id: key, ...countriesData[key]})); // from object to array
-    console.log(countriesArray);
     setCountries(countriesArray);
 
     const citiesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/cities.json`);
     const citiesData = await citiesRes.json();
     const allCities = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key], country: countriesArray })); // from object to array
     const citiesArray = allCities.filter(city => city.countryId === country.id);
-    console.log(citiesArray);
     setCities(citiesArray);
   }
-
-  console.log(country);
 
   useEffect(() => {
     getCountries();

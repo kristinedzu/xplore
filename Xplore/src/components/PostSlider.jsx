@@ -1,7 +1,5 @@
 import {
     IonCard,
-    IonCardHeader,
-    IonCardTitle,
     IonItem,
     IonList,
     IonListHeader,
@@ -10,7 +8,6 @@ import {
     IonSlide,
     IonImg
 } from "@ionic/react";
-import { reload } from "ionicons/icons";
 import { useHistory } from "react-router-dom";
 
 export default function PostSlider({ post }) {
@@ -23,18 +20,12 @@ export default function PostSlider({ post }) {
     function goToCityView() {
         history.push(`cities/${post.city.id}`);
     }
-
-    const slideOpts = {
-        initialSlide: 0,
-        speed: 400,
-        slidesPerView: "2.5"
-      };
-      
-      const slide2Opts = {
-        initialSlide: 0,
-        speed: 400,
-        slidesPerView: 2.3,
-      };
+ 
+    const slide2Opts = {
+    initialSlide: 0,
+    speed: 400,
+    slidesPerView: 2.3,
+    };
 
     return (
         <IonList>
