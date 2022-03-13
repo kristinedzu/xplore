@@ -16,6 +16,7 @@ import AddNewPostPage from './pages/AddNewPostPage';
 import CountryPage from './pages/CountryPage';
 import CityPage from './pages/CityPage';
 import ProfilePage from './pages/ProfilePage';
+import ProfileEditPage from './pages/ProfileEditPage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 
@@ -57,6 +58,9 @@ function PrivateRoutes(){
             </Route>
             <Route path="/profilepage">
               <ProfilePage />
+            </Route>
+            <Route path="/users/:id">
+              <ProfileEditPage />
             </Route>
             <Route exact path="/">
               <Redirect to="/homepage" />

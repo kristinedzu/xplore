@@ -1,10 +1,10 @@
 import React from 'react';
 import 
-{IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar, IonItem, IonAvatar, IonLabel, IonCard, IonImg, IonCardTitle,IonCardContent, IonList, IonListHeader, IonButtons, IonButton} from '@ionic/react';
+{IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar, IonItem, IonAvatar, IonLabel, IonCard, IonImg, IonCardTitle,IonCardContent, IonList, IonListHeader} from '@ionic/react';
 import { IonSlides, IonSlide, useIonViewWillEnter } from '@ionic/react';
 import { useEffect, useState } from "react";
 import CountryItem from "../components/CountryItem";
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth} from "firebase/auth";
 
 
 export default function HomePage(){
@@ -12,9 +12,6 @@ export default function HomePage(){
   const auth = getAuth();
   let activeUser = auth.currentUser;
 
-  function signOutUser() {
-    signOut(auth);
-  }
   const [countries, setCountries] = useState([]);
   
   async function getPosts() {
@@ -83,7 +80,7 @@ export default function HomePage(){
         <IonHeader>
           <IonItem lines="none">
             <IonAvatar slot="end">
-              <IonImg src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y" />
+              <IonImg src={user.profileImg} />
             </IonAvatar>
             <IonLabel>Hi {user.firstName}!</IonLabel>
           </IonItem>
@@ -130,14 +127,6 @@ export default function HomePage(){
             </IonSlides>
           </IonItem>
         </IonList>
-        <IonList>
-          <IonItem>
-            <IonButtons>
-              <IonButton onClick={signOutUser}>Sign Out</IonButton>
-            </IonButtons>
-          </IonItem>
-        </IonList>
-        
       </IonContent>
     </IonPage>
   );
