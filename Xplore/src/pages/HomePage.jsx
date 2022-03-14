@@ -86,7 +86,7 @@ export default function HomePage(){
   const slide2Opts = {
     initialSlide: 0,
     speed: 400,
-    slidesPerView: 2.3,
+    slidesPerView: 1.1
   };
 
   return (
