@@ -1,10 +1,5 @@
 import {
     IonCard,
-    IonItem,
-    IonList,
-    IonListHeader,
-    IonLabel,
-    IonSlides,
     IonSlide,
     IonImg
 } from "@ionic/react";
@@ -17,29 +12,11 @@ export default function PostSlider({ post }) {
         history.push(`posts/${post.id}`);
     }
 
-    function goToCityView() {
-        history.push(`cities/${post.city.id}`);
-    }
- 
-    const slide2Opts = {
-    initialSlide: 0,
-    speed: 400,
-    slidesPerView: 2.3,
-    };
-
     return (
-        <IonList>
-            <IonItem lines="none">
-                <IonSlides options={slide2Opts}>
-                
-                    <IonSlide className='ion-slide'>
-                        <IonCard onClick={goToPostView}>
-                            <IonImg className="post-img" src={post.img} />
-                        </IonCard>  
-                    </IonSlide>
-                
-                </IonSlides>
-          </IonItem>
-        </IonList>
+        <IonSlide className='ion-slide'>
+            <IonCard onClick={goToPostView}>
+                <IonImg className="post-img" src={post.img} />
+            </IonCard>  
+        </IonSlide>
     );
 }

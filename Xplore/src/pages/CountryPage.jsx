@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonListHeader, IonLabel } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonListHeader, IonLabel, IonItem, IonSlides } from '@ionic/react';
 import { useEffect, useState } from "react";
 import { postsRef } from "../firebase-config";
 import { onValue } from "@firebase/database";
@@ -17,6 +17,12 @@ export default function CountryPage() {
   const params = useParams();
   const countryId = params.id;
   const history = useHistory();
+
+  const slide2Opts = {
+    initialSlide: 0,
+    speed: 400,
+    slidesPerView: 2.3,
+    };
 
 
   async function loadData() {
@@ -79,16 +85,16 @@ export default function CountryPage() {
           <IonListHeader city={city} key={city.id}>
             <IonLabel onClick={() => { history.push(`cities/${city.id}`) }}>{city.name}</IonLabel>
           </IonListHeader>
-            {posts?.filter(cityPost => cityPost.cityId == city.id)
-            .map(post => post &&
-              <PostSlider post={post} key={post.id} />
-            )}
+          <IonItem lines="none">
+            <IonSlides options={slide2Opts}>
+              {posts?.filter(cityPost => cityPost.cityId == city.id)
+              .map(post => post &&
+                <PostSlider post={post} key={post.id} />
+              )}
+            </IonSlides>
+          </IonItem>
         </IonList>
         )}
-          
-        
-        
-        
       </IonContent>
     </IonPage>
   );
