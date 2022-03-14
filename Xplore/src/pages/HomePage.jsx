@@ -5,6 +5,8 @@ import { IonSlides, IonSlide, useIonViewWillEnter } from '@ionic/react';
 import { useEffect, useState } from "react";
 import CountryItem from "../components/CountryItem";
 import { getAuth} from "firebase/auth";
+import { useHistory } from "react-router-dom";
+
 
 
 export default function HomePage(){
@@ -14,6 +16,7 @@ export default function HomePage(){
 
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
+  const history = useHistory();
   
   async function getPosts() {
     const postsRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/posts.json`);
@@ -114,7 +117,7 @@ export default function HomePage(){
               {cities.map((city, index) => {
                 return (
                   <IonSlide className='ion-slide' key={`slide_${index}`}>
-                    <IonCard className='cities-card'>
+                    <IonCard className='cities-card' onClick={() => { history.push(`cities/${city.id}`) }}>
                       <IonCardContent>
                         <IonCardTitle className='slider-card-title'>{city.name}</IonCardTitle>  
                       </IonCardContent>  
