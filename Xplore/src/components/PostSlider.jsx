@@ -29,9 +29,6 @@ export default function PostSlider({ post }) {
 
     return (
         <IonList>
-            <IonListHeader onClick={goToCityView}>
-                <IonLabel>{post.city.name}</IonLabel>
-            </IonListHeader>
             <IonItem lines="none">
                 <IonSlides options={slide2Opts}>
                 

@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonListHeader, IonLabel } from '@ionic/react';
 import { useEffect, useState } from "react";
 import { postsRef } from "../firebase-config";
 import { onValue } from "@firebase/database";
@@ -6,13 +6,18 @@ import CityItem from "../components/CityItem";
 import PostSlider from "../components/PostSlider";
 import { useParams } from "react-router";
 import { useIonViewWillEnter } from "@ionic/react";
+import { useHistory } from "react-router-dom";
+
 
 
 export default function CountryPage() {
   const [posts, setPosts] = useState([]);
   const [country, setCountry] = useState([]);
+  const [cities, setCities] = useState([]);
   const params = useParams();
   const countryId = params.id;
+  const history = useHistory();
+
 
   async function loadData() {
     //fetch country data by countryId prop
@@ -27,13 +32,13 @@ export default function CountryPage() {
     const citiesData = await citiesRes.json();
     const allCities = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key]})); // from object to array
     const citiesArray = allCities.filter(city => city.countryId == countryId);
-    return citiesArray;  
+    setCities(citiesArray); 
   }
+  console.log(cities);
 
   useIonViewWillEnter(() => {
-
+    loadData();
     async function listenOnChange() {
-      const cities = await loadData();
       onValue(postsRef, async snapshot => {
           const postsArray = [];
           snapshot.forEach(postSnapshot => {
@@ -42,8 +47,7 @@ export default function CountryPage() {
 
               const post = {
                   id,
-                  ...data,
-                  city: cities.find(city => city.id == data.cityId)
+                  ...data
               };
               postsArray.push(post);
               
@@ -70,9 +74,20 @@ export default function CountryPage() {
           </IonToolbar>
         </IonHeader>
         
-        {posts?.map(post =>  post &&
-            <PostSlider post={post} key={post.id} />
+        {cities?.map(city => city &&
+        <IonList>
+          <IonListHeader city={city} key={city.id}>
+            <IonLabel onClick={() => { history.push(`cities/${city.id}`) }}>{city.name}</IonLabel>
+          </IonListHeader>
+            {posts?.filter(cityPost => cityPost.cityId == city.id)
+            .map(post => post &&
+              <PostSlider post={post} key={post.id} />
+            )}
+        </IonList>
         )}
+          
+        
+        
         
       </IonContent>
     </IonPage>
