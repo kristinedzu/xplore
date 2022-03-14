@@ -13,6 +13,7 @@ export default function HomePage(){
   let activeUser = auth.currentUser;
 
   const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
   
   async function getPosts() {
     const postsRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/posts.json`);
@@ -31,6 +32,16 @@ export default function HomePage(){
     setCountries(countriesArray);
   }
 
+  async function getCities() {
+    const postsArray = await getPosts();
+
+    const citiesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/cities.json`);
+    const citiesData = await citiesRes.json();
+    const allCities = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key], posts: postsArray.find(post => post.cityId == key)})); // from object to array
+    const citiesArray = allCities.filter(city => city.posts != undefined);
+    setCities(citiesArray);
+  }
+
   async function getUserName() {
     const userRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/users/${activeUser.uid}.json`);
     const userData = await userRes.json();
@@ -41,6 +52,7 @@ export default function HomePage(){
 
   useEffect(() => {
     getCountries();
+    getCities();
   }, []);
 
   useIonViewWillEnter(() => {
@@ -99,12 +111,12 @@ export default function HomePage(){
           </IonListHeader>
           <IonItem lines="none">
             <IonSlides options={slideOpts}>
-              {sliderCitiesData.map((card, index) => {
+              {cities.map((city, index) => {
                 return (
                   <IonSlide className='ion-slide' key={`slide_${index}`}>
                     <IonCard className='cities-card'>
                       <IonCardContent>
-                        <IonCardTitle className='slider-card-title'>{card.name}</IonCardTitle>  
+                        <IonCardTitle className='slider-card-title'>{city.name}</IonCardTitle>  
                       </IonCardContent>  
                     </IonCard>  
                   </IonSlide>
