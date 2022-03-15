@@ -35,7 +35,6 @@ export default function CityPage() {
       });
       const postsArray = allPosts.filter(post => post.cityId == cityId);
       setPosts(postsArray.reverse()); // newest post first
-      console.log(postsArray);
   });
   }
 
@@ -44,7 +43,6 @@ export default function CityPage() {
     getPosts();
 
   }, []);
-  console.log(posts);
 
   return (
     <IonPage>
