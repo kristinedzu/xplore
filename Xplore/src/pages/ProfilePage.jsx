@@ -6,7 +6,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { useIonViewWillEnter } from '@ionic/react';
 import { useHistory } from "react-router-dom";
 import { onValue } from "@firebase/database";
-import PostListItem from '../components/PostListItem';
+import ProfileListItem from '../components/ProfileListItem';
 
 export default function ProfilePage() {
 
@@ -111,7 +111,7 @@ export default function ProfilePage() {
         </IonList>
         <IonList>
           {posts.map(post => 
-              <PostListItem post={post} key={post.id} />
+              <ProfileListItem post={post} key={post.id} />
           )}
         </IonList>
       </IonContent>

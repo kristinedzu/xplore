@@ -62,9 +62,9 @@ export default function CityPage() {
             <IonTitle size="large">{city.name}</IonTitle>
           </IonToolbar>
         </IonHeader>
-        {/* {posts.map(post => 
+        {posts.map(post => 
             <PostListItem post={post} key={post.id} />
-        )} */}
+        )}
         
       </IonContent>
     </IonPage>

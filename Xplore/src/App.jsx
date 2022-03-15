@@ -68,10 +68,7 @@ function PrivateRoutes(){
             <Route path="/countries/:id">
                 <CountryPage />
             </Route>
-            <Route path="/countries/cities/:id">
-                <CityPage />
-            </Route>
-            <Route path="/cities/:id">
+            <Route exact path="/countries/cities/:id">
                 <CityPage />
             </Route>
           </IonRouterOutlet>
