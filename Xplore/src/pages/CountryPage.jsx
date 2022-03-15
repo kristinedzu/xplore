@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonListHeader, IonLabel, IonItem, IonSlides } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonListHeader, IonLabel, IonItem, IonSlides, IonBackButton, IonButtons } from '@ionic/react';
 import { useEffect, useState } from "react";
 import { postsRef } from "../firebase-config";
 import { onValue } from "@firebase/database";
@@ -33,7 +33,7 @@ export default function CountryPage() {
   
 
  
-      // fetch cities where countryId is equal to countryId prop
+    // fetch cities where countryId is equal to countryId prop
     const citiesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/cities.json`);
     const citiesData = await citiesRes.json();
     const allCities = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key]})); // from object to array
@@ -61,8 +61,7 @@ export default function CountryPage() {
           setPosts(postsArray.reverse()); // newest post first
       });
     }
-
-  listenOnChange();
+    listenOnChange();
   }, []);
 
 
@@ -70,6 +69,9 @@ export default function CountryPage() {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+        <IonButtons slot="start">
+          <IonBackButton></IonBackButton>
+        </IonButtons>
           <IonTitle>{country.name}</IonTitle>
         </IonToolbar>
       </IonHeader>

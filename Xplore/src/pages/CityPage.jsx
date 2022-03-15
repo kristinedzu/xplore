@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton } from '@ionic/react';
 import { useState } from "react";
 import { useIonViewWillEnter } from "@ionic/react";
 import { postsRef } from "../firebase-config";
@@ -35,6 +35,7 @@ export default function CityPage() {
       });
       const postsArray = allPosts.filter(post => post.cityId == cityId);
       setPosts(postsArray.reverse()); // newest post first
+      console.log(postsArray);
   });
   }
 
@@ -49,6 +50,9 @@ export default function CityPage() {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+        <IonButtons slot="start">
+          <IonBackButton></IonBackButton>
+        </IonButtons>
           <IonTitle>{city.name}</IonTitle>
         </IonToolbar>
       </IonHeader>
