@@ -1,11 +1,10 @@
 import { IonItem, IonLabel, IonInput, IonTextarea, IonImg, IonButton, IonIcon, IonSelectOption, IonSelect } from "@ionic/react";
 import { useState, useEffect } from "react";
+import ReactStars from "react-rating-stars-component";
 
 export default function NewPostForm({ post, handleSubmit }) {
     const [countries, setCountries] = useState([]);
     const [cities, setCities] = useState([]);
-    const [text, setText] = useState();
-
   
     async function getCountries() {
       const countriesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/countries.json`);
@@ -28,6 +27,7 @@ export default function NewPostForm({ post, handleSubmit }) {
     const [body, setBody] = useState("");
     const [city, setCity] = useState("");
     const [country, setCountry] = useState("");
+    const [review, setReview] = useState("");
     const [image, setImage] = useState("");
 
     useEffect(() => {
@@ -35,15 +35,22 @@ export default function NewPostForm({ post, handleSubmit }) {
             setBody(post.body);
             setCity(post.city);
             setCountry(post.country);
+            setReview(post.review);
             setImage(post.image);
         }
     }, [post]);
 
-    function submitEvent(event) {
+    const ratingChanged = (newRating) => {
+        setReview(newRating);
+    };
+
+    async function submitEvent(event) {
         event.preventDefault();
-        const formData = { body: body, cityId: city.id, countryId: country.id, img: image };
+        const formData = { body: body, cityId: city.id, countryId: country.id, review: review, img: image };
         handleSubmit(formData);
     }
+
+    
 
     return (
         <form onSubmit={submitEvent}>
@@ -70,6 +77,15 @@ export default function NewPostForm({ post, handleSubmit }) {
             <IonItem className="input-item">
                 <IonLabel position="stacked">Image Url</IonLabel>
                 <IonInput value={image} placeholder="Place image url" onIonChange={e => setImage(e.target.value)}></IonInput>
+            </IonItem>
+            <IonItem className="input-item">
+                <IonLabel position="stacked">Rate your experience</IonLabel>
+                <ReactStars
+                    count={5}
+                    onChange={ratingChanged}
+                    size={24}
+                    activeColor="#ffd700"
+                />
             </IonItem>
 
             <div className="ion-padding">

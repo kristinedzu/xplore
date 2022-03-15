@@ -1,16 +1,13 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonLabel, IonTextarea, IonItem, IonSelect, IonSelectOption, IonButton} from '@ionic/react';
-import { useEffect, useState } from "react";
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { useHistory } from "react-router-dom";
 import NewPostForm from '../components/NewPost';
 import { push, set } from "@firebase/database";
 import { postsRef } from "../firebase-config";
 import { getAuth} from "firebase/auth";
 
-
-// import { postsRef } from "../firebase-config";
-// import { onValue } from "@firebase/database";
-// import CountryItem from "../components/CountryItem";
-
 export default function AddNewPostPage() {
+  const history = useHistory();
+
   const auth = getAuth();
   let activeUser = auth.currentUser;
   
@@ -19,6 +16,8 @@ export default function AddNewPostPage() {
 
     const newPostRef = push(postsRef);
     await set(newPostRef, newPost);
+
+    history.replace("/homepage");
   }
 
   return (

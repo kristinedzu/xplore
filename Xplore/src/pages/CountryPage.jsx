@@ -40,7 +40,6 @@ export default function CountryPage() {
     const citiesArray = allCities.filter(city => city.countryId == countryId);
     setCities(citiesArray); 
   }
-  console.log(cities);
 
   useIonViewWillEnter(() => {
     loadData();
