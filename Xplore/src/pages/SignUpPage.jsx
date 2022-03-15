@@ -14,17 +14,23 @@ import {
 } from '@ionic/react';
 
 import { getUserRef } from "../firebase-config";
+import { storage } from "../firebase-config";
 import { get, set } from "@firebase/database";
-import { cameraOutline } from 'ionicons/icons';
+import { uploadString, ref, getDownloadURL } from "@firebase/storage";
+import { add } from 'ionicons/icons';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from 'react';
 import { useHistory } from "react-router-dom";
+
+import { Camera, CameraResultType } from "@capacitor/camera";
 
 export default function SignUpPage() {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [profileImg, setProfileImg] = useState("");
+  const [profileImgFile, setProfileImgFile] = useState("");
   const auth = getAuth();
 
   const history = useHistory();
@@ -35,24 +41,26 @@ export default function SignUpPage() {
   //   lastName: lastName
   // }
 
-  function signUp(event){
+  async function signUp(event){
     event.preventDefault();
     createUserWithEmailAndPassword(auth, mail, password)
     .then((userCredential) => {
       // Signed in 
       const user = userCredential.user;
       // ...
-      //await addUser(getUserRef(user.uid), userToUpdate);
-      console.log(user.uid);
+      const userID = user.uid;
+      console.log(userID);
       //console.log(firstName);
       
-      //const db = database;
+      const profileUrl = await uploadPicture(profileImgFile, userID);
+      console.log(profileUrl);
+  
       set(getUserRef(user.uid), {
         userId: user.uid,
         firstName: firstName,
-        lastName: lastName
+        lastName: lastName,
+        profileImg: profileUrl
       });
-
     })
     .catch((error) => {
       // const errorCode = error.code;
@@ -60,6 +68,29 @@ export default function SignUpPage() {
       console.log(error);
     });
   }
+
+  async function takePicture() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      width: 80,
+      allowEditing: true,
+      resultType: CameraResultType.DataUrl
+    });
+    //let imageUrl = image.webPath;
+    setProfileImgFile(image);
+    setProfileImg(image.dataUrl);
+    // Can be set to the src of an image now
+    //ioimageElement.src = imageUrl;
+  };
+
+  async function uploadPicture(imgFile, currentUser){
+    const profileRef = ref(storage, `${currentUser}.${imgFile.format}`);
+    await uploadString(profileRef, profileImgFile.dataUrl, "data_url");
+    const url = await getDownloadURL(profileRef);
+    console.log(url);
+    return url;
+  }
+
 
   return (
     <IonPage>
@@ -78,10 +109,11 @@ export default function SignUpPage() {
             <IonItem lines="none">
               <IonImg className="ion-padding"/>
               <IonLabel>Choose Image</IonLabel>
-              <IonButton>
-                  <IonIcon slot="icon-only" icon={cameraOutline} />
+              <IonButton onClick={takePicture}>
+                  <IonIcon slot="icon-only" icon={add} />
               </IonButton>
             </IonItem>
+            {profileImg && <IonImg className="ion-padding profile-img"src={profileImg} onClick={takePicture} />}
             <IonItem>
                 <IonLabel position="stacked">First name</IonLabel>
                 <IonInput value={firstName} type="text" onIonChange={e => setFirstName(e.target.value)}></IonInput>

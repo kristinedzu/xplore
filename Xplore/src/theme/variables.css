@@ -294,3 +294,10 @@ http://ionicframework.com/docs/theming/ */
 .input-item {
   margin: 16px 0;
 }
+
+.profile-img{
+  border-radius: 100%;
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+}

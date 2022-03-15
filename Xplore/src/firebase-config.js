@@ -27,7 +27,7 @@ export const auth = initializeAuth(app, {
   persistence: indexedDBLocalPersistence
 });
 const analytics = getAnalytics(app);
-const storage = getStorage(app);
+export const storage = getStorage(app);
 //const auth = getAuth(app);
 // const storage = getStorage(firebaseApp);
 
