@@ -7,6 +7,7 @@ import {
     IonItem,
     IonAvatar
 } from "@ionic/react";
+import ReactStars from "react-rating-stars-component";
 
 
 export default function PostListItem({ post }) {
@@ -19,7 +20,11 @@ export default function PostListItem({ post }) {
                 </IonAvatar>
                 <IonLabel>
                     <h2>{post.user.firstName}</h2>
-                    <p>{post.review}</p>
+                    <ReactStars
+                        count={post.review}
+                        size={18}
+                        color="#ffd700"
+                    />
                 </IonLabel>
             </IonItem>
             <IonCardContent className="card-flex">
