@@ -71,6 +71,9 @@ function PrivateRoutes(){
             <Route path="/countries/cities/:id">
                 <CityPage />
             </Route>
+            <Route path="/cities/:id">
+                <CityPage />
+            </Route>
           </IonRouterOutlet>
           <IonTabBar className='main-nav' slot="bottom">
             <IonTabButton className='main-nav-tab' tab="Home Page" href="/homepage">
