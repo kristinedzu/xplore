@@ -36,15 +36,6 @@ export default function ProfilePage() {
     const userData = await userRes.json();
     setUser(userData);
   }
-
-  async function getPosts() {
-    const postsRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/posts.json`);
-    const postData = await postsRes.json();
-    const postsArray = postData.filter(post => post.uid == user.userId);
-    setPosts(postsArray.reverse()); // newest post first
-    console.log(postsArray);
-  };
-
   
   async function listenOnChange() {
     const cities = await loadCity();
@@ -65,15 +56,15 @@ export default function ProfilePage() {
           console.log(post);
         });
         console.log(cities);
-        setPosts(postsArray.reverse()); // newest post first
-        console.log(postsArray);
+        const userPostsArray = postsArray.filter(post => post.uid == activeUser.uid);
+        setPosts(userPostsArray.reverse()); // newest post first
+        console.log(userPostsArray);
     });
   }
 
   useIonViewWillEnter(() => {
     getUserName();
     loadCity();
-    // getPosts();
     listenOnChange();
     console.log("OnEnter");
   });
