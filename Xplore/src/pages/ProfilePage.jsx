@@ -1,7 +1,7 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonButton, IonButtons, IonLabel, IonIcon, IonChip, IonAvatar, IonImg } from '@ionic/react';
 import { postsRef } from "../firebase-config";
 import { mail, settingsOutline } from 'ionicons/icons';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { useIonViewWillEnter } from '@ionic/react';
 import { useHistory } from "react-router-dom";
@@ -27,7 +27,6 @@ export default function ProfilePage() {
     const citiesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/cities.json`);
     const citiesData = await citiesRes.json();
     const allCities = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key]})); // from object to array
-    console.log(allCities);
     return allCities;  
   }
 
@@ -44,8 +43,6 @@ export default function ProfilePage() {
         snapshot.forEach(postSnapshot => {
           const id = postSnapshot.key;
           const data = postSnapshot.val();
-          console.log(data);
-          console.log(data.cityId);
 
           const post = {
               id,
@@ -53,12 +50,9 @@ export default function ProfilePage() {
               city: cities.find(city => city.id == data.cityId)
           };
           postsArray.push(post);
-          console.log(post);
         });
-        console.log(cities);
         const userPostsArray = postsArray.filter(post => post.uid == activeUser.uid);
         setPosts(userPostsArray.reverse()); // newest post first
-        console.log(userPostsArray);
     });
   }
 
@@ -66,7 +60,6 @@ export default function ProfilePage() {
     getUserName();
     loadCity();
     listenOnChange();
-    console.log("OnEnter");
   });
 
   function goToProfileEdit() {

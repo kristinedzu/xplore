@@ -62,21 +62,6 @@ export default function HomePage(){
     getUserName();
   });
 
-  const sliderCitiesData = [
-    {
-      name: "New York"
-    },
-    {
-      name: "Warsaw"
-    },
-    {
-      name: "Aarhus"
-    },
-    {
-      name: "Barcelona"
-    }
-  ];
-
   const slideOpts = {
     initialSlide: 0,
     speed: 400,
