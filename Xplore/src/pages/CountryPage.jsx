@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonListHeader, IonLabel, IonItem, IonSlides, IonBackButton, IonButtons } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonListHeader, IonLabel, IonItem, IonSlides, IonBackButton, IonButtons, IonImg, IonItemGroup, IonCard, IonCardHeader } from '@ionic/react';
 import { useEffect, useState } from "react";
 import { postsRef } from "../firebase-config";
 import { onValue } from "@firebase/database";
@@ -71,20 +71,22 @@ export default function CountryPage() {
         <IonButtons slot="start">
           <IonBackButton></IonBackButton>
         </IonButtons>
-          <IonTitle>{country.name}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen class="ion-padding">
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">{country.name}</IonTitle>
-          </IonToolbar>
-        </IonHeader>
+
+      <IonContent fullscreen class="ion-padding country-content">
+        <IonImg className="fullscreen-img" src={country.img}></IonImg>
         
+        <IonCard class="country-header">
+          <IonCardHeader >{country.name}</IonCardHeader>
+        </IonCard>
+
+        <IonItemGroup class="country-content">
         {cities?.map(city => city &&
-        <IonList>
+        <IonList >
           <IonListHeader city={city} key={city.id}>
-            <IonLabel onClick={() => { history.push(`cities/${city.id}`) }}>{city.name}</IonLabel>
+            <IonLabel>{city.name}</IonLabel>
+            <IonButtons lines="none" class="see-all-button" onClick={() => { history.push(`cities/${city.id}`) }}>See all</IonButtons>
           </IonListHeader>
           <IonItem lines="none">
             <IonSlides options={slide2Opts}>
@@ -96,6 +98,7 @@ export default function CountryPage() {
           </IonItem>
         </IonList>
         )}
+        </IonItemGroup>
       </IonContent>
     </IonPage>
   );
