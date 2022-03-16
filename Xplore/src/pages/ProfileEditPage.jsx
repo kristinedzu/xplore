@@ -1,10 +1,10 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonButton, IonButtons, IonLabel, IonInput } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonButton, IonButtons, IonLabel, IonInput,IonBackButton } from '@ionic/react';
 import { useState } from "react";
 import { useIonViewWillEnter } from '@ionic/react';
 import { useParams } from "react-router";
 import PostForm from "../components/PostForm";
 
-export default function ProfileEditPage({dismiss, reloadEvent}) {
+export default function ProfileEditPage() {
 
   const [user, setUser] = useState([]);
   const params = useParams();
@@ -21,19 +21,22 @@ export default function ProfileEditPage({dismiss, reloadEvent}) {
     getUserName();
   });
 
-  async function updateUser(userToUpdate) {
-    const url = `https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}.json`;
-    await fetch(url, {
-        method: "PUT",
-        body: JSON.stringify({ ...user, ...userToUpdate })
-    });
-    console.log("User Updated");
-}
+    async function updateUser(userToUpdate) {
+        const url = `https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}.json`;
+        await fetch(url, {
+            method: "PUT",
+            body: JSON.stringify({ ...user, ...userToUpdate })
+        });
+        console.log("User Updated");
+    }
 
   return (
     <IonPage>
       <IonHeader>
       <IonToolbar class="ion-padding">
+      <IonButtons slot="start">
+          <IonBackButton />
+        </IonButtons>
         <IonTitle size="large">Edit your profile</IonTitle>
       </IonToolbar>
       </IonHeader>

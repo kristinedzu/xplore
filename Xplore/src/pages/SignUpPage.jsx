@@ -101,14 +101,14 @@ export default function SignUpPage() {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen class='ion-padding'>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Sign up</IonTitle>
+        <IonHeader collapse="condense" className='centered-flex'>
+        <IonImg className='logo title-toolbar' src='..\assets\icon\android-chrome-192x192.png'></IonImg>
+          <IonToolbar className='title-toolbar'>
+            <IonTitle className='home-page-title' size="large">Sign up</IonTitle>
           </IonToolbar>
         </IonHeader>
         <form onSubmit={signUp}>
-            <IonItem lines="none">
-              <IonImg className="ion-padding"/>
+            <IonItem>
               <IonLabel>Choose Image</IonLabel>
               <IonButton onClick={takePicture}>
                   <IonIcon slot="icon-only" icon={add} />
@@ -135,11 +135,12 @@ export default function SignUpPage() {
             <IonButton expand="block" class="ion-margin-top" type="submit">Sign up
               <IonRippleEffect type="unbounded"></IonRippleEffect>
             </IonButton>
-            <IonItem className="ion-text-center" lines="none">
-              <IonButton size="small" fill="clear" onClick={() => history.replace("/signinpage")}>
-                  Sign Ip
+            <IonItem className="ion-text-center padding-top" lines="none">
+                <IonLabel>If you already have an account</IonLabel>
+              </IonItem>
+              <IonButton className='centered-flex' fill="clear" onClick={() => history.replace("/loginpage")}>
+                  Log In
               </IonButton>
-            </IonItem>
         </form>
       </IonContent>
     </IonPage>

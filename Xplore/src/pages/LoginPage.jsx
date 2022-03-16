@@ -41,20 +41,25 @@ export default function LoginPage() {
 
   return (
     <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Login</IonTitle>
+        </IonToolbar>
+      </IonHeader>
       <IonContent fullscreen class='ion-padding'>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Let's start your travel!</IonTitle>
+        <IonHeader collapse="condense" className='centered-flex'>
+          <IonImg className='logo title-toolbar' src='..\assets\icon\android-chrome-192x192.png'></IonImg>
+          <IonToolbar className='title-toolbar'>
+            <IonTitle className='home-page-title' size="large">Let's start your travel!</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonList className="form-container">
           <form onSubmit={signIn}>
-              <IonItem>
+              <IonItem className='input-item'>
                   <IonLabel position="stacked">E-mail</IonLabel>
-                  <IonInput
-                    value={mail} className="input" type="email" onIonChange={e => setMail(e.target.value)}></IonInput>
+                  <IonInput value={mail} type="email" onIonChange={e => setMail(e.target.value)}></IonInput>
               </IonItem>
-              <IonItem>
+              <IonItem className='input-item'>
                   <IonLabel position="stacked">Password</IonLabel>
                   <IonInput value={password} type="Password" onIonChange={e => setPassword(e.target.value)}></IonInput>
               </IonItem>
@@ -62,11 +67,12 @@ export default function LoginPage() {
               <IonButton expand="block" class="ion-margin-top" type="submit">Sign in
                 <IonRippleEffect type="unbounded"></IonRippleEffect>
               </IonButton>
-              <IonItem className="ion-text-center" lines="none">
-                <IonButton size="small" fill="clear" onClick={() => history.replace("/signuppage")}>
-                    Sign Up
-                </IonButton>
+              <IonItem className="ion-text-center padding-top" lines="none">
+                <IonLabel>You don't have an account yet?</IonLabel>
               </IonItem>
+              <IonButton className='centered-flex' fill="clear" onClick={() => history.replace("/signuppage")}>
+                  Sign Up
+              </IonButton>
           </form>
         </IonList>
       </IonContent>

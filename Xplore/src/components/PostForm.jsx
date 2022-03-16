@@ -17,19 +17,15 @@ export default function PostForm({ user, handleSubmit }) {
         event.preventDefault();
         const userData = { firstName: firstName, lastName: lastName};
         handleSubmit(userData);
-        console.log(userData);
     }
-
-    console.log(firstName);
-    console.log(user.firstName);
     
     return (
         <form onSubmit={submitEvent}>
-                <IonItem>
+                <IonItem className="input-item">
                     <IonLabel position="stacked">First name</IonLabel>
                     <IonInput value={firstName} placeholder={user.firstName} onIonChange={e => setFirstName(e.target.value)}></IonInput>
                 </IonItem>
-                <IonItem>
+                <IonItem className="input-item">
                     <IonLabel position="stacked">Last name</IonLabel>
                     <IonInput value={lastName} onIonChange={e => setLastName(e.target.value)}></IonInput>
                 </IonItem>

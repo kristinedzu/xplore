@@ -5,6 +5,8 @@ import { IonSlides, IonSlide, useIonViewWillEnter } from '@ionic/react';
 import { useEffect, useState } from "react";
 import CountryItem from "../components/CountryItem";
 import { getAuth} from "firebase/auth";
+import { useHistory } from "react-router-dom";
+
 
 
 export default function HomePage(){
@@ -13,6 +15,8 @@ export default function HomePage(){
   let activeUser = auth.currentUser;
 
   const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
+  const history = useHistory();
   
   async function getPosts() {
     const postsRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/posts.json`);
@@ -31,6 +35,16 @@ export default function HomePage(){
     setCountries(countriesArray);
   }
 
+  async function getCities() {
+    const postsArray = await getPosts();
+
+    const citiesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/cities.json`);
+    const citiesData = await citiesRes.json();
+    const allCities = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key], posts: postsArray.find(post => post.cityId == key)})); // from object to array
+    const citiesArray = allCities.filter(city => city.posts != undefined);
+    setCities(citiesArray);
+  }
+
   async function getUserName() {
     const userRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/users/${activeUser.uid}.json`);
     const userData = await userRes.json();
@@ -41,26 +55,12 @@ export default function HomePage(){
 
   useEffect(() => {
     getCountries();
+    getCities();
   }, []);
 
   useIonViewWillEnter(() => {
     getUserName();
   });
-
-  const sliderCitiesData = [
-    {
-      name: "New York"
-    },
-    {
-      name: "Warsaw"
-    },
-    {
-      name: "Aarhus"
-    },
-    {
-      name: "Barcelona"
-    }
-  ];
 
   const slideOpts = {
     initialSlide: 0,
@@ -71,11 +71,16 @@ export default function HomePage(){
   const slide2Opts = {
     initialSlide: 0,
     speed: 400,
-    slidesPerView: 2.3,
+    slidesPerView: "auto"
   };
 
   return (
     <IonPage>
+       <IonHeader>
+        <IonToolbar>
+          <IonTitle>Home</IonTitle>
+        </IonToolbar>
+      </IonHeader>
       <IonContent fullscreen class="ion-padding">
         <IonHeader>
           <IonItem lines="none">
@@ -99,12 +104,12 @@ export default function HomePage(){
           </IonListHeader>
           <IonItem lines="none">
             <IonSlides options={slideOpts}>
-              {sliderCitiesData.map((card, index) => {
+              {cities.map((city, index) => {
                 return (
                   <IonSlide className='ion-slide' key={`slide_${index}`}>
-                    <IonCard className='cities-card'>
+                    <IonCard className='cities-card' onClick={() => { history.push(`countries/cities/${city.id}`) }}>
                       <IonCardContent>
-                        <IonCardTitle className='slider-card-title'>{card.name}</IonCardTitle>  
+                        <IonCardTitle className='slider-card-title'>{city.name}</IonCardTitle>  
                       </IonCardContent>  
                     </IonCard>  
                   </IonSlide>
