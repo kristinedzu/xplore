@@ -29,6 +29,7 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [profilePlaceholder] = useState("./public/assets/profile-placeholder-normal.png");
   const [profileImg, setProfileImg] = useState("");
   const [profileImgFile, setProfileImgFile] = useState("");
   const auth = getAuth();
@@ -44,7 +45,7 @@ export default function SignUpPage() {
   async function signUp(event){
     event.preventDefault();
     createUserWithEmailAndPassword(auth, mail, password)
-    .then((userCredential) => {
+    .then( async (userCredential) => {
       // Signed in 
       const user = userCredential.user;
       // ...

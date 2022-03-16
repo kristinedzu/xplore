@@ -10,12 +10,13 @@ import {
   IonLabel,
   IonItem,
   IonList,
-  IonImg
+  IonSelectOption,
+  IonSelect
 } from '@ionic/react';
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 export default function LoginPage() {
   const [mail, setMail] = useState("");
@@ -57,6 +58,7 @@ export default function LoginPage() {
                   <IonLabel position="stacked">Password</IonLabel>
                   <IonInput value={password} type="Password" onIonChange={e => setPassword(e.target.value)}></IonInput>
               </IonItem>
+              <p>Forgot your password? <Link to="/resetpage">Get new one!</Link></p>
               <IonButton expand="block" class="ion-margin-top" type="submit">Sign in
                 <IonRippleEffect type="unbounded"></IonRippleEffect>
               </IonButton>

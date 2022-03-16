@@ -19,6 +19,7 @@ import ProfilePage from './pages/ProfilePage';
 import ProfileEditPage from './pages/ProfileEditPage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
+import ResetPassPage from './pages/ResetPassPage';
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase-config";
@@ -98,6 +99,9 @@ function PublicRoutes(){
       </Route>
       <Route exact path="/signuppage">
         <SignUpPage />
+      </Route>
+      <Route exact path="/resetpage">
+        <ResetPassPage />
       </Route>
     </IonRouterOutlet>
   )
