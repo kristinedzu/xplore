@@ -137,15 +137,25 @@ export default function HomePage(){
           </IonListHeader>
           
           <IonItem lines="none">
-            <IonSlides options={slide2Opts}>
-              <IonSlide className='ion-slide'>
-                {countries.map((country) => {
-                    return (
-                      <CountryItem country={country} key={country.id} />  
-                    )
-                  })}
+          <IonSlides options={slide2Opts}>
+          <IonSlide className='ion-slide'>
+          {countries.map((country) => {
+              return (
+                <CountryItem country={country} key={country.id} />  
+              )
+            })}
+            </IonSlide>
+          </IonSlides>
+
+            {/* <IonSlides options={slide2Opts}>
+            {countries.map((country, index) => {
+              return (
+                <IonSlide className='ion-slide' key={`slide_${index}`}>
+                  <CountryItem country={country} key={country.id} />  
                 </IonSlide>
-            </IonSlides>
+              )
+            })}
+            </IonSlides> */}
           </IonItem>
         </IonList>
       </IonContent>
