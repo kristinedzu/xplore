@@ -16,8 +16,9 @@ export default function HomePage(){
 
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
+  const [searchValue, setSearchValue] = useState();
   const history = useHistory();
-  
+
   async function getPosts() {
     const postsRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/posts.json`);
     const postsData = await postsRes.json();
@@ -32,7 +33,16 @@ export default function HomePage(){
     const countriesData = await countriesRes.json();
     const allCountries = Object.keys(countriesData).map(key => ({ id: key, ...countriesData[key], posts: postsArray.find(post => post.countryId == key)})); // from object to array
     const countriesArray = allCountries.filter(country => country.posts != undefined);
+    const filteredCountriesArray = allCountries.filter(country => country.posts != undefined && country.name.toLowerCase().includes(searchValue));
     setCountries(countriesArray);
+    
+    
+    if(filteredCountriesArray.length == 1){
+      setCountries(filteredCountriesArray);
+    }else if(filteredCountriesArray.length == 0){
+      setCountries(countriesArray);
+    }
+    
   }
 
   async function getCities() {
@@ -50,6 +60,11 @@ export default function HomePage(){
     const userData = await userRes.json();
     console.log(userData);
     setUser(userData);
+  }
+
+  function handleInput()  {
+    setSearchValue(document.querySelector("#ion-searchbar").value)
+    getCountries();
   }
 
 
@@ -95,7 +110,7 @@ export default function HomePage(){
             <IonTitle size="large" className='home-page-title'>Let's start your travel!</IonTitle>
           </IonToolbar>
           <IonToolbar>
-            <IonSearchbar animated></IonSearchbar>
+            <IonSearchbar id='ion-searchbar' onInput={handleInput} onIonChange={handleInput} animated></IonSearchbar>
           </IonToolbar>
         </IonHeader>
         <IonList>
@@ -120,15 +135,16 @@ export default function HomePage(){
           <IonListHeader>
             <IonLabel>Most popular destinations</IonLabel>
           </IonListHeader>
+          
           <IonItem lines="none">
             <IonSlides options={slide2Opts}>
-            {countries.map((country, index) => {
-              return (
-                <IonSlide className='ion-slide' key={`slide_${index}`}>
-                  <CountryItem country={country} key={country.id} />  
+              <IonSlide className='ion-slide'>
+                {countries.map((country) => {
+                    return (
+                      <CountryItem country={country} key={country.id} />  
+                    )
+                  })}
                 </IonSlide>
-              )
-            })}
             </IonSlides>
           </IonItem>
         </IonList>
