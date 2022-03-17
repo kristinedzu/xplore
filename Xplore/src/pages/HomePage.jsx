@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import CountryItem from "../components/CountryItem";
 import { getAuth} from "firebase/auth";
 import { useHistory } from "react-router-dom";
+import { get } from "@firebase/database";
+import { getUserRef } from "../firebase-config";
 
 
 
@@ -17,6 +19,8 @@ export default function HomePage(){
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const [searchValue, setSearchValue] = useState();
+  const [firstName, setFirstName] = useState();
+  const [profileImg, setProfileImg] = useState();
   const history = useHistory();
 
   async function getPosts() {
@@ -56,7 +60,7 @@ export default function HomePage(){
   }
 
   async function getUserName() {
-    const userRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/users/${activeUser.uid}.json`);
+    const userRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/users/${user.uid}.json`);
     const userData = await userRes.json();
     console.log(userData);
     setUser(userData);
@@ -67,13 +71,28 @@ export default function HomePage(){
     getCountries();
   }
 
-
   useEffect(() => {
-    getCountries();
-    getCities();
-  }, []);
+
+    setUser(activeUser);
+
+    async function getUserDataFromDB() {
+      const snapshot = await get(getUserRef(user.uid));
+      const userData = snapshot.val();
+      if (userData) {
+        setFirstName(userData.firstName);
+        setProfileImg(userData.profileImg);
+        console.log(userData);
+      }
+    }
+
+    if (user) getUserDataFromDB();
+
+  }, [activeUser, user]);
 
   useIonViewWillEnter(() => {
+    
+    getCountries();
+    getCities();
     getUserName();
   });
 
@@ -100,9 +119,9 @@ export default function HomePage(){
         <IonHeader>
           <IonItem lines="none">
             <IonAvatar slot="end">
-              <IonImg src={user.profileImg} />
+              <IonImg src={profileImg} />
             </IonAvatar>
-            <IonLabel>Hi {user.firstName}!</IonLabel>
+            <IonLabel>Hi {firstName}!</IonLabel>
           </IonItem>
         </IonHeader>
         <IonHeader collapse="condense">

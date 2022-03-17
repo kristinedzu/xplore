@@ -9,7 +9,7 @@ import {
 import ReactStars from "react-rating-stars-component";
 
 
-export default function PostListItem({ post }) {
+export default function ProfileListItem({ post }) {
     return (
         <IonCard>
             <IonImg className="post-img-profile" src={post.img} />
