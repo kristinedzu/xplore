@@ -352,3 +352,7 @@ http://ionicframework.com/docs/theming/ */
   padding: 5px;
   margin: 155px auto 20px auto;
 }
+
+.country-card-header {
+  padding: 8px 20px;
+}

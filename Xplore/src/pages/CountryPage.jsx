@@ -78,7 +78,7 @@ export default function CountryPage() {
         <IonImg className="fullscreen-img" src={country.img}></IonImg>
         
         <IonCard class="country-header">
-          <IonCardHeader >{country.name}</IonCardHeader>
+          <IonCardHeader className='country-card-header'>{country.name}</IonCardHeader>
         </IonCard>
 
         <IonItemGroup class="country-content">
