@@ -33,11 +33,6 @@ export default function AddNewPostPage() {
     });
   }
 
-  Toast.show({
-    text: "Your post is created!",
-    position: "center"
-  });
-
   async function uploadImage(imgFile, postKey){
     const imageRef = ref(storage, `${postKey}.${imgFile.format}`);
     await uploadString(imageRef, imgFile.dataUrl, "data_url");
