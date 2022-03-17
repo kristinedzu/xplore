@@ -1,6 +1,8 @@
 import { IonItem, IonLabel, IonInput, IonTextarea, IonImg, IonButton, IonIcon, IonSelectOption, IonSelect } from "@ionic/react";
 import { useState, useEffect } from "react";
 import ReactStars from "react-rating-stars-component";
+import { Camera, CameraResultType } from "@capacitor/camera";
+import { add } from 'ionicons/icons';
 
 export default function NewPostForm({ post, handleSubmit }) {
     const [countries, setCountries] = useState([]);
@@ -29,6 +31,7 @@ export default function NewPostForm({ post, handleSubmit }) {
     const [country, setCountry] = useState("");
     const [review, setReview] = useState("");
     const [image, setImage] = useState("");
+    const [imageFile, setImageFile] = useState("");
 
     useEffect(() => {
         if (post) {
@@ -36,7 +39,7 @@ export default function NewPostForm({ post, handleSubmit }) {
             setCity(post.city);
             setCountry(post.country);
             setReview(post.review);
-            setImage(post.image);
+            setImage(post.img);
         }
     }, [post]);
 
@@ -46,14 +49,37 @@ export default function NewPostForm({ post, handleSubmit }) {
 
     async function submitEvent(event) {
         event.preventDefault();
-        const formData = { body: body, cityId: city.id, countryId: country.id, review: review, img: image };
+        const formData = { body: body, cityId: city.id, countryId: country.id, review: review, img: imageFile };
         handleSubmit(formData);
     }
 
+    async function takePicture() {
+        const image = await Camera.getPhoto({
+          quality: 90,
+          width: 80,
+          allowEditing: true,
+          resultType: CameraResultType.DataUrl
+        });
+        //let imageUrl = image.webPath;
+        setImageFile(image);
+        setImage(image.dataUrl);
+        // Can be set to the src of an image now
+        //ioimageElement.src = imageUrl;
+      };
     
 
     return (
         <form onSubmit={submitEvent}>
+            {/* <IonItem className="input-item">
+                <IonLabel position="stacked">Upload image</IonLabel>
+                <IonInput value={image} placeholder="Place image url" onIonChange={e => setImage(e.target.value)}></IonInput>
+            </IonItem> */}
+            <IonItem lines="none">
+                {image && <IonImg className="ion-padding preview-img"src={image} onClick={takePicture} />}
+                <IonButton onClick={takePicture}>
+                    <IonIcon slot="icon-only" icon={add} />
+                </IonButton>
+            </IonItem>
             <IonItem className="input-item">
                 <IonLabel position="floating">Country</IonLabel>
                 <IonSelect value={country} placeholder="Select Country" onIonChange={e => setCountry(e.target.value)}>
@@ -73,10 +99,6 @@ export default function NewPostForm({ post, handleSubmit }) {
             <IonItem className="input-item">
                 <IonLabel position="stacked">Description</IonLabel>
                 <IonTextarea value={body} placeholder="Your review destinations" onIonChange={e => setBody(e.target.value)}></IonTextarea>
-            </IonItem>
-            <IonItem className="input-item">
-                <IonLabel position="stacked">Image Url</IonLabel>
-                <IonInput value={image} placeholder="Place image url" onIonChange={e => setImage(e.target.value)}></IonInput>
             </IonItem>
             <IonItem className="input-item">
                 <IonLabel position="stacked">Rate your experience</IonLabel>
