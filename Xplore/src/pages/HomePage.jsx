@@ -48,7 +48,7 @@ export default function HomePage(){
     }else if(filteredCountriesArray.length == 0){
       setCountries(countriesArray);
     }
-    
+    dismissLoader();
   }
 
   async function getCities() {
