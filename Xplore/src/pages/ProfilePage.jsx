@@ -116,12 +116,6 @@ export default function ProfilePage() {
           <IonItem lines="none">
             <IonLabel>{lastName}</IonLabel>
           </IonItem>
-          <IonItem lines="none">
-            <IonChip>
-              <IonIcon color="primary" icon={mail} />
-              {/* <IonLabel color="secondary">{activeUser.email}</IonLabel> */}
-            </IonChip>
-          </IonItem>
           <IonItem className='padding-top'>
           <h3>Your Posts</h3>
           </IonItem>

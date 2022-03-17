@@ -359,6 +359,17 @@ http://ionicframework.com/docs/theming/ */
   object-fit: cover;
 }
 
+.post-list-item {
+  --padding-start: 0;
+}
+
+.profile-list-item {
+  --padding-start: 0;
+}
+
+.profile-stars{
+  padding-left: 16px;
+}
 /* country & cities page styling */
 
 .country-header {
