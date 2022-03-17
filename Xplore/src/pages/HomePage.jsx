@@ -141,7 +141,7 @@ export default function HomePage(){
               {cities.map((city, index) => {
                 return (
                   <IonSlide className='ion-slide' key={`slide_${index}`}>
-                    <IonCard className='cities-card' onClick={() => { history.push(`countries/cities/${city.id}`) }}>
+                    <IonCard className='cities-card' onClick={() => { history.push(`/cities/${city.id}`) }}>
                       <IonCardContent>
                         <IonCardTitle className='slider-card-title'>{city.name}</IonCardTitle>  
                       </IonCardContent>  
