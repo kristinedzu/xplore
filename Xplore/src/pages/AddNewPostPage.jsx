@@ -5,7 +5,7 @@ import { push, set } from "@firebase/database";
 import { postsRef, storage } from "../firebase-config";
 import { getAuth} from "firebase/auth";
 import { uploadString, ref, getDownloadURL } from "@firebase/storage";
-// import { Toast } from "@capacitor/toast";
+import { Toast } from "@capacitor/toast";
 
 export default function AddNewPostPage() {
   const history = useHistory();
@@ -27,11 +27,16 @@ export default function AddNewPostPage() {
     dismissLoader();
 
 
-    // await Toast.show({
-    //   text: "Your post is created!",
-    //   position: "center"
-    // });
+    await Toast.show({
+      text: "Your post is created!",
+      position: "center"
+    });
   }
+
+  Toast.show({
+    text: "Your post is created!",
+    position: "center"
+  });
 
   async function uploadImage(imgFile, postKey){
     const imageRef = ref(storage, `${postKey}.${imgFile.format}`);
