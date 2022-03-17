@@ -75,8 +75,10 @@ export default function CountryPage() {
       </IonHeader>
 
       <IonContent fullscreen class="ion-padding country-content">
-        <IonImg className="fullscreen-img" src={country.img}></IonImg>
-        
+      <IonItemGroup class="header-photo">
+        <IonImg class="fullscreen-img" src={country.img}></IonImg>
+      </IonItemGroup>
+
         <IonCard class="country-header">
           <IonCardHeader className='country-card-header'>{country.name}</IonCardHeader>
         </IonCard>
@@ -86,7 +88,7 @@ export default function CountryPage() {
         <IonList >
           <IonListHeader city={city} key={city.id}>
             <IonLabel>{city.name}</IonLabel>
-            <IonButtons lines="none" class="see-all-button" onClick={() => { history.push(`cities/${city.id}`) }}>See all</IonButtons>
+            <IonButtons lines="none" class="see-all-button" onClick={() => { history.push(`/cities/${city.id}`) }}>See all</IonButtons>
           </IonListHeader>
           <IonItem lines="none">
             <IonSlides options={slide2Opts}>

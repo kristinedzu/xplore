@@ -33,6 +33,7 @@ export const storage = getStorage(app);
 
 export const database = getDatabase(app);
 export const postsRef = ref(database, "posts");
+export const citiesRef = ref(database, "cities");
 export const usersRef = ref(database, "users");
 
 export function getUserRef(userId) {

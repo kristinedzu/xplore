@@ -335,10 +335,17 @@ http://ionicframework.com/docs/theming/ */
   padding-right: 20px;
 }
 
-.fullscreen-img {
+.header-photo {
   position: absolute;
   top: 0;
   left: 0;
+  height: 500px;
+}
+
+.fullscreen-img {
+  height: 255px;
+  width: 100vw;
+  object-fit: cover;
 }
 
 /* country & cities page styling */

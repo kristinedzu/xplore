@@ -3,10 +3,11 @@ import { useState, useEffect } from "react";
 import ReactStars from "react-rating-stars-component";
 import { Camera, CameraResultType } from "@capacitor/camera";
 import { add } from 'ionicons/icons';
+import { citiesRef } from "../firebase-config";
+import { push, set } from "@firebase/database";
 
 export default function NewPostForm({ post, handleSubmit }) {
     const [countries, setCountries] = useState([]);
-    const [cities, setCities] = useState([]);
   
     async function getCountries() {
       const countriesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/countries.json`);
@@ -18,7 +19,7 @@ export default function NewPostForm({ post, handleSubmit }) {
       const citiesData = await citiesRes.json();
       const allCities = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key], country: countriesArray })); // from object to array
       const citiesArray = allCities.filter(city => city.countryId === country.id);
-      setCities(citiesArray);
+      return citiesArray;
     }
   
     useEffect(() => {
@@ -36,8 +37,8 @@ export default function NewPostForm({ post, handleSubmit }) {
     useEffect(() => {
         if (post) {
             setBody(post.body);
-            setCity(post.city);
             setCountry(post.country);
+            setCity(post.city);
             setReview(post.review);
             setImage(post.img);
         }
@@ -49,8 +50,29 @@ export default function NewPostForm({ post, handleSubmit }) {
 
     async function submitEvent(event) {
         event.preventDefault();
-        const formData = { body: body, cityId: city.id, countryId: country.id, review: review, img: imageFile };
-        handleSubmit(formData);
+
+        const data = await getCountries();
+        const findCity = data.find(thisCity => thisCity.name == city);
+        if(findCity) {
+            const cityId = findCity.id;
+            const formData = { body: body, cityId: cityId, countryId: country.id, review: review, img: imageFile };
+            handleSubmit(formData);
+        } else {
+            const newCity = { countryId: country.id, name: city };
+
+            async function addCity(newCity) {
+
+                const newCityRef = push(citiesRef);
+                await set(newCityRef, newCity);
+            }
+
+            addCity(newCity);
+            
+            const createdCityData = await getCountries();
+            const createdCity = createdCityData.find(thisCity => thisCity.name == city);
+            const formData = { body: body, cityId: createdCity.id, countryId: country.id, review: review, img: imageFile };
+            handleSubmit(formData);
+        }
     }
 
     async function takePicture() {
@@ -89,13 +111,9 @@ export default function NewPostForm({ post, handleSubmit }) {
                 </IonSelect>
             </IonItem>
             <IonItem className="input-item">
-                <IonLabel position="floating">City</IonLabel>
-                <IonSelect value={city} placeholder="Select City" onIonFocus={getCountries} onIonChange={e => setCity(e.target.value)}>
-                    {cities.map(city =>  
-                        <IonSelectOption key={city.id} value={city}>{city.name}</IonSelectOption>
-                    )}
-                </IonSelect>
-            </IonItem>          
+                <IonLabel position="stacked">City</IonLabel>
+                <IonInput value={city} placeholder="Type city" onIonChange={e => setCity(e.target.value)}></IonInput>
+            </IonItem>           
             <IonItem className="input-item">
                 <IonLabel position="stacked">Description</IonLabel>
                 <IonTextarea value={body} placeholder="Your review destinations" onIonChange={e => setBody(e.target.value)}></IonTextarea>
