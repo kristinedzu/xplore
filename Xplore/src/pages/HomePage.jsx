@@ -1,6 +1,6 @@
 import React from 'react';
 import 
-{IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar, IonItem, IonAvatar, IonLabel, IonCard, IonImg, IonCardTitle,IonCardContent, IonList, IonListHeader} from '@ionic/react';
+{IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar, IonItem, IonAvatar, IonLabel, IonCard, IonImg, IonCardTitle,IonCardContent, IonList, IonListHeader, useIonLoading } from '@ionic/react';
 import { IonSlides, IonSlide, useIonViewWillEnter } from '@ionic/react';
 import { useEffect, useState } from "react";
 import CountryItem from "../components/CountryItem";
@@ -13,6 +13,7 @@ import { getUserRef } from "../firebase-config";
 
 export default function HomePage(){
   const [user, setUser] = useState([]);
+  const [showLoader, dismissLoader] = useIonLoading();
   const auth = getAuth();
   let activeUser = auth.currentUser;
 
@@ -31,6 +32,7 @@ export default function HomePage(){
   }
 
   async function getCountries() {
+    showLoader();
     const postsArray = await getPosts();
 
     const countriesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/countries.json`);
@@ -46,7 +48,7 @@ export default function HomePage(){
     }else if(filteredCountriesArray.length == 0){
       setCountries(countriesArray);
     }
-    
+    dismissLoader();
   }
 
   async function getCities() {
@@ -90,10 +92,10 @@ export default function HomePage(){
   }, [activeUser, user]);
 
   useIonViewWillEnter(() => {
-    
     getCountries();
     getCities();
     getUserName();
+
   });
 
   const slideOpts = {
