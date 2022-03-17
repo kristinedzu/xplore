@@ -1,6 +1,6 @@
 import React from 'react';
 import 
-{IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar, IonItem, IonAvatar, IonLabel, IonCard, IonImg, IonCardTitle,IonCardContent, IonList, IonListHeader, useIonLoading } from '@ionic/react';
+{IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar, IonItem,IonBackButton, IonList, IonButtons, useIonLoading } from '@ionic/react';
 import { IonSlides, IonSlide, useIonViewWillEnter } from '@ionic/react';
 import { useEffect, useState } from "react";
 import CountryItem from "../components/CountryItem";
@@ -11,15 +11,15 @@ import { getUserRef } from "../firebase-config";
 
 
 
-export default function HomePage(){
+export default function SearchPage(){
   const [user, setUser] = useState([]);
-  const [showLoader, dismissLoader] = useIonLoading();
   const auth = getAuth();
   let activeUser = auth.currentUser;
 
-  
+  const [searchedCountries, setSearchedCountries] = useState([]);
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
+  const [searchValue, setSearchValue] = useState();
   const [firstName, setFirstName] = useState();
   const [profileImg, setProfileImg] = useState();
   const history = useHistory();
@@ -32,16 +32,23 @@ export default function HomePage(){
   }
 
   async function getCountries() {
-    showLoader();
+    // showLoader();
     const postsArray = await getPosts();
 
     const countriesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/countries.json`);
     const countriesData = await countriesRes.json();
     const allCountries = Object.keys(countriesData).map(key => ({ id: key, ...countriesData[key], posts: postsArray.find(post => post.countryId == key)})); // from object to array
     const countriesArray = allCountries.filter(country => country.posts != undefined);
-    dismissLoader();
-    setCountries(countriesArray);
-    
+    const filteredCountriesArray = allCountries.filter(country => country.posts != undefined && country.name.toLowerCase().includes(searchValue));
+    setSearchedCountries(countriesArray);
+    // dismissLoader();
+
+    if(filteredCountriesArray.length == 1){
+        setSearchedCountries(filteredCountriesArray);
+    }else if(filteredCountriesArray.length == 0){
+        setSearchedCountries(countriesArray);
+    }
+
   }
 
   async function getCities() {
@@ -54,10 +61,9 @@ export default function HomePage(){
     setCities(citiesArray);
   }
 
-  async function getUserName() {
-    const userRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/users/${user.uid}.json`);
-    const userData = await userRes.json();
-    setUser(userData);
+  function handleInput()  {
+    setSearchValue(document.querySelector("#ion-search").value)
+    getCountries();
   }
 
   useEffect(() => {
@@ -78,92 +84,37 @@ export default function HomePage(){
   }, [activeUser, user]);
 
   useIonViewWillEnter(() => {
-    
     getCountries();
     getCities();
-    getUserName();
   });
-
-  const slideOpts = {
-    initialSlide: 0,
-    speed: 400,
-    slidesPerView: "2.5"
-  };
-  
-  const slide2Opts = {
-    initialSlide: 0,
-    speed: 400,
-    slidesPerView: "auto"
-  };
 
   return (
     <IonPage>
        <IonHeader>
         <IonToolbar>
-          <IonTitle>Home</IonTitle>
+          <IonTitle>Search</IonTitle>
+          <IonButtons slot="start">
+          <IonBackButton></IonBackButton>
+        </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen class="ion-padding">
-        <IonHeader>
-          <IonItem lines="none">
-            <IonAvatar slot="end">
-              <IonImg src={profileImg} />
-            </IonAvatar>
-            <IonLabel>Hi {firstName}!</IonLabel>
-          </IonItem>
-        </IonHeader>
         <IonHeader collapse="condense">
           <IonToolbar className='title-toolbar'>
-            <IonTitle size="large" className='home-page-title'>Let's start your travel!</IonTitle>
+            <IonTitle size="large" className='home-page-title'>Search for countries</IonTitle>
           </IonToolbar>
           <IonToolbar>
-            <IonSearchbar id='ion-searchbar'onClick={() => { history.push(`searchpage`) }} animated></IonSearchbar>
+            <IonSearchbar id='ion-search' onInput={handleInput} onIonChange={handleInput} animated></IonSearchbar>
           </IonToolbar>
         </IonHeader>
         <IonList>
-          <IonListHeader>
-            <IonLabel>Cities worth visting</IonLabel>
-          </IonListHeader>
-          <IonItem lines="none">
-            <IonSlides options={slideOpts}>
-              {cities.map((city, index) => {
+            {searchedCountries.map((country,index) => {
                 return (
-                  <IonSlide className='ion-slide' key={`slide_${index}`}>
-                    <IonCard className='cities-card' onClick={() => { history.push(`/cities/${city.id}`) }}>
-                      <IonCardContent>
-                        <IonCardTitle className='slider-card-title'>{city.name}</IonCardTitle>  
-                      </IonCardContent>  
-                    </IonCard>  
-                  </IonSlide>
+                    <IonItem lines="none" key={`slide_${index}`}>
+                        <CountryItem country={country} key={country.id} /> 
+                    </IonItem>
                 )
-              })}
-            </IonSlides>
-          </IonItem>
-          <IonListHeader>
-            <IonLabel>Most popular destinations</IonLabel>
-          </IonListHeader>
-          
-          <IonItem lines="none">
-          <IonSlides options={slide2Opts}>
-            {countries.map((country, index) => {
-                return (
-                  <IonSlide className='ion-slide' key={`slide_${index}`}>
-                    <CountryItem country={country} key={country.id} /> 
-                  </IonSlide> 
-                )
-              })}
-          </IonSlides>
-
-            {/* <IonSlides options={slide2Opts}>
-            {countries.map((country, index) => {
-              return (
-                <IonSlide className='ion-slide' key={`slide_${index}`}>
-                  <CountryItem country={country} key={country.id} />  
-                </IonSlide>
-              )
             })}
-            </IonSlides> */}
-          </IonItem>
         </IonList>
       </IonContent>
     </IonPage>

@@ -20,6 +20,7 @@ import ProfileEditPage from './pages/ProfileEditPage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import ResetPassPage from './pages/ResetPassPage';
+import SearchPage from './pages/SearchPage';
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase-config";
@@ -71,6 +72,9 @@ function PrivateRoutes(){
             </Route>
             <Route  path="/cities/:id">
                 <CityPage />
+            </Route>
+            <Route  path="/searchpage">
+                <SearchPage />
             </Route>
           </IonRouterOutlet>
           <IonTabBar className='main-nav' slot="bottom">
