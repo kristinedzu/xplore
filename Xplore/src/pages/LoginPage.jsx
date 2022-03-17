@@ -11,7 +11,8 @@ import {
   IonItem,
   IonList,
   IonSelectOption,
-  IonSelect
+  IonSelect,
+  IonImg
 } from '@ionic/react';
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";

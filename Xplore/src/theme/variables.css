@@ -328,3 +328,10 @@ http://ionicframework.com/docs/theming/ */
 .logo {
   width: 80px;
 }
+
+.preview-img{
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px 10px 10px 10px;
+}
