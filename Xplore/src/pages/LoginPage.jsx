@@ -14,8 +14,10 @@ import {
 } from '@ionic/react';
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory, Link } from "react-router-dom";
+
+import { SplashScreen } from '@capacitor/splash-screen';
 
 export default function LoginPage() {
   const [mail, setMail] = useState("");
@@ -37,6 +39,17 @@ export default function LoginPage() {
       // ..
     });
   }
+
+  async function screen(){
+    await SplashScreen.show({
+      showDuration: 2000,
+      autoHide: true
+    });
+  }
+
+  useEffect(() => {
+    screen();
+  }, []);
 
   return (
     <IonPage>

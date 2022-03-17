@@ -10,7 +10,9 @@ import {
   IonLabel,
   IonItem,
   IonIcon,
-  IonImg
+  IonImg,
+  IonGrid,
+  IonRow
 } from '@ionic/react';
 
 import { getUserRef } from "../firebase-config";
@@ -108,13 +110,17 @@ export default function SignUpPage() {
           </IonToolbar>
         </IonHeader>
         <form onSubmit={signUp}>
-            <IonItem>
-              <IonLabel>Choose Image</IonLabel>
-              <IonButton onClick={takePicture}>
-                  <IonIcon slot="icon-only" icon={add} />
-              </IonButton>
-            </IonItem>
-            {profileImg && <IonImg className="ion-padding profile-img"src={profileImg} onClick={takePicture} />}
+            <IonGrid>
+              <IonRow class='ion-justify-content-center'>
+                <IonItem>
+                {profileImg ? <IonImg className="profile-img" src={profileImg} onClick={takePicture}/> : <IonImg className="ion-padding profile-img" src='..\assets\profile-placeholder-normal.png' onClick={takePicture}/>}
+                <IonButton className="add-pic" onClick={takePicture}>
+                    <IonIcon slot="icon-only" icon={add} />
+                </IonButton>
+              </IonItem>
+              </IonRow>
+            </IonGrid>
+            
             <IonItem>
                 <IonLabel position="stacked">First name</IonLabel>
                 <IonInput value={firstName} type="text" onIonChange={e => setFirstName(e.target.value)}></IonInput>

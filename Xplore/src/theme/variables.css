@@ -300,11 +300,22 @@ http://ionicframework.com/docs/theming/ */
   margin: 16px 0;
 }
 
+.item-center{
+  text-align: center;
+}
+
 .profile-img {
-  border-radius: 100%;
+  border-radius: 50% !important;
   width: 140px;
   height: 140px;
   object-fit: cover;
+  overflow: hidden;
+}
+
+.add-pic{
+  position: absolute;
+  right: 5px;
+  bottom: 20px;
 }
 
 .card-flex {
