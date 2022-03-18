@@ -339,6 +339,10 @@ http://ionicframework.com/docs/theming/ */
   width: 80px;
 }
 
+.logo-sm {
+  width: 40px;
+}
+
 .see-all-button {
   font-weight: 500;
   font-size: 16px;

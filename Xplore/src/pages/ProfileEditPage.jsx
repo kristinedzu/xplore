@@ -32,7 +32,7 @@ export default function ProfileEditPage() {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent>
       <IonToolbar class="ion-padding">
       <IonButtons slot="start">
           <IonBackButton />

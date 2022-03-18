@@ -53,7 +53,7 @@ export default function LoginPage() {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent>
         <IonToolbar>
           <IonTitle>Login</IonTitle>
         </IonToolbar>
@@ -75,7 +75,7 @@ export default function LoginPage() {
                   <IonLabel position="stacked">Password</IonLabel>
                   <IonInput value={password} type="Password" onIonChange={e => setPassword(e.target.value)}></IonInput>
               </IonItem>
-              <p>Forgot your password? <Link to="/resetpage">Get new one!</Link></p>
+              <p class="ion-padding-horizontal">Forgot your password? <Link to="/resetpage">Get new one!</Link></p>
               <IonButton expand="block" class="ion-margin-top" type="submit">Sign in
                 <IonRippleEffect type="unbounded"></IonRippleEffect>
               </IonButton>

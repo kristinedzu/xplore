@@ -90,7 +90,7 @@ export default function SearchPage(){
 
   return (
     <IonPage>
-       <IonHeader>
+       <IonHeader translucent>
         <IonToolbar>
           <IonTitle>Search</IonTitle>
           <IonButtons slot="start">

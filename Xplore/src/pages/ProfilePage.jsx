@@ -92,7 +92,7 @@ export default function ProfilePage() {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent>
       <IonToolbar class="ion-padding">
       <IonTitle>Profile</IonTitle>
         <IonButtons slot="primary">

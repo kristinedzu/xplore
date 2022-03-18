@@ -98,7 +98,7 @@ export default function HomePage(){
 
   return (
     <IonPage>
-       <IonHeader>
+       <IonHeader translucent>
         <IonToolbar>
           <IonTitle>Home</IonTitle>
         </IonToolbar>

@@ -66,7 +66,7 @@ export default function CountryPage() {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent>
         <IonToolbar>
         <IonButtons slot="start">
           <IonBackButton></IonBackButton>
