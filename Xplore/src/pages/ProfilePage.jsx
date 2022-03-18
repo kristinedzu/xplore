@@ -116,7 +116,7 @@ export default function ProfilePage() {
           <IonItem lines="none">
             <IonLabel>{lastName}</IonLabel>
           </IonItem>
-          <IonItem className='padding-top'>
+          <IonItem className='padding-top' lines='none'>
           <h3>Your Posts</h3>
           </IonItem>
         </IonList>

@@ -6,6 +6,12 @@ import { add } from 'ionicons/icons';
 import { citiesRef } from "../firebase-config";
 import { push, set } from "@firebase/database";
 
+const customActionSheetOptions = {
+    header: 'Countries',
+    subHeader: 'Select the country that you have been to'
+};
+
+
 export default function NewPostForm({ post, handleSubmit }) {
     const [countries, setCountries] = useState([]);
   
@@ -87,8 +93,9 @@ export default function NewPostForm({ post, handleSubmit }) {
         setImage(image.dataUrl);
         // Can be set to the src of an image now
         //ioimageElement.src = imageUrl;
-      };
+    };
     
+    console.log(countries);
 
     return (
         <form onSubmit={submitEvent}>
@@ -104,7 +111,7 @@ export default function NewPostForm({ post, handleSubmit }) {
             </IonItem>
             <IonItem className="input-item">
                 <IonLabel position="floating">Country</IonLabel>
-                <IonSelect value={country} placeholder="Select Country" onIonChange={e => setCountry(e.target.value)}>
+                <IonSelect interface="action-sheet" interfaceOptions={customActionSheetOptions} value={country} placeholder="Select Country" onIonChange={e => setCountry(e.target.value)}>
                     {countries.map(country =>  
                         <IonSelectOption key={country.id} value={country}>{country.name}</IonSelectOption>
                     )}
