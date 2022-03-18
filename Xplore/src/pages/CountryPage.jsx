@@ -30,7 +30,6 @@ export default function CountryPage() {
     const countryRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/countries/${countryId}.json`);
     const countryData = await countryRes.json();
     setCountry(countryData);
-  
 
  
     // fetch cities where countryId is equal to countryId prop
@@ -52,7 +51,8 @@ export default function CountryPage() {
 
               const post = {
                   id,
-                  ...data
+                  ...data,
+                  city: cities.find(city => city.id == data.cityId)
               };
               postsArray.push(post);
               

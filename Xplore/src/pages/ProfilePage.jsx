@@ -1,6 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonButton, IonButtons, IonLabel, IonIcon, IonChip, IonAvatar, IonImg } from '@ionic/react';
 import { postsRef } from "../firebase-config";
-import { mail, settingsOutline } from 'ionicons/icons';
+import { settingsOutline } from 'ionicons/icons';
 import { useState, useEffect } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { useIonViewWillEnter } from '@ionic/react';
@@ -32,6 +32,7 @@ export default function ProfilePage() {
     const citiesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/cities.json`);
     const citiesData = await citiesRes.json();
     const allCities = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key]})); // from object to array
+    setCity(allCities);
     return allCities;  
   }
 
