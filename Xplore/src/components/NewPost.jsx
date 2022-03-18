@@ -78,7 +78,7 @@ export default function NewPostForm({ post, handleSubmit }) {
     async function takePicture() {
         const image = await Camera.getPhoto({
           quality: 90,
-          width: 80,
+          width: 500,
           allowEditing: true,
           resultType: CameraResultType.DataUrl
         });
