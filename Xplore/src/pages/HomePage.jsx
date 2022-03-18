@@ -9,10 +9,10 @@ import { useHistory } from "react-router-dom";
 import { get } from "@firebase/database";
 import { getUserRef } from "../firebase-config";
 
-
-
 export default function HomePage(){
   const [user, setUser] = useState([]);
+  //const [placeholder, setPlaceholder] = useState("");
+  //console.log(placeholder);
   const [showLoader, dismissLoader] = useIonLoading();
   const auth = getAuth();
   let activeUser = auth.currentUser;

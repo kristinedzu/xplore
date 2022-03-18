@@ -296,6 +296,10 @@ http://ionicframework.com/docs/theming/ */
   padding-bottom: 16px;
 }
 
+.form-container{
+  margin-top: 16px;
+}
+
 .input-item {
   margin: 16px 0;
 }
@@ -310,6 +314,17 @@ http://ionicframework.com/docs/theming/ */
   height: 140px;
   object-fit: cover;
   overflow: hidden;
+}
+
+.post-img-preview{
+  width: 100%;
+  object-fit: cover;
+}
+
+.img-space{
+  width: 100%;
+  height: 170px;
+  border-radius: 12px;
 }
 
 .add-pic{

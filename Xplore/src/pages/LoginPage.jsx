@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 import { useHistory, Link } from "react-router-dom";
 
 import { SplashScreen } from '@capacitor/splash-screen';
+import { Toast } from "@capacitor/toast";
 
 export default function LoginPage() {
   const [mail, setMail] = useState("");
@@ -33,9 +34,28 @@ export default function LoginPage() {
       const user = userCredential.user;
       // ...
     })
-    .catch((error) => {
-      const errorCode = error.code;
+    .catch(async (error) => {
+      //const errorCode = error.code;
       const errorMessage = error.message;
+      if(error.code === "auth/invalid-email"){
+        await Toast.show({
+          text: "The password you entered is invalid.",
+          position: "center"
+        });
+      } else if(error.code === "auth/wrong-password"){
+        await Toast.show({
+          text: "The password does not match to this user.",
+          position: "center"
+        });
+      } else if(error.code === "auth/user-not-found"){
+        await Toast.show({
+          text: "We couldn't find a user with this email.",
+          position: "center"
+        });
+      }
+      console.log(errorMessage);
+
+      
       // ..
     });
   }

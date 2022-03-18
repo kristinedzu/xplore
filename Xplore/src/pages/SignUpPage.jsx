@@ -25,13 +25,13 @@ import { useState } from 'react';
 import { useHistory } from "react-router-dom";
 
 import { Camera, CameraResultType } from "@capacitor/camera";
+import { Toast } from "@capacitor/toast";
 
 export default function SignUpPage() {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [profilePlaceholder] = useState("./public/assets/profile-placeholder-normal.png");
   const [profileImg, setProfileImg] = useState("");
   const [profileImgFile, setProfileImgFile] = useState("");
   const auth = getAuth();
@@ -65,10 +65,16 @@ export default function SignUpPage() {
         profileImg: profileUrl
       });
     })
-    .catch((error) => {
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
-      console.log(error);
+    .catch(async (error) => {
+      //const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorMessage);
+      if(error.code === "auth/weak-password"){
+        await Toast.show({
+          text: "The password has to contain at least 6 characters.",
+          position: "center"
+        });
+      }
     });
   }
 
@@ -87,7 +93,7 @@ export default function SignUpPage() {
   };
 
   async function uploadPicture(imgFile, currentUser){
-    const profileRef = ref(storage, `${currentUser}.${imgFile.format}`);
+    const profileRef = ref(storage, `users/${currentUser}.${imgFile.format}`);
     await uploadString(profileRef, profileImgFile.dataUrl, "data_url");
     const url = await getDownloadURL(profileRef);
     console.log(url);
@@ -104,6 +110,7 @@ export default function SignUpPage() {
       </IonHeader>
       <IonContent fullscreen class='ion-padding'>
         <IonHeader collapse="condense" className='centered-flex'>
+          <IonImg className='logo title-toolbar' src='..ios/App/App/public/assets/icon/android-chrome-192x192.png'></IonImg>
           <IonToolbar className='title-toolbar'>
             <IonTitle className='home-page-title' size="large">Sign up</IonTitle>
           </IonToolbar>
@@ -119,7 +126,6 @@ export default function SignUpPage() {
                 </IonItem>
               </IonRow>
             </IonGrid>
-            
             <IonItem>
                 <IonLabel position="stacked">First name</IonLabel>
                 <IonInput value={firstName} type="text" onIonChange={e => setFirstName(e.target.value)}></IonInput>

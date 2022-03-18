@@ -1,4 +1,4 @@
-import { IonItem, IonLabel, IonInput, IonTextarea, IonImg, IonButton, IonIcon, IonSelectOption, IonSelect } from "@ionic/react";
+import { IonItem, IonLabel, IonInput, IonTextarea, IonImg, IonButton, IonIcon, IonSelectOption, IonSelect, IonGrid, IonRow } from "@ionic/react";
 import { useState, useEffect } from "react";
 import ReactStars from "react-rating-stars-component";
 import { Camera, CameraResultType } from "@capacitor/camera";
@@ -37,8 +37,8 @@ export default function NewPostForm({ post, handleSubmit }) {
     const [city, setCity] = useState("");
     const [country, setCountry] = useState("");
     const [review, setReview] = useState("");
-    const [image, setImage] = useState("");
-    const [imageFile, setImageFile] = useState("");
+    const [postImage, setImage] = useState("");
+    const [postImageFile, setImageFile] = useState("");
 
     useEffect(() => {
         if (post) {
@@ -61,7 +61,7 @@ export default function NewPostForm({ post, handleSubmit }) {
         const findCity = data.find(thisCity => thisCity.name == city);
         if(findCity) {
             const cityId = findCity.id;
-            const formData = { body: body, cityId: cityId, countryId: country.id, review: review, img: imageFile };
+            const formData = { body: body, cityId: cityId, countryId: country.id, review: review, img: postImageFile };
             handleSubmit(formData);
         } else {
             const newCity = { countryId: country.id, name: city };
@@ -76,7 +76,7 @@ export default function NewPostForm({ post, handleSubmit }) {
             
             const createdCityData = await getCountries();
             const createdCity = createdCityData.find(thisCity => thisCity.name == city);
-            const formData = { body: body, cityId: createdCity.id, countryId: country.id, review: review, img: imageFile };
+            const formData = { body: body, cityId: createdCity.id, countryId: country.id, review: review, img: postImageFile };
             handleSubmit(formData);
         }
     }
@@ -98,17 +98,25 @@ export default function NewPostForm({ post, handleSubmit }) {
     console.log(countries);
 
     return (
-        <form onSubmit={submitEvent}>
+        <form onSubmit={submitEvent} className="form-container">
             {/* <IonItem className="input-item">
                 <IonLabel position="stacked">Upload image</IonLabel>
                 <IonInput value={image} placeholder="Place image url" onIonChange={e => setImage(e.target.value)}></IonInput>
             </IonItem> */}
-            <IonItem lines="none">
-                {image && <IonImg className="ion-padding preview-img"src={image} onClick={takePicture} />}
+            <IonGrid>
+              <IonRow class='ion-justify-content-center'>
+                {postImage ? <IonItem className="img-space">
+                    {postImage && <IonImg className="post-img-preview" src={postImage} onClick={takePicture}/>}
+                </IonItem> : <IonItem>
+                    {postImage && <IonImg className="post-img-preview" src={postImage} onClick={takePicture}/>}
+                </IonItem>}
+              </IonRow>
+              <IonRow class='ion-justify-content-center'>
                 <IonButton onClick={takePicture}>
                     <IonIcon slot="icon-only" icon={add} />
                 </IonButton>
-            </IonItem>
+              </IonRow>
+            </IonGrid>
             <IonItem className="input-item">
                 <IonLabel position="floating">Country</IonLabel>
                 <IonSelect interface="action-sheet" interfaceOptions={customActionSheetOptions} value={country} placeholder="Select Country" onIonChange={e => setCountry(e.target.value)}>
