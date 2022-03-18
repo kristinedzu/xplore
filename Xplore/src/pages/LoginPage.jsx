@@ -76,7 +76,7 @@ export default function LoginPage() {
                   <IonInput value={password} type="Password" onIonChange={e => setPassword(e.target.value)}></IonInput>
               </IonItem>
               <p class="ion-padding-horizontal">Forgot your password? <Link to="/resetpage">Get new one!</Link></p>
-              <IonButton expand="block" class="ion-margin-top" type="submit">Sign in
+              <IonButton expand="block" class="ion-margin-horizontal ion-margin-top" type="submit">Sign in
                 <IonRippleEffect type="unbounded"></IonRippleEffect>
               </IonButton>
               <IonItem className="ion-text-center padding-top" lines="none">

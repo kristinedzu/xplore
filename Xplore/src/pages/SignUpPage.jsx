@@ -137,7 +137,7 @@ export default function SignUpPage() {
                 <IonLabel position="stacked">Password</IonLabel>
                 <IonInput value={password} type="Password" onIonChange={e => setPassword(e.target.value)}></IonInput>
             </IonItem>
-            <IonButton expand="block" class="ion-margin-top" type="submit">Sign up
+            <IonButton expand="block" class="ion-margin-horizontal ion-margin-top" type="submit">Sign up
               <IonRippleEffect type="unbounded"></IonRippleEffect>
             </IonButton>
             <IonItem className="ion-text-center padding-top" lines="none">

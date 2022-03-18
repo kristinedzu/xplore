@@ -43,7 +43,7 @@ export default function AddNewPostPage() {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent>
         <IonToolbar>
           <IonTitle>Add new post</IonTitle>
         </IonToolbar>
