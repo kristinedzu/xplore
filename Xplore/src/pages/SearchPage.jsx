@@ -62,7 +62,7 @@ export default function SearchPage(){
   }
 
   function handleInput()  {
-    setSearchValue(document.querySelector("#ion-search").value)
+    setSearchValue(document.querySelector("#ion-search").value.toLowerCase());
     getCountries();
   }
 
