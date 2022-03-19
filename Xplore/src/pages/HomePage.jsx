@@ -37,7 +37,7 @@ export default function HomePage(){
     // const postsArray = await getPosts();
     // const postRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/posts.json`);
     // const postData = await postRes.json();
-    // const allPosts = Object.keys(postData).map(key => ({ id: key, ...postData[key], })); // from object to array
+    // const allPosts = Object.keys(postData).map(key => ({ id: key, ...postData[key] })); // from object to array
 
     // const countriesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/countries.json`);
     // const countriesData = await countriesRes.json();
