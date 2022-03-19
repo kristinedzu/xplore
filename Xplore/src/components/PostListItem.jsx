@@ -18,10 +18,10 @@ export default function PostListItem({ post }) {
                 <IonLabel>{post.body}</IonLabel>
                 <IonItem lines="none" color="none" className="post-list-item">
                     <IonAvatar slot="start">
-                        <IonImg src={post.user.profileImg} />
+                        <IonImg src={post.user?.profileImg} />
                     </IonAvatar>
                     <IonLabel>
-                        <h2>{post.user.firstName}</h2>
+                        <h2>{post.user?.firstName}</h2>
                         <ReactStars
                             count={post.review}
                             size={18}
