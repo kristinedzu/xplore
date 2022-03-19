@@ -110,7 +110,7 @@ export default function SignUpPage() {
       </IonHeader>
       <IonContent fullscreen class='ion-padding'>
         <IonHeader collapse="condense" className='centered-flex'>
-          <IonImg className='logo title-toolbar' src='..ios/App/App/public/assets/icon/android-chrome-192x192.png'></IonImg>
+          <IonImg className='logo title-toolbar' src='../assets/icon/android-chrome-192x192.png'></IonImg>
           <IonToolbar className='title-toolbar'>
             <IonTitle className='home-page-title' size="large">Sign up</IonTitle>
           </IonToolbar>
@@ -119,7 +119,7 @@ export default function SignUpPage() {
             <IonGrid>
               <IonRow class='ion-justify-content-center'>
                 <IonItem lines='none'>
-                  {profileImg ? <IonImg className="profile-img" src={profileImg} onClick={takePicture}/> : <IonImg className="ion-padding profile-img" src='..\assets\profile-placeholder-normal.png' onClick={takePicture}/>}
+                  {profileImg ? <IonImg className="profile-img" src={profileImg} onClick={takePicture}/> : <IonImg className="ion-padding profile-img" src='../assets/profile-placeholder-normal.png' onClick={takePicture}/>}
                   <IonButton className="add-pic" onClick={takePicture}>
                       <IonIcon slot="icon-only" icon={add} />
                   </IonButton>

@@ -80,7 +80,7 @@ export default function LoginPage() {
       </IonHeader>
       <IonContent fullscreen class='ion-padding'>
         <IonHeader collapse="condense" className='centered-flex'>
-          <IonImg className='logo title-toolbar' src='..\assets\icon\android-chrome-192x192.png'></IonImg>
+          <IonImg className='logo title-toolbar' src='../assets/icon/android-chrome-192x192.png'></IonImg>
           <IonToolbar className='title-toolbar'>
             <IonTitle className='home-page-title' size="large">Let's start your travel!</IonTitle>
           </IonToolbar>

@@ -108,7 +108,7 @@ export default function ProfilePage() {
           <IonToolbar>
             <IonTitle size="large">{firstName}</IonTitle>
             <IonAvatar slot="end">
-              <IonImg src={profileImg} />
+              {profileImg ? <IonImg src={profileImg} /> : <IonImg src="../assets/profile-placeholder-small.png" />}
             </IonAvatar>
           </IonToolbar>
         </IonHeader>
