@@ -13,86 +13,53 @@ import ReactStars from "react-rating-stars-component";
 import { useState } from "react";
 import { trash, createOutline, close } from 'ionicons/icons';
 import { Toast } from "@capacitor/toast";
-import { citiesRef } from "../firebase-config";
-import { remove, set } from "@firebase/database";
 
 
 export default function ProfileListItem({ post }) {
-
     const [showActionSheet, setShowActionSheet] = useState(false);
-    const [postCity, setPostCity] = useState();
-
     
+    async function getPosts() {
+      const postsRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/posts.json`);
+      const postsData = await postsRes.json();
+      const posts = Object.keys(postsData).map(key => ({ id: key, ...postsData[key]})); // from object to array
+      const thisCityPosts = posts.filter(thisPost => thisPost.cityId == post.cityId);
+      return thisCityPosts;
+    }
 
-    // async function deletePost() {
-    //     //Deleting the post
-    //     const url = `https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/posts/${post.id}.json`;
-    //     const response = await fetch(url, {
-    //         method: "DELETE"
-    //     });
-    //     console.log(response);
-    //     console.log("deleted");
+    async function deletePost() {
+        //Deleting the post
+        const url = `https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/posts/${post.id}.json`;
+        const response = await fetch(url, {
+            method: "DELETE"
+        });
+        console.log(response);
+        console.log("post deleted");
 
-    //      //Displaying the Toast 
-    //     await Toast.show({
-    //         text: "Your post is deleted!",
-    //         position: "middle"
-    //     });
+         //Displaying the Toast 
+        await Toast.show({
+            text: "Your post is deleted!",
+            position: "middle"
+        });
+    }
 
+    // async function deleteCity() {
+    //   await deletePost();
 
-    //     const citiesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/cities.json`);
-    //     const citiesData = await citiesRes.json();
-    //     const allCities = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key], post: post}));
-    //     console.log(post);
-    //     const citiesArray = allCities.filter(city => city.id == post.cityId);
-    //     setPostCity(citiesArray);
-    //     console.log(citiesArray);
-    //     const postsCitiesArray = citiesArray.map(city => city.post);
-    //     const postsLenght = postsCitiesArray.length;
-    //     const cityID = citiesArray.find(city => city.id)
+    //   const allPosts = await getPosts();
+    //   console.log(allPosts.length);
+    //   console.log(post.cityId);
 
-    //     console.log(postsLenght);
-    //     console.log(cityID.id);
+    //     if(allPosts.length == 0) {
+    //       console.log("no posts");
 
-    //     if(postsLenght == 1){
-    //         console.log("It's all good");
-    //     } else {
-
-    //         async function deleteCity(citiesArray) {
-
-    //             const oldCityRef = remove(citiesRef);
-    //             await set(oldCityRef, citiesArray);
-    //         }
-
-    //         deleteCity(citiesArray);
+    //       const url = `https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/cities/${post.cityId}.json`;
+    //         const response = await fetch(url, {
+    //             method: "DELETE"
+    //         });
+    //         console.log(response);
+    //         console.log("city deleted");
     //     }
-
     // }
-
-    // async function deleteCity(){
-    //     await deletePost();
-    //     const citiesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/cities.json`);
-    //     const citiesData = await citiesRes.json();
-    //     const allCities = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key], post: post}));
-    //     console.log(post);
-    //     const citiesArray = allCities.filter(city => city.id == post.cityId);
-    //     setPostCity(citiesArray);
-    //     const postsCitiesArray = citiesArray.map(city => city.post);
-    //     const postsLenght = postsCitiesArray.length;
-    //     const cityID = citiesArray.find(city => city.id)
-
-    //     console.log(postsLenght);
-    //     console.log(cityID.id);
-
-    //     if(postsLenght == 0){
-    //         console.log("there are no posts");
-    //         // const url = `https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/cities/${cityID.id}.json`;
-    //         // const response = await fetch(url, {
-    //         //     method: "DELETE"
-    //         // });
-    //         // console.log(response);
-    //     }
-    //}
 
     return (
         <IonCard>
@@ -128,7 +95,8 @@ export default function ProfileListItem({ post }) {
           },
           handler: () => {
             console.log('Delete clicked');
-            // deletePost();
+            deletePost();
+            // deleteCity();
           }
         }, {
           text: 'Cancel',
