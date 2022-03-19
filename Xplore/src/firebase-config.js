@@ -35,6 +35,7 @@ export const database = getDatabase(app);
 export const postsRef = ref(database, "posts");
 export const citiesRef = ref(database, "cities");
 export const usersRef = ref(database, "users");
+export const countriesRef = ref(database, "countries");
 
 export function getUserRef(userId) {
   return ref(database, "users/" + userId);
