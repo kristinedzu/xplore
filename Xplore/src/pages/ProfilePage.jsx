@@ -85,7 +85,7 @@ export default function ProfilePage() {
     getUserName();
     loadCity();
     listenOnChange();
-  });
+  }, []);
 
   function goToProfileEdit() {
     history.push(`users/${activeUser.uid}`);
