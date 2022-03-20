@@ -112,7 +112,7 @@ export default function ProfileListItem({ post }) {
             console.log('Cancel clicked');
           }
         },{
-          text: 'Update your post',
+          text: 'Edit your post',
           icon: createOutline,
           id: 'update-button',
           handler: () => {
