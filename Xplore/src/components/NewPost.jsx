@@ -139,12 +139,12 @@ export default function NewPostForm({ post, handleSubmit }) {
                 <IonLabel position="stacked">Description</IonLabel>
                 <IonTextarea value={body} placeholder="Your review destinations" onIonChange={e => setBody(e.target.value)}></IonTextarea>
             </IonItem>
-            <IonItem className="input-item">
+            <IonItem lines="none" className="input-item">
                 <IonLabel position="stacked">Rate your experience</IonLabel>
                 <ReactStars
                     count={5}
                     onChange={ratingChanged}
-                    size={24}
+                    size={32}
                     activeColor="#ffd700"
                     required
                 />

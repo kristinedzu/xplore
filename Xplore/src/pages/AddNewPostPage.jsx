@@ -55,8 +55,6 @@ export default function AddNewPostPage() {
           </IonToolbar>
         </IonHeader>
         <NewPostForm handleSubmit={handleSubmit} />
-
-        
       </IonContent>
     </IonPage>
   );

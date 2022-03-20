@@ -107,12 +107,10 @@ export default function SearchPage(){
             <IonSearchbar id='ion-search' onInput={handleInput} onIonChange={handleInput} animated></IonSearchbar>
           </IonToolbar>
         </IonHeader>
-        <IonList>
-            {searchedCountries.map((country,index) => {
+        <IonList class='search-results-list'>
+            {searchedCountries.map((country) => {
                 return (
-                    <IonItem lines="none" key={`slide_${index}`}>
-                        <CountryItem country={country} key={country.id} /> 
-                    </IonItem>
+                  <CountryItem country={country} key={country.id} /> 
                 )
             })}
         </IonList>
