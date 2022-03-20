@@ -24,13 +24,34 @@ export default function CountryPage() {
     slidesPerView: 1.1,
     };
 
+  async function getPosts() {
+    onValue(postsRef, async snapshot => {
+      const postsArray = [];
+      snapshot.forEach(postSnapshot => {
+          const id = postSnapshot.key;
+          const data = postSnapshot.val();
+
+          const post = {
+              id,
+              ...data
+          };
+          postsArray.push(post);
+          
+      });
+      setPosts(postsArray.reverse()); // newest post first
+    });
+  }
 
   async function loadData() {
+    getPosts();
     //fetch country data by countryId prop
     const countryRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/countries/${countryId}.json`);
     const countryData = await countryRes.json();
     setCountry(countryData);
-  
+
+    const postRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/posts.json`);
+    const postData = await postRes.json();
+    const allPosts = Object.keys(postData).map(key => ({ id: key, ...postData[key], })); // from object to array
 
  
     // fetch cities where countryId is equal to countryId prop
@@ -38,29 +59,21 @@ export default function CountryPage() {
     const citiesData = await citiesRes.json();
     const allCities = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key]})); // from object to array
     const citiesArray = allCities.filter(city => city.countryId == countryId);
-    setCities(citiesArray); 
+
+    // check if cities have any posts
+    const result = citiesArray.map((city) => ({
+    data: city,
+    match: allPosts.some((post) => post.cityId === city.id)
+    })).filter(res => res.match == true);
+    const citiesWithPosts = result.map(res => res.data);
+
+    if(result.length != 0) {
+      setCities(citiesWithPosts); 
+    }
   }
 
   useIonViewWillEnter(() => {
     loadData();
-    async function listenOnChange() {
-      onValue(postsRef, async snapshot => {
-          const postsArray = [];
-          snapshot.forEach(postSnapshot => {
-              const id = postSnapshot.key;
-              const data = postSnapshot.val();
-
-              const post = {
-                  id,
-                  ...data
-              };
-              postsArray.push(post);
-              
-          });
-          setPosts(postsArray.reverse()); // newest post first
-      });
-    }
-    listenOnChange();
   }, []);
 
 
