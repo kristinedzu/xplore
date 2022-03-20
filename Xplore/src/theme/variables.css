@@ -296,7 +296,7 @@ http://ionicframework.com/docs/theming/ */
   padding-bottom: 16px;
 }
 
-.form-container{
+.form-container {
   margin-top: 16px;
 }
 
@@ -304,7 +304,7 @@ http://ionicframework.com/docs/theming/ */
   margin: 16px 0;
 }
 
-.item-center{
+.item-center {
   text-align: center;
 }
 
@@ -316,19 +316,19 @@ http://ionicframework.com/docs/theming/ */
   overflow: hidden;
 }
 
-.post-img-preview{
+.post-img-preview {
   width: 100%;
   height: 170px;
   object-fit: cover;
 }
 
-.img-space{
+.img-space {
   width: 100%;
   height: 170px;
   border-radius: 12px;
 }
 
-.add-pic{
+.add-pic {
   position: absolute;
   right: 5px;
   bottom: 20px;
@@ -397,7 +397,7 @@ http://ionicframework.com/docs/theming/ */
   --inner-padding-end: 0;
 }
 
-.profile-stars{
+.profile-stars {
   padding-left: 16px;
 }
 
@@ -415,7 +415,7 @@ http://ionicframework.com/docs/theming/ */
   font-size: 26px;
   border-radius: 50px;
   padding: 5px;
-  margin: 165px auto 20px auto;
+  margin: -30px auto 0 auto;
 }
 
 .country-card-header {
@@ -423,7 +423,7 @@ http://ionicframework.com/docs/theming/ */
   color: var(--ion-text-color);
 }
 
-.no-posts{
+.no-posts {
   position: absolute;
   width: 250px;
   text-align: center;
@@ -435,6 +435,10 @@ http://ionicframework.com/docs/theming/ */
   background-color: var(--ion-card-background);
 }
 
-.country-card{
+.country-card {
   width: min-content;
+}
+
+.country-content {
+  margin-top: 245px;
 }

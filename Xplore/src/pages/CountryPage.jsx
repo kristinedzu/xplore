@@ -93,11 +93,12 @@ export default function CountryPage() {
       <IonContent fullscreen class="ion-padding country-content">
       <IonItemGroup class="header-photo">
         <IonImg class="fullscreen-img" src={country.img}></IonImg>
-      </IonItemGroup>
-
         <IonCard class="country-header">
           <IonCardHeader className='country-card-header'>{country.name}</IonCardHeader>
         </IonCard>
+      </IonItemGroup>
+
+        
 
         <IonItemGroup id='country-content' class="country-content">
           {cities?.map(city => city &&
