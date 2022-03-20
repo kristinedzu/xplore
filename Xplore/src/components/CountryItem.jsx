@@ -16,7 +16,7 @@ export default function CountryItem({ country }) {
 
 
     return (
-        <IonCard onClick={goToCountryView}>
+        <IonCard onClick={goToCountryView} className="country-card">
             <IonImg className="post-img" src={country.img} />
             <IonCardHeader className="post-header">
                 <IonCardTitle className="post-title">

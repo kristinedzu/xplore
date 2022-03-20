@@ -1,4 +1,4 @@
-import { IonItem, IonLabel, IonInput, IonTextarea, IonImg, IonButton, IonIcon } from "@ionic/react";
+import { IonItem, IonLabel, IonInput, IonButton} from "@ionic/react";
 import { useState, useEffect } from "react";
 
 export default function PostForm({ user, handleSubmit }) {

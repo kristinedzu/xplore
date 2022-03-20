@@ -69,8 +69,11 @@ export default function CountryPage() {
 
     if(result.length != 0) {
       setCities(citiesWithPosts); 
+    } else{
+      document.querySelector("#country-content").innerHTML = `<ionItem class="no-posts"> There are no posts for this country yet. </IonItem>` 
     }
   }
+    console.log(cities);
 
   useIonViewWillEnter(() => {
     loadData();
@@ -96,23 +99,23 @@ export default function CountryPage() {
           <IonCardHeader className='country-card-header'>{country.name}</IonCardHeader>
         </IonCard>
 
-        <IonItemGroup class="country-content">
-        {cities?.map(city => city &&
-        <IonList >
-          <IonListHeader city={city} key={city.id}>
-            <IonLabel>{city.name}</IonLabel>
-            <IonButtons lines="none" class="see-all-button" onClick={() => { history.push(`/cities/${city.id}`) }}>See all</IonButtons>
-          </IonListHeader>
-          <IonItem lines="none">
-            <IonSlides options={slide2Opts}>
-              {posts?.filter(cityPost => cityPost.cityId == city.id)
-              .map(post => post &&
-                <PostSlider post={post} key={post.id} />
-              )}
-            </IonSlides>
-          </IonItem>
-        </IonList>
-        )}
+        <IonItemGroup id='country-content' class="country-content">
+          {cities?.map(city => city &&
+          <IonList>
+            <IonListHeader city={city} key={city.id}>
+              <IonLabel>{city.name}</IonLabel>
+              <IonButtons lines="none" class="see-all-button" onClick={() => { history.push(`/cities/${city.id}`) }}>See all</IonButtons>
+            </IonListHeader>
+            <IonItem lines="none">
+              <IonSlides options={slide2Opts}>
+                {posts?.filter(cityPost => cityPost.cityId == city.id)
+                .map(post => post &&
+                  <PostSlider post={post} key={post.id} />
+                )}
+              </IonSlides>
+            </IonItem>
+          </IonList>
+          )}
         </IonItemGroup>
       </IonContent>
     </IonPage>
