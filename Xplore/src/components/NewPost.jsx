@@ -43,9 +43,6 @@ export default function NewPostForm({ post, handleSubmit }) {
 
     useEffect(() => {
         if (post) {
-            if(post.body) {
-                console.log(post.body);
-            }
             setBody(post.body);
             setCountry(post.country);
             setCity(post.city);
