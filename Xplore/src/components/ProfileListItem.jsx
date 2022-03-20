@@ -7,7 +7,8 @@ import {
     IonItem,
     IonActionSheet,
     IonButton,
-    IonIcon
+    IonIcon,
+    IonAlert
 } from "@ionic/react";
 import ReactStars from "react-rating-stars-component";
 import { useState } from "react";
@@ -18,6 +19,7 @@ import { useHistory } from "react-router-dom";
 
 export default function ProfileListItem({ post }) {
     const [showActionSheet, setShowActionSheet] = useState(false);
+    const [showAlert1, setShowAlert1] = useState(false);
     const history = useHistory();
     
     async function getPosts() {
@@ -91,7 +93,17 @@ export default function ProfileListItem({ post }) {
         isOpen={showActionSheet}
         onDidDismiss={() => setShowActionSheet(false)}
         cssClass='my-custom-class'
-        buttons={[{
+        buttons={[
+          {
+            text: 'Edit your post',
+            icon: createOutline,
+            id: 'update-button',
+            handler: () => {
+              console.log('Update clicked');
+              updatePost();
+            }
+          },
+          {
           text: 'Delete your post',
           role: 'destructive',
           icon: trash,
@@ -101,7 +113,8 @@ export default function ProfileListItem({ post }) {
           },
           handler: () => {
             console.log('Delete clicked');
-            deletePost();
+            setShowAlert1(true);
+            // deletePost();
             // deleteCity();
           }
         }, {
@@ -111,18 +124,35 @@ export default function ProfileListItem({ post }) {
           handler: () => {
             console.log('Cancel clicked');
           }
-        },{
-          text: 'Edit your post',
-          icon: createOutline,
-          id: 'update-button',
-          handler: () => {
-            console.log('Update clicked');
-            updatePost();
-          }
         }
       ]}
       >
       </IonActionSheet>
+      <IonAlert
+          isOpen={showAlert1}
+          onDidDismiss={() => setShowAlert1(false)}
+          cssClass='my-custom-class'
+          header={'Are you sure that you want delete this post?'}
+          subHeader={'That post will be deleted pernamently.'}
+          buttons={[
+            {
+            text: 'Cancel',
+            role: 'cancel',
+            id: 'cancel-button',
+            handler: () => {
+              console.log('Confirm Cancel');
+            }
+          },
+          {
+            text: 'Delete',
+            role: 'destructive',
+            id: 'delete-button',
+            handler: () => {
+              deletePost();
+            }
+          }
+        ]}
+        />
             </IonCardContent>
         </IonCard>
     );
