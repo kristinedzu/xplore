@@ -25,13 +25,13 @@ import { useState } from 'react';
 import { useHistory } from "react-router-dom";
 
 import { Camera, CameraResultType } from "@capacitor/camera";
+import { Toast } from "@capacitor/toast";
 
 export default function SignUpPage() {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [profilePlaceholder] = useState("./public/assets/profile-placeholder-normal.png");
   const [profileImg, setProfileImg] = useState("");
   const [profileImgFile, setProfileImgFile] = useState("");
   const auth = getAuth();
@@ -65,17 +65,23 @@ export default function SignUpPage() {
         profileImg: profileUrl
       });
     })
-    .catch((error) => {
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
-      console.log(error);
+    .catch(async (error) => {
+      //const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorMessage);
+      if(error.code === "auth/weak-password"){
+        await Toast.show({
+          text: "The password has to contain at least 6 characters.",
+          position: "center"
+        });
+      }
     });
   }
 
   async function takePicture() {
     const image = await Camera.getPhoto({
       quality: 90,
-      width: 80,
+      width: 500,
       allowEditing: true,
       resultType: CameraResultType.DataUrl
     });
@@ -87,7 +93,7 @@ export default function SignUpPage() {
   };
 
   async function uploadPicture(imgFile, currentUser){
-    const profileRef = ref(storage, `${currentUser}.${imgFile.format}`);
+    const profileRef = ref(storage, `users/${currentUser}.${imgFile.format}`);
     await uploadString(profileRef, profileImgFile.dataUrl, "data_url");
     const url = await getDownloadURL(profileRef);
     console.log(url);
@@ -97,14 +103,14 @@ export default function SignUpPage() {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent>
         <IonToolbar>
           <IonTitle>Sign up Page</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen class='ion-padding'>
         <IonHeader collapse="condense" className='centered-flex'>
-        <IonImg className='logo title-toolbar' src='..\assets\icon\android-chrome-192x192.png'></IonImg>
+          <IonImg className='logo title-toolbar' src='../assets/icon/android-chrome-192x192.png'></IonImg>
           <IonToolbar className='title-toolbar'>
             <IonTitle className='home-page-title' size="large">Sign up</IonTitle>
           </IonToolbar>
@@ -112,15 +118,14 @@ export default function SignUpPage() {
         <form onSubmit={signUp}>
             <IonGrid>
               <IonRow class='ion-justify-content-center'>
-                <IonItem>
-                {profileImg ? <IonImg className="profile-img" src={profileImg} onClick={takePicture}/> : <IonImg className="ion-padding profile-img" src='..\assets\profile-placeholder-normal.png' onClick={takePicture}/>}
-                <IonButton className="add-pic" onClick={takePicture}>
-                    <IonIcon slot="icon-only" icon={add} />
-                </IonButton>
-              </IonItem>
+                <IonItem lines='none'>
+                  {profileImg ? <IonImg className="profile-img" src={profileImg} onClick={takePicture}/> : <IonImg className="ion-padding profile-img" src='../assets/profile-placeholder-normal.png' onClick={takePicture}/>}
+                  <IonButton className="add-pic" onClick={takePicture}>
+                      <IonIcon slot="icon-only" icon={add} />
+                  </IonButton>
+                </IonItem>
               </IonRow>
             </IonGrid>
-            
             <IonItem>
                 <IonLabel position="stacked">First name</IonLabel>
                 <IonInput value={firstName} type="text" onIonChange={e => setFirstName(e.target.value)}></IonInput>
@@ -138,7 +143,7 @@ export default function SignUpPage() {
                 <IonLabel position="stacked">Password</IonLabel>
                 <IonInput value={password} type="Password" onIonChange={e => setPassword(e.target.value)}></IonInput>
             </IonItem>
-            <IonButton expand="block" class="ion-margin-top" type="submit">Sign up
+            <IonButton expand="block" class="ion-margin-horizontal ion-margin-top" type="submit">Sign up
               <IonRippleEffect type="unbounded"></IonRippleEffect>
             </IonButton>
             <IonItem className="ion-text-center padding-top" lines="none">

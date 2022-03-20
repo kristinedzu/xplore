@@ -10,7 +10,9 @@ import {
   IonLabel,
   IonItem,
   IonList,
-  IonImg
+  IonButtons,
+  IonBackButton
+
 } from '@ionic/react';
 
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
@@ -39,20 +41,29 @@ export default function ResetPassPage() {
 
   return (
     <IonPage>
+      <IonHeader translucent>
+        <IonToolbar>
+          <IonTitle>Reset your password</IonTitle>
+          <IonButtons slot="start">
+          <IonBackButton></IonBackButton>
+        </IonButtons>
+        </IonToolbar>
+      </IonHeader>
       <IonContent fullscreen class='ion-padding'>
         <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Forgot password!</IonTitle>
+          <IonToolbar className='title-toolbar'>
+            <IonTitle className='home-page-title' size="large">Reset your password</IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonList className="form-container">
           <form onSubmit={resetPass}>
-              <IonItem>
+              <IonItem className='input-item'>
                   <IonLabel position="stacked">E-mail</IonLabel>
                   <IonInput
                     value={mail} className="input" type="email" onIonChange={e => setMail(e.target.value)}></IonInput>
               </IonItem>
-                <IonButton expand="block" class="ion-margin-top" type="submit" onClick={() => history.replace("/loginpage")}>Reset your password
+              <p class="ion-padding-horizontal">We will send you an email to provide you with the password reset instructions.</p>
+                <IonButton  expand="block" class="ion-margin-horizontal ion-margin-top" type="submit" onClick={() => history.replace("/loginpage")}>Reset your password
                   <IonRippleEffect type="unbounded"></IonRippleEffect>
                 </IonButton>
           </form>

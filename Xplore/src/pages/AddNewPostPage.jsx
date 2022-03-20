@@ -34,7 +34,7 @@ export default function AddNewPostPage() {
   }
 
   async function uploadImage(imgFile, postKey){
-    const imageRef = ref(storage, `${postKey}.${imgFile.format}`);
+    const imageRef = ref(storage, `posts/${postKey}.${imgFile.format}`);
     await uploadString(imageRef, imgFile.dataUrl, "data_url");
     const url = await getDownloadURL(imageRef);
     console.log(url);
@@ -43,7 +43,7 @@ export default function AddNewPostPage() {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent>
         <IonToolbar>
           <IonTitle>Add new post</IonTitle>
         </IonToolbar>

@@ -93,7 +93,7 @@ export default function ProfilePage() {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent>
       <IonToolbar class="ion-padding">
       <IonTitle>Profile</IonTitle>
         <IonButtons slot="primary">
@@ -109,7 +109,7 @@ export default function ProfilePage() {
           <IonToolbar>
             <IonTitle size="large">{firstName}</IonTitle>
             <IonAvatar slot="end">
-              <IonImg src={profileImg} />
+              {profileImg ? <IonImg src={profileImg} /> : <IonImg src="../assets/profile-placeholder-small.png" />}
             </IonAvatar>
           </IonToolbar>
         </IonHeader>
@@ -117,7 +117,7 @@ export default function ProfilePage() {
           <IonItem lines="none">
             <IonLabel>{lastName}</IonLabel>
           </IonItem>
-          <IonItem className='padding-top'>
+          <IonItem className='padding-top' lines='none'>
           <h3>Your Posts</h3>
           </IonItem>
         </IonList>

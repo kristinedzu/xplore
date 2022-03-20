@@ -62,7 +62,7 @@ export default function SearchPage(){
   }
 
   function handleInput()  {
-    setSearchValue(document.querySelector("#ion-search").value)
+    setSearchValue(document.querySelector("#ion-search").value.toLowerCase());
     getCountries();
   }
 
@@ -90,7 +90,7 @@ export default function SearchPage(){
 
   return (
     <IonPage>
-       <IonHeader>
+       <IonHeader translucent>
         <IonToolbar>
           <IonTitle>Search</IonTitle>
           <IonButtons slot="start">

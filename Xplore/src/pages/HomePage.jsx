@@ -9,10 +9,10 @@ import { useHistory } from "react-router-dom";
 import { get, onValue } from "@firebase/database";
 import { getUserRef, countriesRef, postsRef, citiesRef } from "../firebase-config";
 
-
-
 export default function HomePage(){
   const [user, setUser] = useState([]);
+  //const [placeholder, setPlaceholder] = useState("");
+  //console.log(placeholder);
   const [showLoader, dismissLoader] = useIonLoading();
   const auth = getAuth();
   let activeUser = auth.currentUser;
@@ -152,7 +152,7 @@ export default function HomePage(){
 
   return (
     <IonPage>
-       <IonHeader>
+       <IonHeader translucent>
         <IonToolbar>
           <IonTitle>Home</IonTitle>
         </IonToolbar>

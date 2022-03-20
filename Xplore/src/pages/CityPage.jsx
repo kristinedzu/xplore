@@ -55,7 +55,7 @@ export default function CityPage() {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader translucent>
         <IonToolbar>
         <IonButtons slot="start">
           <IonBackButton></IonBackButton>
