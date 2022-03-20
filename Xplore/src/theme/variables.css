@@ -385,10 +385,19 @@ http://ionicframework.com/docs/theming/ */
 
 .profile-list-item {
   --padding-start: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  --inner-padding-end: 0;
 }
 
 .profile-stars{
   padding-left: 16px;
+}
+
+.edit-button {
+  --background: transparent;
+  color: var(--ion-color-primary);
 }
 
 /* country & cities page styling */
@@ -405,6 +414,7 @@ http://ionicframework.com/docs/theming/ */
 
 .country-card-header {
   padding: 8px 20px;
+  color: var(--ion-text-color);
 }
 
 .no-posts{

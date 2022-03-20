@@ -19,7 +19,6 @@ export default function PostListItem({ post }) {
                 <IonItem lines="none" color="none" className="post-list-item">
                     <IonAvatar slot="start">
                     {post.user?.profileImg ? <IonImg src={post.user?.profileImg} /> : <IonImg src="../assets/profile-placeholder-small.png" />}
-                    <IonImg src={post.user?.profileImg} />
                     </IonAvatar>
                     <IonLabel>
                         <h2>{post.user?.firstName}</h2>

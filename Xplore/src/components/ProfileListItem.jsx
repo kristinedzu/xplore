@@ -77,7 +77,7 @@ export default function ProfileListItem({ post }) {
                             color="#ffd700"
                         />
                     </IonLabel>
-                    <IonButton onClick={() => setShowActionSheet(true)} expand="block">
+                    <IonButton className="edit-button" onClick={() => setShowActionSheet(true)} expand="block">
                         <IonIcon slot="icon-only" icon={createOutline} />
                     </IonButton>
                 </IonItem>
