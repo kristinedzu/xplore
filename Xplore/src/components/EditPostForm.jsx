@@ -1,11 +1,10 @@
-import { IonItem, IonLabel, IonButton, IonTextarea} from "@ionic/react";
+import { IonItem, IonLabel, IonButton, IonTextarea, } from "@ionic/react";
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { Toast } from "@capacitor/toast";
+
 
 export default function EditPostForm({ post, handleSubmit }) {
     const [body, setBody] = useState("");
-    const history = useHistory();
+    
 
     useEffect(() => {
         if(post){
@@ -18,13 +17,6 @@ export default function EditPostForm({ post, handleSubmit }) {
         event.preventDefault();
         const postData = { body: body};
         handleSubmit(postData);
-        history.replace("/profilepage");
-
-        
-        await Toast.show({
-            text: "Your post has been updated!",
-            position: "center"
-        });
     }
     
     return (

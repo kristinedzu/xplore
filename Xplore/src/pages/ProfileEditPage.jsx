@@ -1,11 +1,15 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonButton, IonButtons, IonLabel, IonInput,IonBackButton } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonButton, IonButtons, IonLabel, useIonLoading,IonBackButton } from '@ionic/react';
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useIonViewWillEnter } from '@ionic/react';
 import { useParams } from "react-router";
 import PostForm from "../components/PostForm";
+import { Toast } from "@capacitor/toast";
 
 export default function ProfileEditPage() {
 
+  const history = useHistory();
+  const [showLoader, dismissLoader] = useIonLoading();
   const [user, setUser] = useState([]);
   const params = useParams();
   const userId = params.id;
@@ -22,12 +26,19 @@ export default function ProfileEditPage() {
   });
 
     async function updateUser(userToUpdate) {
-        const url = `https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}.json`;
-        await fetch(url, {
-            method: "PUT",
-            body: JSON.stringify({ ...user, ...userToUpdate })
-        });
-        console.log("User Updated");
+      showLoader();
+      const url = `https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}.json`;
+      await fetch(url, {
+          method: "PUT",
+          body: JSON.stringify({ ...user, ...userToUpdate })
+      });
+
+      history.replace("/profilepage");
+      dismissLoader();
+      await Toast.show({
+        text: "Your profile has been updated!",
+        position: "center"
+      });
     }
 
   return (

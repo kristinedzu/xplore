@@ -154,7 +154,7 @@ export default function HomePage(){
     <IonPage>
        <IonHeader translucent>
         <IonToolbar>
-          <IonTitle>Home</IonTitle>
+          <IonTitle>Xplore</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen class="ion-padding">
