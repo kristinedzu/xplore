@@ -32,7 +32,7 @@ To run the app you have to install a few npm packages:
 5. Stars rating
     - `npm i react-rating-stars-component`
 
-TTo run the Ionic project in the browser type in the terminal `ionic serve`.
+To run the Ionic project in the browser type in the terminal `ionic serve`.
 
 Becuase our app uses native API you need to install Capacitor and some plugins. Firstly, in the root of your app, install Capacitor:
 - `npm install @capacitor/core`
@@ -40,14 +40,14 @@ Becuase our app uses native API you need to install Capacitor and some plugins. 
 
 Then install plugins: 
 1. Camera
-    `npm install @capacitor/camera`
+    - `npm install @capacitor/camera`
 2. Toast
-    `npm install @capacitor/toast`
-    `npm install @ionic/pwa-elements`
+    - `npm install @capacitor/toast`
+    - `npm install @ionic/pwa-elements`
 3. Splash screen
-    `npm install @capacitor/splash-screen`
+    - `npm install @capacitor/splash-screen`
 4. Sync changes
-    `npx cap sync` or `ionic cap sync`
+    - `npx cap sync` or `ionic cap sync`
 
 To run the app in Xcode type:
 `ionic cap open ios`
