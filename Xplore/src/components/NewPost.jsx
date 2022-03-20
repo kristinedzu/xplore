@@ -156,8 +156,7 @@ export default function NewPostForm({ post, handleSubmit }) {
             <IonAlert
                 isOpen={showAlert1}
                 onDidDismiss={() => setShowAlert1(false)}
-                header={'Missing fields'}
-                message={'Please fill out all fields.'}
+                header={'Please fill out all fields'}
                 buttons={['OK']}
             />
         </form>
