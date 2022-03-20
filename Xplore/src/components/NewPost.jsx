@@ -1,4 +1,4 @@
-import { IonItem, IonLabel, IonInput, IonTextarea, IonImg, IonButton, IonIcon, IonSelectOption, IonSelect, IonGrid, IonRow } from "@ionic/react";
+import { IonItem, IonLabel, IonInput, IonTextarea, IonImg, IonButton, IonIcon, IonSelectOption, IonSelect, IonGrid, IonRow, IonAlert } from "@ionic/react";
 import { useState, useEffect } from "react";
 import ReactStars from "react-rating-stars-component";
 import { Camera, CameraResultType } from "@capacitor/camera";
@@ -14,6 +14,7 @@ const customActionSheetOptions = {
 
 export default function NewPostForm({ post, handleSubmit }) {
     const [countries, setCountries] = useState([]);
+    const [showAlert1, setShowAlert1] = useState(false);
   
     async function getCountries() {
       const countriesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/countries.json`);
@@ -42,6 +43,9 @@ export default function NewPostForm({ post, handleSubmit }) {
 
     useEffect(() => {
         if (post) {
+            if(post.body) {
+                console.log(post.body);
+            }
             setBody(post.body);
             setCountry(post.country);
             setCity(post.city);
@@ -57,27 +61,34 @@ export default function NewPostForm({ post, handleSubmit }) {
     async function submitEvent(event) {
         event.preventDefault();
 
-        const data = await getCountries();
-        const findCity = data.find(thisCity => thisCity.name == city);
-        if(findCity) {
-            const cityId = findCity.id;
-            const formData = { body: body, cityId: cityId, countryId: country.id, review: review, img: postImageFile };
-            handleSubmit(formData);
+        if(!city || !body || !country || !review || !postImageFile) {
+            setShowAlert1(true);
         } else {
-            const newCity = { countryId: country.id, name: city };
+            const data = await getCountries();
+            const findCity = data.find(thisCity => thisCity.name == city);
+            if(findCity) {
+                const cityId = findCity.id;
+                if(body) {
+                    console.log(body);
+                }
+                const formData = { body: body, cityId: cityId, countryId: country.id, review: review, img: postImageFile };
+                handleSubmit(formData);
+            } else {
+                const newCity = { countryId: country.id, name: city };
 
-            async function addCity(newCity) {
+                async function addCity(newCity) {
 
-                const newCityRef = push(citiesRef);
-                await set(newCityRef, newCity);
+                    const newCityRef = push(citiesRef);
+                    await set(newCityRef, newCity);
+                }
+
+                addCity(newCity);
+                            
+                const createdCityData = await getCountries();
+                const createdCity = createdCityData.find(thisCity => thisCity.name == city);
+                const formData = { body: body, cityId: createdCity.id, countryId: country.id, review: review, img: postImageFile };
+                handleSubmit(formData);
             }
-
-            addCity(newCity);
-            
-            const createdCityData = await getCountries();
-            const createdCity = createdCityData.find(thisCity => thisCity.name == city);
-            const formData = { body: body, cityId: createdCity.id, countryId: country.id, review: review, img: postImageFile };
-            handleSubmit(formData);
         }
     }
 
@@ -95,8 +106,6 @@ export default function NewPostForm({ post, handleSubmit }) {
         //ioimageElement.src = imageUrl;
     };
     
-    console.log(countries);
-
     return (
         <form onSubmit={submitEvent} className="form-container">
             {/* <IonItem className="input-item">
@@ -119,7 +128,7 @@ export default function NewPostForm({ post, handleSubmit }) {
             </IonGrid>
             <IonItem className="input-item">
                 <IonLabel position="floating">Country</IonLabel>
-                <IonSelect interface="action-sheet" interfaceOptions={customActionSheetOptions} value={country} placeholder="Select Country" onIonChange={e => setCountry(e.target.value)}>
+                <IonSelect interface="action-sheet" interfaceOptions={customActionSheetOptions} value={country} placeholder="Select Country" onIonChange={e => setCountry(e.target.value)} required>
                     {countries.map(country =>  
                         <IonSelectOption key={country.id} value={country}>{country.name}</IonSelectOption>
                     )}
@@ -140,12 +149,20 @@ export default function NewPostForm({ post, handleSubmit }) {
                     onChange={ratingChanged}
                     size={24}
                     activeColor="#ffd700"
+                    required
                 />
             </IonItem>
 
             <div className="ion-padding">
                 <IonButton type="submit" expand="block">Add</IonButton>
             </div>
+            <IonAlert
+                isOpen={showAlert1}
+                onDidDismiss={() => setShowAlert1(false)}
+                header={'Missing fields'}
+                message={'Please fill out all fields.'}
+                buttons={['OK']}
+            />
         </form>
     );
 }
