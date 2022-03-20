@@ -161,7 +161,7 @@ export default function HomePage(){
         <IonHeader>
           <IonItem lines="none">
             <IonAvatar slot="end">
-              <IonImg src={profileImg} />
+              {profileImg ? <IonImg src={profileImg} /> : <IonImg src="../assets/profile-placeholder-small.png" />}
             </IonAvatar>
             <IonLabel>Hi {firstName}!</IonLabel>
           </IonItem>

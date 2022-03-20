@@ -93,6 +93,9 @@ export default function SignUpPage() {
   };
 
   async function uploadPicture(imgFile, currentUser){
+    if(imgFile == "" && profileImgFile == ""){
+      return null;
+    }
     const profileRef = ref(storage, `users/${currentUser}.${imgFile.format}`);
     await uploadString(profileRef, profileImgFile.dataUrl, "data_url");
     const url = await getDownloadURL(profileRef);
