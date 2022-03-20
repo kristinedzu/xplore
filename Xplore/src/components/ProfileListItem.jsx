@@ -13,10 +13,12 @@ import ReactStars from "react-rating-stars-component";
 import { useState } from "react";
 import { trash, createOutline, close } from 'ionicons/icons';
 import { Toast } from "@capacitor/toast";
+import { useHistory } from "react-router-dom";
 
 
 export default function ProfileListItem({ post }) {
     const [showActionSheet, setShowActionSheet] = useState(false);
+    const history = useHistory();
     
     async function getPosts() {
       const postsRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/posts.json`);
@@ -40,6 +42,10 @@ export default function ProfileListItem({ post }) {
             text: "Your post is deleted!",
             position: "middle"
         });
+    }
+
+    function updatePost(){
+      history.push(`/post/${post.id}`);
     }
 
     // async function deleteCity() {
@@ -105,7 +111,16 @@ export default function ProfileListItem({ post }) {
           handler: () => {
             console.log('Cancel clicked');
           }
-        }]}
+        },{
+          text: 'Update your post',
+          icon: createOutline,
+          id: 'update-button',
+          handler: () => {
+            console.log('Update clicked');
+            updatePost();
+          }
+        }
+      ]}
       >
       </IonActionSheet>
             </IonCardContent>

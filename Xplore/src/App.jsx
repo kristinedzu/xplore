@@ -16,6 +16,7 @@ import AddNewPostPage from './pages/AddNewPostPage';
 import CountryPage from './pages/CountryPage';
 import CityPage from './pages/CityPage';
 import PostPage from './pages/PostPage';
+import PostEditPage from './pages/PostEditPage';
 import ProfilePage from './pages/ProfilePage';
 import ProfileEditPage from './pages/ProfileEditPage';
 import LoginPage from './pages/LoginPage';
@@ -76,6 +77,9 @@ function PrivateRoutes(){
             </Route>
             <Route  path="/posts/:id">
                 <PostPage />
+            </Route>
+            <Route  path="/post/:id">
+                <PostEditPage />
             </Route>
             <Route  path="/searchpage">
                 <SearchPage />
