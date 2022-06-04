@@ -50,6 +50,10 @@ export default function ProfileListItem({ post }) {
       history.push(`/post/${post.id}`);
     }
 
+    function goToPostDetails() {
+        history.push(`/posts/${post.id}`);
+    }
+
     // async function deleteCity() {
     //   await deletePost();
 
@@ -70,7 +74,7 @@ export default function ProfileListItem({ post }) {
     // }
 
     return (
-        <IonCard>
+        <IonCard onClick={goToPostDetails}>
             <IonImg className="post-img-profile" src={post.img} />
             <IonCardContent className="card-flex">
                 <IonLabel>{post.body}</IonLabel>
