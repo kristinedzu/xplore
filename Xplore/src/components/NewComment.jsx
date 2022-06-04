@@ -31,7 +31,7 @@ export default function NewCommentForm({ comment, handleSubmit }) {
     }
 
     return (
-        <form onSubmit={submitEvent} className="form-container">          */}
+        <form onSubmit={submitEvent} className="form-container">
             <IonItem className="input-item">
                 <IonLabel position="stacked">Comment</IonLabel>
                 <IonTextarea value={body} placeholder="Your review for this place" onIonChange={e => setBody(e.target.value)}></IonTextarea>
