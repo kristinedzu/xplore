@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton, IonItemGroup, IonImg, IonLabel, IonItem, IonAvatar, IonCard, IonCardContent, IonList, IonListHeader, IonButton } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonBackButton, IonImg, IonLabel, IonItem, IonAvatar, IonCard, IonCardContent, IonList, IonListHeader, IonButton } from '@ionic/react';
 import { useState } from "react";
 import { useIonViewWillEnter } from "@ionic/react";
 import { postsRef } from "../firebase-config";
@@ -119,9 +119,9 @@ export default function PostPage() {
             <IonLabel>All Comments</IonLabel>
           </IonListHeader>
 
-          {post.comments?.map(comment => 
-          
-          
+          { post.comments?.length > 0 ?
+          post.comments?.map(comment => 
+
           <IonCard key={comment.id}>
             <IonCardContent className="card-flex">
                 <IonLabel>{comment.comment}</IonLabel>
@@ -143,9 +143,10 @@ export default function PostPage() {
                   </IonLabel>
                 </IonItem>
             </IonCardContent>
-          </IonCard>
-          )}
-
+          </IonCard> 
+          ) 
+          : <IonItem lines='none'>No comments yet</IonItem>}
+          
         </IonList>
         
 
