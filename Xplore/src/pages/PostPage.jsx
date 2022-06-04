@@ -122,21 +122,21 @@ export default function PostPage() {
           { post.comments?.length > 0 ?
           post.comments?.map(comment => 
 
-          <IonCard key={comment.id}>
+          <IonCard key={comment?.id}>
             <IonCardContent className="card-flex">
-                <IonLabel>{comment.comment}</IonLabel>
+                <IonLabel>{comment?.comment}</IonLabel>
                 <IonItem lines="none" color="none" className="post-list-item">
-                  {users.filter(auth => auth.id == comment.uid).map(auths =>
+                  {users.filter(auth => auth.id == comment?.uid).map(auths =>
                     <IonAvatar key={Math.random().toString(16)} slot="start">
                     {auths?.profileImg ? <IonImg src={auths?.profileImg} /> : <IonImg src="../assets/profile-placeholder-small.png" />}
                     </IonAvatar>
                   )}
                   <IonLabel>
-                    {users.filter(auth => auth.id == comment.uid).map(auths =>
+                    {users.filter(auth => auth.id == comment?.uid).map(auths =>
                     <h2 key={Math.random().toString(16)}>{auths?.firstName}</h2>
                     )}
                     <ReactStars
-                        count={comment.review}
+                        count={comment?.review}
                         size={18}
                         color="#ffd700"
                     />
@@ -149,9 +149,6 @@ export default function PostPage() {
           
         </IonList>
         
-
-        
-
       </IonContent>
     </IonPage>
   );
