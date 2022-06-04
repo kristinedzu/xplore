@@ -25,7 +25,7 @@ export default function AddCommentPage() {
     const newCommentRef = push(commentsRef);
     await set(newCommentRef, newComment);
 
-    history.push(`/posts/${postId}`);
+    history.goBack();
     dismissLoader();
 
 
