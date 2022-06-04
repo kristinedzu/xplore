@@ -65,8 +65,7 @@ export default function PostPage() {
                 ...data,
                 user: users.find(user => user.id == data.uid),
                 city: cities.find(city => city.id == data.cityId),
-                comments: comments.filter(comment => comment.postId == postId)
-                
+                comments: comments.filter(comment => comment.postId == postId).reverse() // newest comment first
             };
             allPosts.push(post);
         });
