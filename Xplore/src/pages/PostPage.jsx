@@ -18,8 +18,6 @@ export default function PostPage() {
 
   const params = useParams();
   const postId = params.id;
-  
-  console.log(post);
 
   async function getUsers() {
     const usersRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/users.json`);
@@ -76,8 +74,6 @@ export default function PostPage() {
     getPost();
     getCommentAuth();
   }, []);
-
-  console.log(users);
 
   return (
     <IonPage>

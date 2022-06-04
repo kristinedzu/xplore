@@ -17,8 +17,6 @@ export default function AddCommentPage() {
 
   const params = useParams();
   const postId = params.id;
-
-  console.log(activeUser);
   
   async function handleSubmit(newComment) {
     showLoader();
@@ -26,8 +24,6 @@ export default function AddCommentPage() {
     newComment.postId = postId; // default user id added
     const newCommentRef = push(commentsRef);
     await set(newCommentRef, newComment);
-
-    console.log(newComment);
 
     history.push(`/posts/${postId}`);
     dismissLoader();
