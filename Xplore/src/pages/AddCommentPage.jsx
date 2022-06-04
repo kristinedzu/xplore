@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonLoading } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, useIonLoading ,IonButtons, IonBackButton } from '@ionic/react';
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import NewCommentForm from '../components/NewComment';
@@ -44,6 +44,9 @@ export default function AddCommentPage() {
     <IonPage>
       <IonHeader translucent>
         <IonToolbar>
+            <IonButtons slot="start">
+            <IonBackButton></IonBackButton>
+            </IonButtons>
           <IonTitle>Add new comment</IonTitle>
         </IonToolbar>
       </IonHeader>
