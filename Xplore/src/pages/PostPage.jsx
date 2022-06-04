@@ -124,8 +124,9 @@ export default function PostPage() {
 
           <IonCard key={comment?.id}>
             <IonCardContent className="card-flex">
-                <IonLabel>{comment?.comment}</IonLabel>
-                <IonItem lines="none" color="none" className="post-list-item">
+            <IonLabel>{comment?.comment}</IonLabel>
+                <h1 className='comment-title'>{comment?.title}</h1>
+                <IonItem lines="none" color="none" className="post-list-item title-toolbar">
                   {users.filter(auth => auth.id == comment?.uid).map(auths =>
                     <IonAvatar key={Math.random().toString(16)} slot="start">
                     {auths?.profileImg ? <IonImg src={auths?.profileImg} /> : <IonImg src="../assets/profile-placeholder-small.png" />}
@@ -135,11 +136,6 @@ export default function PostPage() {
                     {users.filter(auth => auth.id == comment?.uid).map(auths =>
                     <h2 key={Math.random().toString(16)}>{auths?.firstName}</h2>
                     )}
-                    <ReactStars
-                        count={comment?.review}
-                        size={18}
-                        color="#ffd700"
-                    />
                   </IonLabel>
                 </IonItem>
             </IonCardContent>

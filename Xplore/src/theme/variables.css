@@ -275,6 +275,10 @@ http://ionicframework.com/docs/theming/ */
   padding: 4px 16px;
 }
 
+.comment-title {
+  color: var(--ion-color-dark);
+}
+
 .post-title {
   width: fit-content;
 }
@@ -290,6 +294,14 @@ http://ionicframework.com/docs/theming/ */
 .home-page-title {
   box-sizing: unset;
   font-size: 30px;
+}
+
+.border-top {
+  border-top: 1px solid lightgray;
+}
+
+.w-full {
+  width: 100%;
 }
 
 .title-toolbar {
