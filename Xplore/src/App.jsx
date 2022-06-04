@@ -82,7 +82,7 @@ function PrivateRoutes(){
             <Route  path="/post/:id">
                 <PostEditPage />
             </Route>
-            <Route  path="/posts/:id/addcomment">
+            <Route  path="/:id/addcomment">
                 <AddCommentPage />
             </Route>
             <Route  path="/searchpage">
