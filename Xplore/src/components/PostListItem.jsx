@@ -7,12 +7,18 @@ import {
     IonItem,
     IonAvatar
 } from "@ionic/react";
+import { useHistory } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 
 
 export default function PostListItem({ post }) {
+    const history = useHistory();
+
+    function goToPostDetails() {
+        history.push(`/posts/${post.id}`);
+    }
     return (
-        <IonCard>
+        <IonCard onClick={goToPostDetails}>
             <IonImg className="post-img-profile" src={post.img} />
             <IonCardContent className="card-flex">
                 <IonLabel>{post.body}</IonLabel>

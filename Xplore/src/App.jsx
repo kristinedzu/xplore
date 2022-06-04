@@ -23,6 +23,7 @@ import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import ResetPassPage from './pages/ResetPassPage';
 import SearchPage from './pages/SearchPage';
+import AddCommentPage from './pages/AddCommentPage';
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase-config";
@@ -80,6 +81,9 @@ function PrivateRoutes(){
             </Route>
             <Route  path="/post/:id">
                 <PostEditPage />
+            </Route>
+            <Route  path="/posts/:id/addcomment">
+                <AddCommentPage />
             </Route>
             <Route  path="/searchpage">
                 <SearchPage />
