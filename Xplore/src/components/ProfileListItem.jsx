@@ -74,8 +74,8 @@ export default function ProfileListItem({ post }) {
     // }
 
     return (
-        <IonCard onClick={goToPostDetails}>
-            <IonImg className="post-img-profile" src={post.img} />
+        <IonCard>
+            <IonImg onClick={goToPostDetails} className="post-img-profile" src={post.img} />
             <IonCardContent className="card-flex">
                 <IonLabel>{post.body}</IonLabel>
                 <IonItem className="profile-list-item" color="none" lines="none">
