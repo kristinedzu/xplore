@@ -12,7 +12,8 @@ import {
   IonIcon,
   IonImg,
   IonGrid,
-  IonRow
+  IonRow,
+  IonAlert
 } from '@ionic/react';
 
 import { getUserRef } from "../firebase-config";
@@ -34,9 +35,11 @@ export default function SignUpPage() {
   const [lastName, setLastName] = useState("");
   const [profileImg, setProfileImg] = useState("");
   const [profileImgFile, setProfileImgFile] = useState("");
+  const [showAlert1, setShowAlert1] = useState(false);
   const auth = getAuth();
 
   const history = useHistory();
+  
 
   // const userDataToAdd = {
   //   userId: user.uid,
@@ -46,36 +49,41 @@ export default function SignUpPage() {
 
   async function signUp(event){
     event.preventDefault();
-    createUserWithEmailAndPassword(auth, mail, password)
-    .then( async (userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      // ...
-      const userID = user.uid;
-      console.log(userID);
-      //console.log(firstName);
-      
-      const profileUrl = await uploadPicture(profileImgFile, userID);
-      console.log(profileUrl);
-  
-      set(getUserRef(user.uid), {
-        userId: user.uid,
-        firstName: firstName,
-        lastName: lastName,
-        profileImg: profileUrl
-      });
-    })
-    .catch(async (error) => {
-      //const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorMessage);
-      if(error.code === "auth/weak-password"){
-        await Toast.show({
-          text: "The password has to contain at least 6 characters.",
-          position: "center"
+
+    if(!mail || !password || !firstName || !lastName ) {
+      setShowAlert1(true);
+    } else {
+      createUserWithEmailAndPassword(auth, mail, password)
+      .then( async (userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        // ...
+        const userID = user.uid;
+        console.log(userID);
+        //console.log(firstName);
+        
+        const profileUrl = await uploadPicture(profileImgFile, userID);
+        console.log(profileUrl);
+    
+        set(getUserRef(user.uid), {
+          userId: user.uid,
+          firstName: firstName,
+          lastName: lastName,
+          profileImg: profileUrl
         });
-      }
-    });
+      })
+      .catch(async (error) => {
+        //const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+        if(error.code === "auth/weak-password"){
+          await Toast.show({
+            text: "The password has to contain at least 6 characters.",
+            position: "center"
+          });
+        }
+      });
+    }
   }
 
   async function takePicture() {
@@ -146,6 +154,12 @@ export default function SignUpPage() {
                 <IonLabel position="stacked">Password</IonLabel>
                 <IonInput value={password} type="Password" onIonChange={e => setPassword(e.target.value)}></IonInput>
             </IonItem>
+            <IonAlert
+                isOpen={showAlert1}
+                onDidDismiss={() => setShowAlert1(false)}
+                header={'Please fill out all fields'}
+                buttons={['OK']}
+            />
             <IonButton expand="block" class="ion-margin-horizontal ion-margin-top" type="submit">Sign up
               <IonRippleEffect type="unbounded"></IonRippleEffect>
             </IonButton>
