@@ -160,7 +160,7 @@ export default function HomePage(){
       <IonContent fullscreen class="ion-padding">
         <IonHeader>
           <IonItem lines="none">
-            <IonAvatar slot="end">
+            <IonAvatar slot="end" onClick={() => { history.push("/profilepage") }}>
               {profileImg ? <IonImg src={profileImg} /> : <IonImg src="../assets/profile-placeholder-small.png" />}
             </IonAvatar>
             <IonLabel>Hi {firstName}!</IonLabel>
