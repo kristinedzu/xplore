@@ -39,13 +39,6 @@ export default function SignUpPage() {
   const auth = getAuth();
 
   const history = useHistory();
-  
-
-  // const userDataToAdd = {
-  //   userId: user.uid,
-  //   firstName: firstName,
-  //   lastName: lastName
-  // }
 
   async function signUp(event){
     event.preventDefault();
@@ -57,13 +50,9 @@ export default function SignUpPage() {
       .then( async (userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        // ...
         const userID = user.uid;
-        console.log(userID);
-        //console.log(firstName);
         
         const profileUrl = await uploadPicture(profileImgFile, userID);
-        console.log(profileUrl);
     
         set(getUserRef(user.uid), {
           userId: user.uid,
@@ -73,7 +62,6 @@ export default function SignUpPage() {
         });
       })
       .catch(async (error) => {
-        //const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage);
         if(error.code === "auth/weak-password"){
