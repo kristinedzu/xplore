@@ -24,15 +24,13 @@ export default function NewPostForm({ post, handleSubmit }) {
   
       const citiesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/cities.json`);
       const citiesData = await citiesRes.json();
-      const allCities = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key], country: countriesArray })); // from object to array
-      const citiesArray = allCities.filter(city => city.countryId === country.id);
-      return citiesArray;
+      const allCities = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key] })); // from object to array
+      return allCities;
     }
   
     useEffect(() => {
       getCountries();
     }, []);
-    
 
     const [body, setBody] = useState("");
     const [city, setCity] = useState("");
