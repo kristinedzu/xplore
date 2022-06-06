@@ -6,8 +6,9 @@ import { useEffect, useState } from "react";
 import CountryItem from "../components/CountryItem";
 import { getAuth} from "firebase/auth";
 import { useHistory } from "react-router-dom";
-import { get, onValue } from "@firebase/database";
+import { get, onValue, query, orderByValue, limitToFirst } from "@firebase/database";
 import { getUserRef, countriesRef, postsRef, citiesRef } from "../firebase-config";
+import {orderBy, limit} from "firebase/firestore"
 
 export default function HomePage(){
   const [user, setUser] = useState([]);
@@ -58,8 +59,11 @@ export default function HomePage(){
 
             countriesArray.push(country);
           });
-          const selectedCountries = countriesArray.filter(country => country.post.length>0)
-          setCountries(selectedCountries);
+          const selectedCountries = countriesArray.filter(country => country.post.length>0);
+          //const aaa = selectedCountries.orderBy("name").limit(3);
+          const aaa = selectedCountries.sort(function(a,b){return b-a}).slice(0, 9);
+          console.log(aaa);
+          setCountries(aaa);
       });
   }
   console.log(countries);
