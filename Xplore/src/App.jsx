@@ -130,7 +130,6 @@ export default function App() {
   useEffect(() => {
     onAuthStateChanged(auth, user => {
       if (user) {
-          console.log(user);
           // User is authenticated
           setUserIsAuthenticated(true);
           localStorage.setItem("userIsAuthenticated", true);

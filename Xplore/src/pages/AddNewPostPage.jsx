@@ -37,7 +37,6 @@ export default function AddNewPostPage() {
     const imageRef = ref(storage, `posts/${postKey}.${imgFile.format}`);
     await uploadString(imageRef, imgFile.dataUrl, "data_url");
     const url = await getDownloadURL(imageRef);
-    console.log(url);
     return url;
   }
 

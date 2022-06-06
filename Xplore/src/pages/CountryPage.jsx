@@ -73,7 +73,6 @@ export default function CountryPage() {
       document.querySelector("#country-content").innerHTML = `<ionItem class="no-posts"> There are no posts for this country yet. </IonItem>` 
     }
   }
-    console.log(cities);
 
   useIonViewWillEnter(() => {
     loadData();

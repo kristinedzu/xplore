@@ -53,7 +53,6 @@ export default function ProfilePage() {
         setFirstName(userData.firstName);
         setProfileImg(userData.profileImg);
         setLastName(userData.lastName);
-        console.log(userData);
       }
     }
 

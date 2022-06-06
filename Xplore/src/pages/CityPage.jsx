@@ -26,9 +26,6 @@ export default function CityPage() {
     return allUsers;
   }
 
-  
-  console.log(posts);
-
   useIonViewWillEnter(() => {
     loadCity();
     async function getPosts() {

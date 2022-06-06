@@ -17,8 +17,6 @@ export default function PostEditPage() {
   const params = useParams();
   const postId = params.id;
   
-  console.log(post);
-
   useIonViewWillEnter(() => {
     async function getPost() {
       onValue(postsRef, async snapshot => {

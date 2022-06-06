@@ -17,7 +17,6 @@ export default function ProfileEditPage() {
   async function getUserName() {
     const userRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/users/${userId}.json`);
     const userData = await userRes.json();
-    console.log(userData);
     setUser(userData);
   }
 

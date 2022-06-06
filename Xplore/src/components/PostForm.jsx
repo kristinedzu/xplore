@@ -47,7 +47,6 @@ export default function PostForm({ user, handleSubmit }) {
         const profileRef = ref(storage, `users/${currentUser}.${imgFile.format}`);
         await uploadString(profileRef, profileImgFile.dataUrl, "data_url");
         const url = await getDownloadURL(profileRef);
-        console.log(url);
         return url;
     }
     

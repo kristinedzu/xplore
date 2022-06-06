@@ -53,8 +53,6 @@ export default function LoginPage() {
           position: "center"
         });
       }
-      console.log(errorMessage);
-
       
       // ..
     });

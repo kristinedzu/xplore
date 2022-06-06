@@ -63,7 +63,6 @@ export default function SignUpPage() {
       })
       .catch(async (error) => {
         const errorMessage = error.message;
-        console.log(errorMessage);
         if(error.code === "auth/weak-password"){
           await Toast.show({
             text: "The password has to contain at least 6 characters.",
@@ -95,7 +94,6 @@ export default function SignUpPage() {
     const profileRef = ref(storage, `users/${currentUser}.${imgFile.format}`);
     await uploadString(profileRef, profileImgFile.dataUrl, "data_url");
     const url = await getDownloadURL(profileRef);
-    console.log(url);
     return url;
   }
 

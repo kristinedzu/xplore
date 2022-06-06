@@ -36,8 +36,6 @@ export default function ProfileListItem({ post }) {
         const response = await fetch(url, {
             method: "DELETE"
         });
-        console.log(response);
-        console.log("post deleted");
 
          //Displaying the Toast 
         await Toast.show({
@@ -103,7 +101,6 @@ export default function ProfileListItem({ post }) {
             icon: createOutline,
             id: 'update-button',
             handler: () => {
-              console.log('Update clicked');
               updatePost();
             }
           },
@@ -116,7 +113,6 @@ export default function ProfileListItem({ post }) {
             type: 'delete'
           },
           handler: () => {
-            console.log('Delete clicked');
             setShowAlert1(true);
             // deletePost();
             // deleteCity();
@@ -126,7 +122,6 @@ export default function ProfileListItem({ post }) {
           icon: close,
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
           }
         }
       ]}
@@ -144,7 +139,6 @@ export default function ProfileListItem({ post }) {
             role: 'cancel',
             id: 'cancel-button',
             handler: () => {
-              console.log('Confirm Cancel');
             }
           },
           {
