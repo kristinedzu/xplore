@@ -63,9 +63,6 @@ export default function NewPostForm({ post, handleSubmit }) {
             const findCity = data.find(thisCity => thisCity.name == city);
             if(findCity) {
                 const cityId = findCity.id;
-                if(body) {
-                    console.log(body);
-                }
                 const formData = { body: body, cityId: cityId, countryId: country.id, review: review, img: postImageFile };
                 handleSubmit(formData);
             } else {
