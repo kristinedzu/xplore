@@ -32,29 +32,18 @@ export default function HomePage(){
   //   match: posts.some((post) => post.countryId === country.id)
   // })).filter(res => res.match == true);
 
+  async function getPosts() {
+    //fetch country data by countryId prop
+    const postsRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/posts.json`);
+    const citiesData = await postsRes.json();
+    const allPosts = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key]})); // from object to array
+    setPosts(allPosts);
+    return allPosts;  
+  }
+  console.log(posts);
 
   async function getCountries() {
-    // const postsArray = await getPosts();
-    // const postRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/posts.json`);
-    // const postData = await postRes.json();
-    // const allPosts = Object.keys(postData).map(key => ({ id: key, ...postData[key] })); // from object to array
-
-    // const countriesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/countries.json`);
-    // const countriesData = await countriesRes.json();
-    // const allCountries = Object.keys(countriesData).map(key => ({ id: key, ...countriesData[key]})); // from object to array
-
-    // // check if countries have any posts
-    // const result = allCountries.map((country) => ({
-    //   data: country,
-    //   match: allPosts.some((post) => post.countryId === country.id)
-    //   })).filter(res => res.match == true);
-    //   const countriesWithPosts = result.map(res => res.data);
-    //   console.log(countriesWithPosts);
-  
-    //   if(result.length != 0) {
-    //     setCountries(countriesWithPosts);
-    //   }
-
+    const posts = await getPosts();
       onValue(countriesRef, async snapshot => {
           const countriesArray = [];
           snapshot.forEach(postSnapshot => {
@@ -63,14 +52,19 @@ export default function HomePage(){
   
             const country = {
                 id,
-                ...data
+                ...data,
+                post: posts.filter(post=> post.countryId === id)
             };
 
             countriesArray.push(country);
           });
-          setCountries(countriesArray);
+          const selectedCountries = countriesArray.filter(country => country.post.length>0)
+          setCountries(selectedCountries);
       });
   }
+  console.log(countries);
+
+  
 
   async function getCities() {
     // const postRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/posts.json`);
@@ -133,6 +127,7 @@ export default function HomePage(){
   }, [activeUser, user]);
 
   useIonViewWillEnter(() => {
+    getPosts();
     getCountries();
     getCities();
     getUserName();
