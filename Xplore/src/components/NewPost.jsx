@@ -119,7 +119,7 @@ export default function NewPostForm({ post, handleSubmit }) {
               </IonRow>
             </IonGrid>
             <IonItem className="input-item">
-                <IonLabel position="floating">Country</IonLabel>
+                <IonLabel position="floating"><span class='red-text'>* </span>Country</IonLabel>
                 <IonSelect interface="action-sheet" interfaceOptions={customActionSheetOptions} value={country} placeholder="Select Country" onIonChange={e => setCountry(e.target.value)} required>
                     {countries.map(country =>  
                         <IonSelectOption key={country.id} value={country}>{country.name}</IonSelectOption>
@@ -127,15 +127,15 @@ export default function NewPostForm({ post, handleSubmit }) {
                 </IonSelect>
             </IonItem>
             <IonItem className="input-item">
-                <IonLabel position="stacked">City</IonLabel>
+                <IonLabel position="stacked"><span class='red-text'>* </span>City</IonLabel>
                 <IonInput value={city} placeholder="Type city" onIonChange={e => setCity(e.target.value)}></IonInput>
             </IonItem>           
             <IonItem className="input-item">
-                <IonLabel position="stacked">Description</IonLabel>
+                <IonLabel position="stacked"><span class='red-text'>* </span>Description</IonLabel>
                 <IonTextarea value={body} placeholder="Your review destinations" onIonChange={e => setBody(e.target.value)}></IonTextarea>
             </IonItem>
             <IonItem lines="none" className="input-item">
-                <IonLabel position="stacked">Rate your experience</IonLabel>
+                <IonLabel position="stacked"><span class='red-text'>* </span>Rate your experience</IonLabel>
                 <ReactStars
                     count={5}
                     onChange={ratingChanged}

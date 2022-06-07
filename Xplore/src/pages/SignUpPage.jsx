@@ -107,7 +107,6 @@ export default function SignUpPage() {
       </IonHeader>
       <IonContent fullscreen class='ion-padding'>
         <IonHeader collapse="condense" className='centered-flex'>
-          <IonImg className='logo title-toolbar' src='../assets/icon/android-chrome-192x192.png'></IonImg>
           <IonToolbar className='title-toolbar'>
             <IonTitle className='home-page-title' size="large">Sign up</IonTitle>
           </IonToolbar>
@@ -124,22 +123,23 @@ export default function SignUpPage() {
               </IonRow>
             </IonGrid>
             <IonItem>
-                <IonLabel position="stacked">First name</IonLabel>
+                <IonLabel position="stacked"><span class='red-text'>* </span>First name</IonLabel>
                 <IonInput value={firstName} type="text" onIonChange={e => setFirstName(e.target.value)}></IonInput>
             </IonItem>
             <IonItem>
-                <IonLabel position="stacked">Last name</IonLabel>
+                <IonLabel position="stacked"><span class='red-text'>* </span>Last name</IonLabel>
                 <IonInput value={lastName} type="text" onIonChange={e => setLastName(e.target.value)}></IonInput>
             </IonItem>
             <IonItem>
-                <IonLabel position="stacked">E-mail</IonLabel>
+                <IonLabel position="stacked"><span class='red-text'>* </span>E-mail</IonLabel>
                 <IonInput
                   value={mail} type="email" onIonChange={e => setMail(e.target.value)}></IonInput>
             </IonItem>
             <IonItem>
-                <IonLabel position="stacked">Password</IonLabel>
+                <IonLabel position="stacked"><span class='red-text'>* </span>Password</IonLabel>
                 <IonInput value={password} type="Password" onIonChange={e => setPassword(e.target.value)}></IonInput>
             </IonItem>
+            <IonItem lines='none' class='small-text'>Password should have at least 6 characters.</IonItem>
             <IonAlert
                 isOpen={showAlert1}
                 onDidDismiss={() => setShowAlert1(false)}

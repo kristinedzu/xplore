@@ -271,6 +271,15 @@ http://ionicframework.com/docs/theming/ */
   object-fit: cover;
 }
 
+.small-text{
+  font-size: 14px;
+  color: var(--ion-color-medium);
+}
+
+.red-text{
+  color: var(--ion-color-danger);
+}
+
 .post-header {
   padding: 4px 16px;
 }
