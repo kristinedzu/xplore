@@ -60,12 +60,12 @@ export default function HomePage(){
 
             countriesArray.push(country);
           });
-          const selectedCountries = countriesArray.filter(country => country.post.length>0);
+          const selectedCountries = countriesArray.filter(country => country.post.length>2);
           const topTenCountries = selectedCountries.sort(function (a, b) {
             return b.post.length - a.post.length;
           });
           console.log(topTenCountries);
-          setCountries(topTenCountries);
+          setCountries(topTenCountries.slice(0, 9));
       });
   }
   console.log(countries);
