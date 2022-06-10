@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import CountryItem from "../components/CountryItem";
 import { getAuth} from "firebase/auth";
 import { useHistory } from "react-router-dom";
-import { get, onValue, query, orderByValue, limitToFirst } from "@firebase/database";
-import { getUserRef, countriesRef, postsRef, citiesRef } from "../firebase-config";
-import {orderBy, limit} from "firebase/firestore"
+import { get, onValue } from "@firebase/database";
+import { getUserRef, countriesRef, citiesRef } from "../firebase-config";
+//import {orderBy, limit} from "firebase/firestore"
 
 export default function HomePage(){
   const [user, setUser] = useState([]);
@@ -50,7 +50,8 @@ export default function HomePage(){
           snapshot.forEach(postSnapshot => {
             const id = postSnapshot.key;
             const data = postSnapshot.val();
-  
+            console.log(data);
+            
             const country = {
                 id,
                 ...data,
@@ -60,10 +61,11 @@ export default function HomePage(){
             countriesArray.push(country);
           });
           const selectedCountries = countriesArray.filter(country => country.post.length>0);
-          //const aaa = selectedCountries.orderBy("name").limit(3);
-          const aaa = selectedCountries.sort(function(a,b){return b-a}).slice(0, 9);
-          console.log(aaa);
-          setCountries(aaa);
+          const topTenCountries = selectedCountries.sort(function (a, b) {
+            return b.post.length - a.post.length;
+          });
+          console.log(topTenCountries);
+          setCountries(topTenCountries);
       });
   }
   console.log(countries);
@@ -71,28 +73,6 @@ export default function HomePage(){
   
 
   async function getCities() {
-    // const postRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/posts.json`);
-    // const postData = await postRes.json();
-    // const allPosts = Object.keys(postData).map(key => ({ id: key, ...postData[key], })); // from object to array
-
-    // const citiesRes = await fetch(`https://xplore-cf984-default-rtdb.europe-west1.firebasedatabase.app/cities.json`);
-    // const citiesData = await citiesRes.json();
-    // const allCities = Object.keys(citiesData).map(key => ({ id: key, ...citiesData[key]})); // from object to array
-    // // const citiesArray = allCities.filter(city => city.posts != undefined);
-
-    //  // check if cities have any posts
-    //  const result = allCities.map((city) => ({
-    //   data: city,
-    //   match: allPosts.some((post) => post.cityId === city.id)
-    //   })).filter(res => res.match == true);
-    //   const citiesWithPosts = result.map(res => res.data);
-    //   console.log(citiesWithPosts);
-  
-    //   if(result.length != 0) {
-    //     setCities(citiesWithPosts);
-    //   }
-
-
     onValue(citiesRef, async snapshot => {
       const citiesArray= [];
       snapshot.forEach(postSnapshot => {
