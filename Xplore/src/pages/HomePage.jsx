@@ -41,7 +41,6 @@ export default function HomePage(){
     setPosts(allPosts);
     return allPosts;  
   }
-  console.log(posts);
 
   async function getCountries() {
     const posts = await getPosts();
@@ -50,7 +49,6 @@ export default function HomePage(){
           snapshot.forEach(postSnapshot => {
             const id = postSnapshot.key;
             const data = postSnapshot.val();
-            console.log(data);
             
             const country = {
                 id,
@@ -64,13 +62,9 @@ export default function HomePage(){
           const topTenCountries = selectedCountries.sort(function (a, b) {
             return b.post.length - a.post.length;
           });
-          console.log(topTenCountries);
           setCountries(topTenCountries.slice(0, 9));
       });
   }
-  console.log(countries);
-
-  
 
   async function getCities() {
     onValue(citiesRef, async snapshot => {

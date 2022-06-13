@@ -28,7 +28,6 @@ export default function AddCommentPage() {
     history.goBack();
     dismissLoader();
 
-
     await Toast.show({
       text: "Your comment is added!",
       position: "center"
